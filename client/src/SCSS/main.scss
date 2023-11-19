@@ -1,0 +1,33 @@
+//base structure
+@import "base/page.scss";
+@import "base/hover-active.scss";
+@import "base/variable.scss";
+//reset settings selectors
+@import "base/base-settings.scss";
+
+//MainPage
+@import "MainPage/block-head.scss";
+@import "MainPage/block-content.scss";
+@import "MainPage/block-sales.scss";
+
+//SignInPage
+@import "SignInPage/block-signin.scss";
+@import "SignInPage/page-signin.scss";
+
+//AccountPage
+@import "AccountPage/page-account.scss";
+@import "AccountPage/block-account.scss";
+
+//TariffPage
+@import "TariffPage/block-Tariff.scss";
+@import "TariffPage/page-Tariff.scss";
+
+//NotePage
+@import "NotePage/page-note.scss";
+@import "NotePage/block-note.scss";
+
+//DrivePage
+@import "DrivePage/page-drive.scss";
+@import "DrivePage/block-folderSearch.scss";
+@import "DrivePage/block-lastFile.scss";
+@import "DrivePage/pie-diagrams.scss";

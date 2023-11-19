@@ -1,0 +1,49 @@
+.container-Tariff {
+  display: flex;
+  flex-direction: column;
+  h2 {
+    margin: 0 auto;
+    width: 100%;
+    height: fit-content;
+  }
+}
+.Tariff-inner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  .Tariff {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 50px;
+    width: 320px;
+    height: 370px;
+    h4 {
+      margin-top: 10px;
+    }
+    h6 {
+      color: $color-tarrrif-one;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+    h2 {
+      margin-top: 20px;
+      color: $color-tarrrif-two;
+    }
+    .description {
+      width: 93%;
+      text-align: center;
+      line-height: 30px;
+      b {
+        color: $color-tarrrif-two;
+      }
+    }
+    input {
+      margin-top: 10px;
+      height: 50px;
+      font-size: 25px;
+      padding: 0 50px;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  justify-content: center;
+  h2 {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  h4 {
+    line-height: 180%;
+    text-align: center;
+  }
+}
