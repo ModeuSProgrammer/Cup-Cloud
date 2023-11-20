@@ -1,73 +1,41 @@
 const ApiError = require('../error/ApiError');
 const path = require('path');
-const multer = require('multer');
-const { File } = require('../models/models');
+const { Storage, File } = require('../models/models');
 const fs = require('fs').promises;
+const createDirMiddleware = require('../middleware/createDirMiddleware');
 
 class StorageController {
-  async AddFile(req, res, next) {
+  async createDir(req, res, next) {
     try {
-      const userID = req.user.ID;
-      const userDir = path.join(__dirname, '..', 'files', `user${userID}`);
+      const { name, type, parentID } = req.body;
+      const file = new File({ name, type, parentID, storageID: req.user.storageID });
+      console.log(req.user);
+      let parentFile = null;
+      if (parentID) {
+        parentFile = await File.findByPk(parentID);
+        if (!parentFile) {
+          return next(ApiError.internal('Родительский файл не найден'));
+        }
+        file.path = path.join(parentFile.path, name);
+        await createDirMiddleware.createDirServices(file);
 
-      // Проверка создана ли директория
-      try {
-        await fs.access(userDir);
-      } catch (err) {
-        // Если директория не существует, создаем её
-        await fs.mkdir(userDir);
+        parentFile.child.push(file.ID);
+        await parentFile.save();
       }
 
-      const storage = multer.diskStorage({
-        destination: userDir,
-        filename: (req, file, cb) => {
-          const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-          const fileName = `${uniqueSuffix}-${file.originalname}`;
-          cb(null, fileName);
-        },
-      });
-
-      const upload = multer({ storage }).single('file');
-
-      await new Promise((resolve, reject) => {
-        upload(req, res, (err) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve();
-          }
-        });
-      });
-
-      if (!req.file) {
-        return res.status(400).json('Файл не был передан');
+      else {
+        if (!req.user.dirMain) {
+          return next(ApiError.internal('Отсутствует информация о корневой директории пользователя'));
+        }
+        const userRootPath = path.join(req.user.dirMain);
+        file.path = path.join(userRootPath, name);
+        await createDirMiddleware.createDirServices(file);
       }
-
-      // Путь, куда нужно переместить файл
-      const { originalname, mimetype, buffer, size } = req.file;
-      const newPath = path.join(__dirname, '..', 'files', `user${userID}`, originalname);
-
-      // Проверяем существование файла
-      try {
-        await fs.access(newPath);
-        // Файл существует, удаляем загруженный файл и возвращаем ошибку
-        await fs.unlink(req.file.path);
-        return res.status(400).json('Файл с таким именем уже существует');
-      } catch (err) {
-        // Файл не существует, продолжаем
-      }
-
-      // Перемещаем файл без чтения его содержимого
-      await fs.rename(req.file.path, newPath, 'utf8');
-
-      const newFile = await File.create({
-        name: originalname, type: mimetype, path: newPath, size: size, storageID: req.user.storageID,
-      });
-
-      res.status(201).json('Файл успешно загружен');
+      await file.save();
+      return res.json(file);
     } catch (error) {
       console.error(error);
-      return next(ApiError.badRequest('Ошибка добавления файла'));
+      return next(ApiError.internal('Ошибка добавления файла'));
     }
   }
 }

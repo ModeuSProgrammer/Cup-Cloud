@@ -1,11 +1,13 @@
 const ApiError = require('../error/ApiError');
 const bcrypt = require('bcrypt'); // для хеширование паролей
 const jwt = require('jsonwebtoken'); // для регистрации и тд
+const path = require('path');
 const { User, Profile, Storage } = require('../models/models');
+const createDirMiddleware = require('../middleware/createDirMiddleware');
 
-const generateJwt = (ID, email, roleID, storageID) => {
+const generateJwt = (ID, email, roleID, storageID, dirMain) => {
   return jwt.sign(
-    { ID, email, roleID, storageID },
+    { ID, email, roleID, storageID, dirMain },
     process.env.SECRET_KEY,
     { expiresIn: '24h' }
   ) // данные и ключ, опции
@@ -14,7 +16,6 @@ const generateJwt = (ID, email, roleID, storageID) => {
 
 //функции и их вызов с обработкой от get post и тд
 class UserController {
-
   async registration(req, res, next) {
     try {
       const { firstname, email, password, passwordTwo } = req.body;
@@ -39,16 +40,19 @@ class UserController {
       const profile = await Profile.create({ avatar: 'avatarDefault.jpeg' });
       const storage = await Storage.create({ occupied: 0, status: true, datePay: new Date(), tariffID: 1 });
       const user = await User.create({ password: hashPassword, email, firstname, roleID: 1, storageID: storage.ID, profileID: profile.ID });
-      const token = generateJwt(user.ID, user.email, user.roleID, storage.storageID);
 
+      // Передаем идентификатор хранилища в метод 
+      await createDirMiddleware.createDirServices({ path: `user${storage.ID.toString()}` });
+      const dirMain = `user${storage.ID.toString()}`;
+      console.log(dirMain);
+      const token = generateJwt(user.ID, user.email, user.roleID, user.storageID, dirMain);
       return res.json({ token });
     }
     catch (error) {
-      console.error('Ошибка в регистрации:', error);
-      return next(ApiError.internal('Внутренняя ошибка сервера'));
+      console.log(error);
+      return next(ApiError.badRequest('Внутренняя ошибка сервера'));
     }
   }
-
 
 
   async login(req, res, next) {
@@ -63,8 +67,8 @@ class UserController {
     if (!comparePassword) {
       return next(ApiError.internal('Неверный пароль'));
     }
-
-    const token = generateJwt(user.ID, user.email, user.roleID, user.storageID);
+    const dirMain = `user${user.storageID.toString()}`;
+    const token = generateJwt(user.ID, user.email, user.roleID, user.storageID, dirMain);
     return res.json({ token });
   }
 
@@ -72,7 +76,7 @@ class UserController {
 
   // проверка и генерация нового токена для авторизации и продолжения сессии 
   async check(req, res, next) {
-    const token = generateJwt(req.user.ID, req.user.email, req.user.roleID, req.user.storageID);
+    const token = generateJwt(req.user.ID, req.user.email, req.user.roleID, req.user.storageID, req.user.dirMain);
     return res.json({ token })
   }
 }

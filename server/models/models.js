@@ -35,8 +35,11 @@ const File = sequelize.define('file', {
   ID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, },
   type: { type: DataTypes.STRING, },
-  path: { type: DataTypes.STRING, unique: true, },
+  path: { type: DataTypes.STRING, unique: true },
   size: { type: DataTypes.DOUBLE },
+  parentID: { type: DataTypes.INTEGER }, // для того чтобы можно было сделать своего рода вложенность
+  childsID: { type: DataTypes.INTEGER },
+  access_link: { type: DataTypes.STRING, },
 },
   {
     timestamps: false,
@@ -86,3 +89,4 @@ module.exports = {
   File,
   Tariff
 }
+

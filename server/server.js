@@ -1,22 +1,22 @@
 const express = require('express');// экспресс приложение
+const cors = require('cors'); // библиотека для получение запросов
 const dotenv = require('dotenv'); // конфиг
 dotenv.config(); // Настройка переменных среды из файла .env
+
 const sequelize = require('./models/DB.js'); //для подключения к бд
 const models = require('./models/models.js'); //  таблицы бд(модели)
-const cors = require('cors'); // библиотека для получение запросов
+
 const router = require('./routes/index.js');// Routes для настройки маршрутов
 const ErrorHandler = require('./middleware/ErrorHandlingMiddleware.js'); // для работы с ошибками
 const path = require('path'); // для файлов
-const multer = require('multer');// для файлов
-
+const corsMiddleware = require('./middleware/corsMiddleware.js')
 
 const defaultRole = require('./defaultDataDB/roleData.js'); //добавление базовых данынх для таблицы Role
 const defaultTariff = require('./defaultDataDB/tariffData.js'); //добавление базовых данынх для таблицы Tariff
 
 const app = express(); // создание экспресс приложения
-app.use(cors());// для получение запросов из браузера
 app.use(express.json())//Для обработки запросов json
-
+app.use(corsMiddleware); // для cors (механизм безопасности)
 app.use('/api', router);
 
 //должен идти в самом концеЮ обработчик ошибок
@@ -36,4 +36,25 @@ const start = async () => {
   }
 };
 
-start();
+const initializeData = async () => {
+  try {
+    await defaultRole.addDefaultDataRoles();
+    await defaultTariff.createDefaultTariffs();
+  }
+  catch (error) {
+    console.error('Ошибка инициализации данных:', error.message);
+    throw error;
+  }
+}
+// добавление данных для нормальной работы бд и приложения
+const runApp = async () => {
+  try {
+    await sequelize.sync();
+    await initializeData();
+    await start();
+  } catch (error) {
+    console.error('Ошибка при запуске:', error.message);
+  }
+};
+
+runApp();
