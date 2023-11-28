@@ -38,7 +38,7 @@ const File = sequelize.define('file', {
   path: { type: DataTypes.STRING, unique: true },
   size: { type: DataTypes.DOUBLE },
   parentID: { type: DataTypes.INTEGER }, // для того чтобы можно было сделать своего рода вложенность
-  childsID: { type: DataTypes.INTEGER },
+  childID: { type: DataTypes.JSON, defaultValue: [] },
   access_link: { type: DataTypes.STRING, },
 },
   {
@@ -64,6 +64,10 @@ const Tariff = sequelize.define('tariff', {
   {
     timestamps: false,
   });
+
+// для файлов связь
+File.belongsTo(File, { foreignKey: 'parentID', as: 'parent', onDelete: 'CASCADE' });
+File.hasMany(File, { foreignKey: 'parentID', as: 'children', onDelete: 'CASCADE' });
 
 //Создание связей между моделями
 Profile.hasOne(User)
