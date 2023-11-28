@@ -6,7 +6,8 @@ const storageController = require('../controllers/storageController');
 
 const authMiddleware = require('../middleware/authMiddleware');
 
-router.post('/', authMiddleware, storageController.createDir);
+router.post('/add', authMiddleware, storageController.createDir);
+router.get('/', authMiddleware, storageController.getFiles);
 
 
 module.exports = router
