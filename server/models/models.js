@@ -38,7 +38,6 @@ const File = sequelize.define('file', {
   path: { type: DataTypes.STRING, unique: true },
   size: { type: DataTypes.DOUBLE },
   parentID: { type: DataTypes.INTEGER }, // для того чтобы можно было сделать своего рода вложенность
-  childID: { type: DataTypes.JSON, defaultValue: [] },
   access_link: { type: DataTypes.STRING, },
 },
   {
