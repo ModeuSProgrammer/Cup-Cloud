@@ -8,16 +8,15 @@ const models = require('./models/models.js'); //  таблицы бд(модел
 
 const router = require('./routes/index.js');// Routes для настройки маршрутов
 const ErrorHandler = require('./middleware/ErrorHandlingMiddleware.js'); // для работы с ошибками
-const path = require('path'); // для файлов
 const corsMiddleware = require('./middleware/corsMiddleware.js')
 
 const defaultRole = require('./defaultDataDB/roleData.js'); //добавление базовых данынх для таблицы Role
 const defaultTariff = require('./defaultDataDB/tariffData.js'); //добавление базовых данынх для таблицы Tariff
 
 const app = express(); // создание экспресс приложения
-app.use(express.json())//Для обработки запросов json
 app.use(corsMiddleware); // для cors (механизм безопасности)
-app.use('/api', router);
+app.use(express.json())//Для обработки запросов json
+app.use('/api/CupCloud', router);
 
 //должен идти в самом концеЮ обработчик ошибок
 const port = process.env.PORT || 5000;

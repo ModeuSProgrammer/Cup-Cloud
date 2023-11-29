@@ -16,14 +16,14 @@ class NavMenu extends React.Component {
                 {link.internal ? (
                   <Link to={link.url}>{link.text}</Link>
                 ) : (
-                  <a href={link.url}>{link.text}</a>
+                  <a href={link.url} onClick={link.onClick}>{link.text}</a>
                 )}
               </li>
             ))}
           </ul>
         </nav>
       </div>
-    )
+    );
   }
 }
 

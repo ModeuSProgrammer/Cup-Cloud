@@ -35,7 +35,7 @@ class StorageController {
       const files = parentID ? await File.findAll({ where: { storageID: req.user.storageID, parentID: req.query.parentID } })
         : await File.findAll({ where: { storageID: req.user.storageID, parentID: null } });
 
-      return res.json({ files });
+      return res.json(files);
     } catch (error) {
       console.error(error);
       return next(ApiError.internal('Ошибка отображения файла'));

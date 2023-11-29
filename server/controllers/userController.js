@@ -21,18 +21,18 @@ class UserController {
       const { firstname, email, password, passwordTwo } = req.body;
       // Проверка заполненых полей
       if (!email || !firstname || !password || !passwordTwo) {
-        return next(ApiError.badRequest('Заполните все поля'));
+        return res.status(400).json({ message: "Заполните все поля" });
       }
 
       // Проверка данных из двух инпутов
       if (password !== passwordTwo) {
-        return next(ApiError.badRequest('Ошибка в поле пароль'));
+        return res.status(400).json({ message: "Ошибка в поле пароль" });
       }
 
       // Проверка на наличие данной почты в бд
       const checkRegUser = await User.findOne({ where: { email } });
       if (checkRegUser) {
-        return next(ApiError.badRequest('Пользователь с данной почтой уже зарегистрирован'));
+        return res.status(400).json({ message: "Пользователь с данной почтой уже зарегистрирован" });
       }
 
       //Создание нового пользователя с хешированием пароля
@@ -50,7 +50,7 @@ class UserController {
     }
     catch (error) {
       console.log(error);
-      return next(ApiError.badRequest('Внутренняя ошибка сервера'));
+      return res.status(500).json({ message: "Внутренняя ошибка сервера" });
     }
   }
 
@@ -60,16 +60,23 @@ class UserController {
     //проверяем наличие пользователя
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      return next(ApiError.internal('Пользователь не найден'));
+      return res.status(400).json({ message: "Пользователь не найден" });
     }
 
-    let comparePassword = bcrypt.compareSync(password, user.password)
+    const comparePassword = bcrypt.compareSync(password, user.password)
     if (!comparePassword) {
-      return next(ApiError.internal('Неверный пароль'));
+      return res.status(400).json({ message: "Неверный пароль" });
     }
     const dirMain = `user${user.storageID.toString()}`;
     const token = generateJwt(user.ID, user.email, user.roleID, user.storageID, dirMain);
-    return res.json({ token });
+    return res.json({
+      token, user: {
+        ID: user.ID,
+        email: user.email,
+        roleID: user.roleID,
+        storageID: user.storageID,
+      }
+    });
   }
 
 

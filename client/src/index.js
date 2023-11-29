@@ -1,19 +1,13 @@
-import React, { createContext } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import UserDrive from './drive/UserDrive';
-
-
-export const Context = createContext(null);
+import { Provider } from 'react-redux';
+import store from './reducers/index';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <Context.Provider value={{
-      user: new UserDrive()
-    }}>
-      <App />
-    </Context.Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <App />
+  </Provider>
 );
 
