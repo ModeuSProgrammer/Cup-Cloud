@@ -54,30 +54,36 @@ class UserController {
     }
   }
 
-
-  async login(req, res, next) {
+  async login(req, res) {
     const { email, password } = req.body;
-    //проверяем наличие пользователя
-    const user = await User.findOne({ where: { email } });
-    if (!user) {
-      return res.status(400).json({ message: "Пользователь не найден" });
-    }
+    try {
+      const user = await User.findOne({ where: { email } });
 
-    const comparePassword = bcrypt.compareSync(password, user.password)
-    if (!comparePassword) {
-      return res.status(400).json({ message: "Неверный пароль" });
-    }
-    const dirMain = `user${user.storageID.toString()}`;
-    const token = generateJwt(user.ID, user.email, user.roleID, user.storageID, dirMain);
-    return res.json({
-      token, user: {
-        ID: user.ID,
-        email: user.email,
-        roleID: user.roleID,
-        storageID: user.storageID,
+      if (!user) {
+        return res.status(400).json({ message: "Пользователь не найден" });
       }
-    });
-  }
+
+      const isPasswordValid = bcrypt.compareSync(password, user.password);
+      if (!isPasswordValid) {
+        return res.status(400).json({ message: "Неверный пароль" });
+      }
+      const dirMain = `user${user.storageID.toString()}`;
+      const token = generateJwt(user.ID, user.email, user.roleID, user.storageID, dirMain);
+      return res.json({
+        token,
+        user: {
+          ID: user.ID,
+          email: user.email,
+          roleID: user.roleID,
+          storageID: user.storageID,
+        },
+      });
+    } catch (error) {
+      console.error('Error during login:', error);
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+
 
 
 

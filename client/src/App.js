@@ -11,12 +11,14 @@ function App() {
   const isAuth = useSelector(state => state.user.isAuth)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(auth())
-  }, [])
+    if (!isAuth) {
+      dispatch(auth());
+    }
+  }, [dispatch, isAuth]);
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/CupCloud/" element={!isAuth ? <Main /> : <Navigate to="/CupCloud/storage" />} />
+        <Route path="/CupCloud/" element={!isAuth ? <Main /> : <Navigate to="/CupCloud/storage" />} exact />
         <Route path="/CupCloud/login" element={!isAuth ? <Login /> : <Navigate to="/CupCloud/storage" />} />
         <Route path="/CupCloud/storage" element={<Drive />} />
       </Routes>

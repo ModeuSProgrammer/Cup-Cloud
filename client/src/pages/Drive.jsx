@@ -17,7 +17,7 @@ const Drive = () => {
     { url: '/CupCloud/storage', text: 'ДИСК', id: '1', internal: true },
     { url: '/CupCloud/Tariff', text: 'ТАРИФ', id: '2', internal: true },
     { url: '/CupCloud/account', text: 'АККАУНТ', id: '3', internal: true },
-    { url: '/exit', text: 'ВЫХОД', id: '4', internal: true }
+    { url: '/CupCloud/', text: 'ВЫХОД', id: '4', internal: false, onClick: () => dispatch(logout()) }
   ];
   return (
     <div className="body-bg-1" >

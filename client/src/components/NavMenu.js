@@ -14,7 +14,7 @@ class NavMenu extends React.Component {
             {links.map((link) => (
               <li key={link.id} className="nav-item">
                 {link.internal ? (
-                  <Link to={link.url}>{link.text}</Link>
+                  <Link to={link.url} onClick={link.onClick}>{link.text}</Link>
                 ) : (
                   <a href={link.url} onClick={link.onClick}>{link.text}</a>
                 )}
