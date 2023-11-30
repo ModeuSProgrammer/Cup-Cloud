@@ -58,11 +58,9 @@ class UserController {
     const { email, password } = req.body;
     try {
       const user = await User.findOne({ where: { email } });
-
       if (!user) {
         return res.status(400).json({ message: "Пользователь не найден" });
       }
-
       const isPasswordValid = bcrypt.compareSync(password, user.password);
       if (!isPasswordValid) {
         return res.status(400).json({ message: "Неверный пароль" });
@@ -76,6 +74,7 @@ class UserController {
           email: user.email,
           roleID: user.roleID,
           storageID: user.storageID,
+          dirMain: dirMain
         },
       });
     } catch (error) {

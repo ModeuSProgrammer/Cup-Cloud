@@ -55,7 +55,6 @@ const Login = () => {
                 <input type="password" value={password} placeholder="Пароль" id="UserPassword" onChange={(event) => setPassword(event.target.value)} />
                 <input type="submit" value="Войти" id="SignInBtn" />
               </form>
-
             </div>
             {error && <div className="error-message">{error}</div>}
           </div>

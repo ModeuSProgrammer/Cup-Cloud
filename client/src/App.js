@@ -20,7 +20,7 @@ function App() {
       <Routes>
         <Route path="/CupCloud/" element={!isAuth ? <Main /> : <Navigate to="/CupCloud/storage" />} exact />
         <Route path="/CupCloud/login" element={!isAuth ? <Login /> : <Navigate to="/CupCloud/storage" />} />
-        <Route path="/CupCloud/storage" element={<Drive />} />
+        <Route path="/CupCloud/storage" element={isAuth ? <Drive /> : <Navigate to="/CupCloud/login" />} />
       </Routes>
     </BrowserRouter >
   );

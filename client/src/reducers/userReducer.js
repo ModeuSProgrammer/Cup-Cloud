@@ -12,7 +12,7 @@ export default function userReducer(state = defaultState, action) {
       return {
         ...state,
         currentUser: action.payload,
-        isAuth: true
+        isAuth: true,
       }
     case LOGOUT:
       localStorage.removeItem('token');

@@ -1,16 +1,21 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from "../reducers/userReducer";
 
 import NavMenu from "../components/NavMenu";
 import ContainerBlock from "../components/container-block";
 import Pie from "../components/Pie-diagram";
 import Logo from "../components/Logo";
+import { getFiles } from '../actions/file';
 
 
 
 const Drive = () => {
   const dispatch = useDispatch();
+  const currentDir = useSelector(state => state.files.currentDir);
+  useEffect(() => {
+    dispatch(getFiles(currentDir));
+  }, [currentDir])
 
 
   const MainLinks = [
