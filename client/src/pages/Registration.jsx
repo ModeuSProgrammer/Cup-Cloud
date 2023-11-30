@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { registr } from "../actions/user";
+import { registration } from "../actions/user";
 
 import NavMenu from "../components/NavMenu";
 import Footer from "../components/Footer";
@@ -31,12 +31,12 @@ const Registration = () => {
           <div>
             <h2>Регистрация</h2>
             <div className="registr-form">
-              <form method="post" onSubmit={(event) => { event.preventDefault(); registr(email, password, passwordTwo, firstname); }}>
+              <form>
                 <input type="text" value={firstname} placeholder="Имя" id="firstName" onChange={(event) => setFirstName(event.target.value)} />
                 <input type="email" value={email} placeholder="Почта" id="Email" onChange={(event) => setEmail(event.target.value)} />
                 <input type="password" value={password} placeholder="Пароль" id="Password" onChange={(event) => setPassword(event.target.value)} />
                 <input type="password" value={passwordTwo} placeholder="Повторите пароль" id="PasswordTwo" onChange={(event) => setPasswordTwo(event.target.value)} />
-                <input type="submit" value="Зарегистрироваться" id="RegBtn" />
+                <input type="submit" value="Зарегистрироваться" id="RegBtn" onClick={() => registration(email, password, passwordTwo, firstname)} />
               </form>
 
             </div>

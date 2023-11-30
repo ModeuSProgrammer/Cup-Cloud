@@ -11,7 +11,7 @@ export function getFiles(dirID) {
       console.log(response.data);
     }
     catch (error) {
-      alert(error.response.data.message);
+      alert(error);
     }
   }
 }

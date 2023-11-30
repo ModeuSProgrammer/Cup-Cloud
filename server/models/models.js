@@ -36,7 +36,7 @@ const File = sequelize.define('file', {
   name: { type: DataTypes.STRING, },
   type: { type: DataTypes.STRING, },
   path: { type: DataTypes.STRING, unique: true },
-  date: { type: DataTypes.DATE, default: Date.now() },
+  date: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
   size: { type: DataTypes.BIGINT },
   parentID: { type: DataTypes.INTEGER }, // для того чтобы можно было сделать своего рода вложенность
   access_link: { type: DataTypes.STRING, },

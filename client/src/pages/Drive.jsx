@@ -14,10 +14,10 @@ import FileList from '../components/fileList/fileList';
 const Drive = () => {
   const dispatch = useDispatch();
   const currentDir = useSelector(state => state.files.currentDir);
+
   useEffect(() => {
     dispatch(getFiles(currentDir));
   }, [currentDir])
-
 
   const MainLinks = [
     { url: '/storage', text: 'ДИСК', id: '1', internal: true },

@@ -1,20 +1,18 @@
 import axios from 'axios'
 import { setUser } from "../reducers/userReducer";
 
-export const registr = (email, password, passwordTwo, firstname) => {
-  return async dispatch => {
-    try {
-      const response = await axios.post(`http://localhost:8000/api/registration`, {
-        email,
-        password,
-        passwordTwo,
-        firstname
-      })
-      alert('Пользователь создан')
-    } catch (error) {
-      console.error('Registration failed:', error);
-      alert(error.response?.data.message || "Произошла ошибка при регистрации");
-    }
+export const registration = async (email, password, passwordTwo, firstname) => {
+  try {
+    const response = await axios.post(`http://localhost:8000/api/registration`, {
+      email,
+      password,
+      passwordTwo,
+      firstname
+    })
+    alert('Пользователь создан');
+  } catch (error) {
+    console.error('Registration failed:', error);
+    alert(error.response?.data.message || "Произошла ошибка при регистрации");
   };
 };
 

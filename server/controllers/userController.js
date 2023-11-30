@@ -1,7 +1,6 @@
-const ApiError = require('../error/ApiError');
+
 const bcrypt = require('bcrypt'); // для хеширование паролей
 const jwt = require('jsonwebtoken'); // для регистрации и тд
-const path = require('path');
 const { User, Profile, Storage } = require('../models/models');
 const createDirMiddleware = require('../middleware/createDirMiddleware');
 
@@ -13,7 +12,6 @@ const generateJwt = (ID, email, roleID, storageID, dirMain) => {
   ) // данные и ключ, опции
 } // генерация токена
 
-
 //функции и их вызов с обработкой от get post и тд
 class UserController {
   async registration(req, res, next) {
@@ -23,18 +21,15 @@ class UserController {
       if (!email || !firstname || !password || !passwordTwo) {
         return res.status(400).json({ message: "Заполните все поля" });
       }
-
       // Проверка данных из двух инпутов
       if (password !== passwordTwo) {
         return res.status(400).json({ message: "Ошибка в поле пароль" });
       }
-
       // Проверка на наличие данной почты в бд
       const checkRegUser = await User.findOne({ where: { email } });
       if (checkRegUser) {
         return res.status(400).json({ message: "Пользователь с данной почтой уже зарегистрирован" });
       }
-
       //Создание нового пользователя с хешированием пароля
       const hashPassword = await bcrypt.hash(password, 5)
       const profile = await Profile.create({ avatar: 'avatarDefault.jpeg' });
@@ -44,9 +39,8 @@ class UserController {
       // Передаем идентификатор хранилища в метод 
       await createDirMiddleware.createDirServices({ path: `user${storage.ID.toString()}` });
       const dirMain = `user${storage.ID.toString()}`;
-      console.log(dirMain);
       const token = generateJwt(user.ID, user.email, user.roleID, user.storageID, dirMain);
-      return res.json(token);
+      return res.json({ token })
     }
     catch (error) {
       console.log(error);
