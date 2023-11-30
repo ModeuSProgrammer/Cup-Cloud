@@ -1,9 +1,10 @@
 .container-diagrams {
-  margin-top: 150px;
+  margin-top: 250px;
   height: 100%;
+  margin-left: -150px;
   .diagrams-info {
     display: flex;
-    margin-left: 50px;
+    margin-left: -30px;
     align-items: center;
     h2 {
       margin-left: 20px;
@@ -20,10 +21,14 @@
 }
 .pie {
   margin-top: 70px;
+  border-radius: 100%;
+  outline: 10px solid #561f47;
+  border: 5px solid white;
+  background: #561f47;
 }
 .pie {
   --b: 0;
-  --w: 450px;
+  --w: 300px;
   --c: #fb354e;
   width: var(--w);
   aspect-ratio: 1;
