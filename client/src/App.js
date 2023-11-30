@@ -1,9 +1,10 @@
+import './SCSS/main.scss';
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'; // Добавлены импорты
-import './SCSS/main.scss';
 import Main from './pages/Main';
 import Login from './pages/Login';
 import Drive from './pages/Drive';
+import Registration from './pages/Registration';
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "./actions/user";
 
@@ -18,9 +19,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/CupCloud/" element={!isAuth ? <Main /> : <Navigate to="/CupCloud/storage" />} exact />
-        <Route path="/CupCloud/login" element={!isAuth ? <Login /> : <Navigate to="/CupCloud/storage" />} />
-        <Route path="/CupCloud/storage" element={isAuth ? <Drive /> : <Navigate to="/CupCloud/login" />} />
+        <Route path="/" element={!isAuth ? <Main /> : <Navigate to="/storage" />} />
+        <Route path="/registration" element={!isAuth ? <Registration /> : <Navigate to="/storage" />} />
+        <Route path="/login" element={!isAuth ? <Login /> : <Navigate to="/storage" />} />
+        <Route path="/storage" element={isAuth ? <Drive /> : <Navigate to="/login" />} />
       </Routes>
     </BrowserRouter >
   );

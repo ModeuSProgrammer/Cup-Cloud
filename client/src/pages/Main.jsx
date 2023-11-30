@@ -8,18 +8,12 @@ import ImgBlock from "../components/Img";
 import { registration } from "../actions/user";
 
 const Main = () => {
-  //для redux
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordTwo, setPasswordTwo] = useState("");
-  const [firstname, setFirstName] = useState("");
-
   const MainLinks = [
-    { url: '/CupCloud', text: 'ГЛАВНАЯ', id: '1', internal: true },
-    { url: '/CupCloud#aboutus', text: 'О НАС', id: '2', internal: false },
-    { url: '/CupCloud#Sale', text: 'АКЦИЯ', id: '3', internal: false },
-    { url: '/CupCloud#registr', text: 'РЕГИСТРАЦИЯ', id: '4', internal: false },
-    { url: '/CupCloud/login', text: 'ВХОД', id: '5', internal: true }
+    { url: '/', text: 'ГЛАВНАЯ', id: '1', internal: true },
+    { url: '/#aboutus', text: 'О НАС', id: '2', internal: false },
+    { url: '/#Sale', text: 'АКЦИЯ', id: '3', internal: false },
+    { url: '/registration', text: 'РЕГИСТРАЦИЯ', id: '4', internal: true },
+    { url: '/login', text: 'ВХОД', id: '5', internal: false }
   ];
   return (
     <div className="body-bg-0">
@@ -63,27 +57,8 @@ const Main = () => {
           </div>
         </ContainerBlock>
       </SectionBlock>
-
-      <SectionBlock sectionId="registr" className="">
-        <ContainerBlock className="container">
-          <div>
-            <h2>РЕГИСТРАЦИЯ</h2>
-            <div className="registr-form">
-              <form>
-                <input type="text" value={firstname} placeholder="Имя" id="firstName" onChange={(event) => setFirstName(event.target.value)} />
-                <input type="email" value={email} placeholder="Почта" id="Email" onChange={(event) => setEmail(event.target.value)} />
-                <input type="password" value={password} placeholder="Пароль" id="Password" onChange={(event) => setPassword(event.target.value)} />
-                <input type="password" value={passwordTwo} placeholder="Повторите пароль" id="PasswordTwo" onChange={(event) => setPasswordTwo(event.target.value)} />
-
-                <input type="submit" value="Зарегистрироваться" id="RegBtn" onClick={() => registration(email, password, passwordTwo, firstname)} />
-              </form>
-            </div>
-          </div>
-        </ContainerBlock>
-      </SectionBlock>
-
       <Footer />
-    </div>
+    </div >
   );
 }
 export default Main;

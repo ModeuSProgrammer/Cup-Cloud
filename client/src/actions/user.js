@@ -1,21 +1,19 @@
 import axios from 'axios'
 import { setUser } from "../reducers/userReducer";
 
-export const registration = (email, password, passwordTwo, firstname) => {
+export const registr = (email, password, passwordTwo, firstname) => {
   return async dispatch => {
     try {
-      const response = await axios.post(`http://localhost:8000/api/CupCloud/`, {
+      const response = await axios.post(`http://localhost:8000/api/registration`, {
         email,
         password,
         passwordTwo,
         firstname
-      });
-      alert('Пользователь создан');
-      return response.data;
+      })
+      alert('Пользователь создан')
     } catch (error) {
-      console.error(error);
+      console.error('Registration failed:', error);
       alert(error.response?.data.message || "Произошла ошибка при регистрации");
-      throw error;
     }
   };
 };
@@ -24,7 +22,7 @@ export const registration = (email, password, passwordTwo, firstname) => {
 export const login = (email, password) => {
   return async dispatch => {
     try {
-      const response = await axios.post(`http://localhost:8000/api/CupCloud/login`, {
+      const response = await axios.post(`http://localhost:8000/api/login`, {
         email,
         password
       })
@@ -41,14 +39,14 @@ export const auth = () => {
     try {
       const token = localStorage.getItem('token');
       if (token) {
-        const response = await axios.get(`http://localhost:8000/api/CupCloud/auth`, {
+        const response = await axios.get(`http://localhost:8000/api/check`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         dispatch(setUser(response.data.user));
       }
     } catch (e) {
       console.error(e);
-      alert(e.response?.data.message || "Failed to authenticate.");
+      alert(e.response?.data.message || "Ошибка проверки авторизации.");
       localStorage.removeItem('token');
     }
   };

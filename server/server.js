@@ -1,5 +1,6 @@
 const express = require('express');// экспресс приложение
 const cors = require('cors'); // библиотека для получение запросов
+const corsMiddleware = require('./middleware/corsMiddleware.js')
 const dotenv = require('dotenv'); // конфиг
 dotenv.config(); // Настройка переменных среды из файла .env
 
@@ -8,7 +9,6 @@ const models = require('./models/models.js'); //  таблицы бд(модел
 
 const router = require('./routes/index.js');// Routes для настройки маршрутов
 const ErrorHandler = require('./middleware/ErrorHandlingMiddleware.js'); // для работы с ошибками
-const corsMiddleware = require('./middleware/corsMiddleware.js')
 
 const defaultRole = require('./defaultDataDB/roleData.js'); //добавление базовых данынх для таблицы Role
 const defaultTariff = require('./defaultDataDB/tariffData.js'); //добавление базовых данынх для таблицы Tariff
@@ -16,7 +16,7 @@ const defaultTariff = require('./defaultDataDB/tariffData.js'); //добавле
 const app = express(); // создание экспресс приложения
 app.use(corsMiddleware); // для cors (механизм безопасности)
 app.use(express.json())//Для обработки запросов json
-app.use('/api/CupCloud', router);
+app.use('/api', router);
 
 //должен идти в самом концеЮ обработчик ошибок
 const port = process.env.PORT || 5000;

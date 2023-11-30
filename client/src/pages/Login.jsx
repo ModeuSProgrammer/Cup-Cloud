@@ -35,11 +35,11 @@ const Login = () => {
 
 
   const MainLinks = [
-    { url: '/CupCloud', text: 'ГЛАВНАЯ', id: '1', internal: true },
-    { url: '/CupCloud/#aboutus', text: 'О НАС', id: '2', internal: false },
-    { url: '/CupCloud/#Sale', text: 'АКЦИЯ', id: '3', internal: false },
-    { url: '/CupCloud/#registr', text: 'РЕГИСТРАЦИЯ', id: '4', internal: false },
-    { url: '/CupCloud/login', text: 'ВХОД', id: '5', internal: true }
+    { url: '/', text: 'ГЛАВНАЯ', id: '1', internal: false },
+    { url: '/#aboutus', text: 'О НАС', id: '2', internal: false },
+    { url: '/#Sale', text: 'АКЦИЯ', id: '3', internal: false },
+    { url: '/registration', text: 'РЕГИСТРАЦИЯ', id: '4', internal: true },
+    { url: '/login', text: 'ВХОД', id: '5', internal: true }
   ];
   return (
     <div className='body-bg-2'>

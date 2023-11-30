@@ -1,6 +1,6 @@
 import React from 'react';
-import dirLogo from ''
-import fileLogo from ''
+import dirLogo from '../../../assets/folder1-icons.png'
+import fileLogo from '../../../assets/file-icons.png'
 const File = ({ file }) => {
   return (
     <div className='file'>

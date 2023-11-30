@@ -32,3 +32,15 @@ form {
     }
   }
 }
+
+.drive_btns {
+  button:hover {
+    cursor: pointer;
+    background-color: $color-active;
+    transition: background-color 0.3s;
+  }
+  button:active {
+    cursor: pointer;
+    background-color: $color-red-btn;
+  }
+}

@@ -46,7 +46,7 @@ class UserController {
       const dirMain = `user${storage.ID.toString()}`;
       console.log(dirMain);
       const token = generateJwt(user.ID, user.email, user.roleID, user.storageID, dirMain);
-      return res.json({ token });
+      return res.json(token);
     }
     catch (error) {
       console.log(error);
@@ -78,8 +78,8 @@ class UserController {
         },
       });
     } catch (error) {
-      console.error('Error during login:', error);
-      return res.status(500).json({ message: 'Internal Server Error' });
+      console.error('Ошибка:', error);
+      return res.status(500).json({ message: 'Ошибка Сервера' });
     }
   };
 
