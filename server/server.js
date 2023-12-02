@@ -1,5 +1,6 @@
 const express = require('express');// экспресс приложение
 const cors = require('cors'); // библиотека для получение запросов
+const fileUpload = require('express-fileupload'); // для файлов
 const corsMiddleware = require('./middleware/corsMiddleware.js')
 const dotenv = require('dotenv'); // конфиг
 dotenv.config(); // Настройка переменных среды из файла .env
@@ -15,6 +16,7 @@ const defaultTariff = require('./defaultDataDB/tariffData.js'); //добавле
 
 const app = express(); // создание экспресс приложения
 app.use(corsMiddleware); // для cors (механизм безопасности)
+app.use(fileUpload({}));
 app.use(express.json())//Для обработки запросов json
 app.use('/api', router);
 

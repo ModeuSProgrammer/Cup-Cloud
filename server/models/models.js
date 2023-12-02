@@ -36,7 +36,7 @@ const File = sequelize.define('file', {
   type: { type: DataTypes.STRING, },
   path: { type: DataTypes.STRING, unique: true },
   date: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-  size: { type: DataTypes.BIGINT },
+  size: { type: DataTypes.DOUBLE },
   parentID: { type: DataTypes.INTEGER }, // для того чтобы можно было сделать своего рода вложенность
   access_link: { type: DataTypes.STRING, },
 },
@@ -46,8 +46,8 @@ const File = sequelize.define('file', {
 
 const Storage = sequelize.define('storage', {
   ID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  occupied: { type: DataTypes.INTEGER },
-  status: { type: DataTypes.BOOLEAN },
+  occupied: { type: DataTypes.DECIMAL(20), defaultValue: 0 },
+  status: { type: DataTypes.BOOLEAN, defaultValue: true },
   datePay: { type: DataTypes.DATE },
 },
   {

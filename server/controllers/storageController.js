@@ -1,9 +1,7 @@
 const ApiError = require('../error/ApiError');
-const path = require('path');
-const { Storage, File } = require('../models/models');
-const fs = require('fs').promises;
+const { Storage, File, Tariff } = require('../models/models');
+const fs = require('fs');
 const createDirMiddleware = require('../middleware/createDirMiddleware');
-const { NUMBER } = require('sequelize');
 
 class StorageController {
   async createDir(req, res, next) {
@@ -43,6 +41,60 @@ class StorageController {
   }
 
 
+  //для загрузки файлов
+  async uploadFile(req, res, next) {
+    try {
+      const file = req.files.file
+      console.log(req.user.parentID);
+      const parent = req.user.parentID ? await File.findOne({ where: { ID: req.user.parentID } }) : null;
+
+      console.log(req.user.parentID);
+      const storage = await Storage.findOne({ where: { ID: req.user.storageID } })
+      //поиск сколько положенно всего свободного места для пользователя
+      const tariffID = storage.tariffID;
+      const tariffData = await Tariff.findOne({ where: { ID: tariffID } })
+
+      // проверка места на диске в зависимости от тарифа
+      if (parseInt(storage.occupied) + parseInt(file.size) > (tariffData.placeCount * 1024 * 1024 * 1024)) {
+        return res.status(400).json('Не хватает свободного места на диске');
+      }
+
+      storage.occupied = parseInt(storage.occupied) + parseInt(file.size);
+      let path;
+      //проверка пути
+      if (parent != null) {
+        path = `${process.env.filePath}\\${parent.path}\\${file.name}`;
+        console.log(path)
+      } else {
+        path = `${process.env.filePath}\\${req.user.dirMain}\\${file.name}`;
+      }
+      // проверка существует ли файл по такому пути
+      if (fs.existsSync(path)) {
+        return res.status(400).json('Файл по такому пути уже существует');
+      }
+      // перемещаем файл
+      file.mv(path)
+      //получаем инфоромацию о файле и загрузка его в бд ит.д
+      const type = file.name.split('.').pop()
+      const dbFile = new File({
+        name: file.name,
+        type,
+        size: file.size,
+        path: parent?.path,
+        parentID: parent?.ID,
+        storageID: storage.ID
+      })
+      await dbFile.save()
+      await storage.save()
+
+      return res.json(dbFile);
+    } catch (error) {
+      console.error(error);
+      return next(ApiError.internal('Ошибка загрузки файла'));
+    }
+  }
+
 }
+
 
 module.exports = new StorageController();
