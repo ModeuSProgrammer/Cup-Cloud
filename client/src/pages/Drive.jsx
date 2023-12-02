@@ -9,6 +9,8 @@ import Logo from "../components/Logo";
 import { getFiles } from '../actions/file';
 
 import FileList from '../components/fileList/fileList';
+import Popup from '../components/Popup';
+import { setPopupDisplay } from '../reducers/fileReducer';
 
 
 const Drive = () => {
@@ -19,6 +21,9 @@ const Drive = () => {
     dispatch(getFiles(currentDir));
   }, [currentDir])
 
+  function showPopupHandler() {
+    dispatch(setPopupDisplay('flex'))
+  }
   const MainLinks = [
     { url: '/storage', text: 'ДИСК', id: '1', internal: true },
     { url: '/Tariff', text: 'ТАРИФ', id: '2', internal: true },
@@ -29,6 +34,7 @@ const Drive = () => {
     <div className="body-bg-1" >
       <Logo />
       <NavMenu links={MainLinks} />
+      <Popup />
       <ContainerBlock className="container-drive">
         <div className="container-folderSearch">
           <form>
@@ -38,7 +44,7 @@ const Drive = () => {
           <div className="folders">
             <div className="drive_btns">
               <button className='drive_back'>Назад</button>
-              <button className='drive_create'>Создать папку</button>
+              <button className='drive_create' onClick={() => showPopupHandler()}>Создать папку</button>
             </div>
           </div>
         </div>

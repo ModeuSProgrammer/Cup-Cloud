@@ -1,12 +1,10 @@
 const { Tariff } = require('../models/models');
-
 // Базовые данные для тарифов
 const defaultTariffs = [
   { ID: 1, placeCount: 15, price: 0, name: 'basic' },
   { ID: 2, placeCount: 200, price: 200, name: 'standard' },
   { ID: 3, placeCount: 500, price: 400, name: 'business' }
 ];
-
 // Функция для создания тарифов в виде промиса
 function createDefaultTariffs() {
   return new Promise(async (resolve, reject) => {

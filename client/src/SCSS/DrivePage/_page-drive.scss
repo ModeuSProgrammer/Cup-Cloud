@@ -5,3 +5,64 @@
   height: 100vh;
   overflow-y: hidden;
 }
+
+.popup {
+  background: rgba(0, 0, 0, 0.85);
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-size: 18px;
+  bottom: 0;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  z-index: 1;
+  input {
+    width: 500px;
+    margin: 10px 0;
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  &__header {
+    width: 530px;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__create {
+    margin-left: 420px;
+  }
+}
+
+.popup__create {
+  background-color: #561f47;
+  box-shadow: rgba(0, 0, 0, 0.25);
+  font-size: 18px;
+  height: 40px;
+  border-top: none;
+  border-left: none;
+  color: white;
+  border-radius: 10px;
+  width: fit-content;
+  padding: 0px 20px;
+}
+.popup__close {
+  background-color: #561f47;
+  box-shadow: rgba(0, 0, 0, 0.25);
+  font-size: 18px;
+  height: 30px;
+  border-top: none;
+  border-left: none;
+  color: white;
+  border-radius: 10px;
+  width: fit-content;
+  padding: 0px 20px;
+}

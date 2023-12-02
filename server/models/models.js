@@ -1,6 +1,5 @@
 const sequelize = require('./DB.js'); // база данных
 const { DataTypes } = require('sequelize');// для использование типов полей
-
 // Модели бд без ключей и т.д.
 const User = sequelize.define('user', {
   ID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -64,7 +63,6 @@ const Tariff = sequelize.define('tariff', {
   {
     timestamps: false,
   });
-
 // для файлов связь
 File.belongsTo(File, { foreignKey: 'parentID', as: 'parent', onDelete: 'CASCADE' });
 File.hasMany(File, { foreignKey: 'parentID', as: 'children', onDelete: 'CASCADE' });
@@ -84,7 +82,6 @@ File.belongsTo(Storage)
 
 Tariff.hasMany(Storage)
 Storage.belongsTo(Tariff)
-
 module.exports = {
   User,
   Role,
