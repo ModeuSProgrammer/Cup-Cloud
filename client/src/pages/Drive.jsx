@@ -6,7 +6,7 @@ import NavMenu from "../components/NavMenu";
 import ContainerBlock from "../components/container-block";
 import Pie from "../components/Pie-diagram";
 import Logo from "../components/Logo";
-import { getFiles } from '../actions/file';
+import { getFiles, uploadFile } from '../actions/file';
 
 import FileList from '../components/fileList/fileList';
 import Popup from '../components/Popup';
@@ -31,6 +31,12 @@ const Drive = () => {
     dispatch(setCurrentDir(backDirId))
   }
 
+  function fileUploadHandler(event) {
+    const files = [...event.target.files]
+    files.forEach(file => dispatch(uploadFile(file, currentDir)))
+  }
+
+
   const MainLinks = [
     { url: '/storage', text: 'ДИСК', id: '1', internal: true },
     { url: '/Tariff', text: 'ТАРИФ', id: '2', internal: true },
@@ -54,10 +60,17 @@ const Drive = () => {
               <button className='drive_create' onClick={() => showPopupHandler()}>Создать папку</button>
             </div>
           </div>
+
+          <div className='drive__upload'>
+            <label htmlFor='drive__upload-input' className='drive__upload-lable'>Загрузить файл</label>
+            <input type="file" className='drive__upload-input' id='drive__upload-input' multiple={true} onChange={(event) => fileUploadHandler(event)} />
+          </div>
         </div>
 
         <div className="container-lastFile">
-          <FileList />
+          <div className='listScroll'>
+            <FileList />
+          </div>
         </div>
         <div className="container-diagrams">
           <div className="diagrams-info">

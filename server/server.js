@@ -15,12 +15,13 @@ const defaultRole = require('./defaultDataDB/roleData.js'); //добавлени
 const defaultTariff = require('./defaultDataDB/tariffData.js'); //добавление базовых данынх для таблицы Tariff
 
 const app = express(); // создание экспресс приложения
-app.use(corsMiddleware); // для cors (механизм безопасности)
 app.use(fileUpload({}));
+app.use(corsMiddleware); // для cors (механизм безопасности)
 app.use(express.json())//Для обработки запросов json
 app.use('/api', router);
 
-//должен идти в самом концеЮ обработчик ошибок
+
+//должен идти в самом конце обработчик ошибок
 const port = process.env.PORT || 5000;
 
 

@@ -1,9 +1,24 @@
 .container-lastFile {
-  height: 100%;
+  height: 80%;
   margin-top: 150px;
   margin-left: 78px;
   margin-right: 350px;
   h3 {
     margin-bottom: 30px;
+  }
+  .listScroll {
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: white;
+    &::-webkit-scrollbar {
+      width: 5px; /* Ширина скроллбара */
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: white; /* Цвет ползунка */
+      border-radius: 4px; /* Закругленные углы ползунка */
+    }
   }
 }

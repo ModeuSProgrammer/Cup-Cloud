@@ -45,10 +45,7 @@ class StorageController {
   async uploadFile(req, res, next) {
     try {
       const file = req.files.file
-      console.log(req.user.parentID);
-      const parent = req.user.parentID ? await File.findOne({ where: { ID: req.user.parentID } }) : null;
-
-      console.log(req.user.parentID);
+      const parent = await File.findOne({ _ID: req.user.parentID });
       const storage = await Storage.findOne({ where: { ID: req.user.storageID } })
       //поиск сколько положенно всего свободного места для пользователя
       const tariffID = storage.tariffID;
@@ -62,9 +59,9 @@ class StorageController {
       storage.occupied = parseInt(storage.occupied) + parseInt(file.size);
       let path;
       //проверка пути
-      if (parent != null) {
-        path = `${process.env.filePath}\\${parent.path}\\${file.name}`;
-        console.log(path)
+      if (parent) {
+        path = `${process.env.filePath}\\${req.user.dirMain}\\${parent.path}${file.name}`;
+        console.log(path);
       } else {
         path = `${process.env.filePath}\\${req.user.dirMain}\\${file.name}`;
       }
@@ -81,8 +78,8 @@ class StorageController {
         type,
         size: file.size,
         path: parent?.path,
-        parentID: parent?.ID,
-        storageID: storage.ID
+        parentID: parent?._ID,
+        storageID: storage._ID
       })
       await dbFile.save()
       await storage.save()
