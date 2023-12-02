@@ -10,12 +10,13 @@ import { getFiles } from '../actions/file';
 
 import FileList from '../components/fileList/fileList';
 import Popup from '../components/Popup';
-import { setPopupDisplay } from '../reducers/fileReducer';
+import { setCurrentDir, setPopupDisplay } from '../reducers/fileReducer';
 
 
 const Drive = () => {
   const dispatch = useDispatch();
   const currentDir = useSelector(state => state.files.currentDir);
+  const dirStack = useSelector(state => state.files.dirStack);
 
   useEffect(() => {
     dispatch(getFiles(currentDir));
@@ -24,6 +25,12 @@ const Drive = () => {
   function showPopupHandler() {
     dispatch(setPopupDisplay('flex'))
   }
+
+  function backClickHandler() {
+    const backDirId = dirStack.pop();
+    dispatch(setCurrentDir(backDirId))
+  }
+
   const MainLinks = [
     { url: '/storage', text: 'ДИСК', id: '1', internal: true },
     { url: '/Tariff', text: 'ТАРИФ', id: '2', internal: true },
@@ -43,7 +50,7 @@ const Drive = () => {
           </form>
           <div className="folders">
             <div className="drive_btns">
-              <button className='drive_back'>Назад</button>
+              <button className='drive_back' onClick={() => backClickHandler()} >Назад</button>
               <button className='drive_create' onClick={() => showPopupHandler()}>Создать папку</button>
             </div>
           </div>
