@@ -15,7 +15,10 @@ const defaultRole = require('./defaultDataDB/roleData.js'); //добавлени
 const defaultTariff = require('./defaultDataDB/tariffData.js'); //добавление базовых данынх для таблицы Tariff
 
 const app = express(); // создание экспресс приложения
-app.use(fileUpload({}));
+app.use(fileUpload({
+  defCharset: 'utf8',
+  defParamCharset: 'utf8'
+}));
 app.use(corsMiddleware); // для cors (механизм безопасности)
 app.use(express.json())//Для обработки запросов json
 app.use('/api', router);

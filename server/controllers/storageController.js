@@ -1,5 +1,6 @@
 const ApiError = require('../error/ApiError');
 const { Storage, File, Tariff } = require('../models/models');
+const path = require('path');
 const fs = require('fs');
 const createDirMiddleware = require('../middleware/createDirMiddleware');
 
@@ -44,47 +45,54 @@ class StorageController {
   //для загрузки файлов
   async uploadFile(req, res, next) {
     try {
-      const file = req.files.file
+      const file = req.files.file;
       const parentID = req.body.parentID;
-      const parent = await File.findOne({ where: { ID: parentID } });
-      const storage = await Storage.findOne({ where: { ID: req.user.storageID } })
-      //поиск сколько положенно всего свободного места для пользователя
+      const parent = parentID ? await File.findOne({ where: { ID: parentID } }) : null;
+      const storage = await Storage.findOne({ where: { ID: req.user.storageID } });
+      // Проверка места на диске в зависимости от тарифа
       const tariffID = storage.tariffID;
-      const tariffData = await Tariff.findOne({ where: { ID: tariffID } })
+      const tariffData = await Tariff.findOne({ where: { ID: tariffID } });
 
-      // проверка места на диске в зависимости от тарифа
       if (parseInt(storage.occupied) + parseInt(file.size) > (tariffData.placeCount * 1024 * 1024 * 1024)) {
         return res.status(400).json('Не хватает свободного места на диске');
       }
 
       storage.occupied = parseInt(storage.occupied) + parseInt(file.size);
-      let path;
-      //проверка пути
-      if (parent) {
-        console.log('путь 1')
-        path = `${process.env.filePath}\\${parent.path}${file.name}`;
-        console.log(path);
+      let filePath;
+      let pathFile;
+      // Проверка пути
+      if (parent && parent.path !== null) {
+        filePath = path.join(process.env.filePath, parent.path, file.name);
+        pathFile = path.join(parent.path, file.name);
+        console.log(filePath);
       } else {
-        path = `${process.env.filePath}\\${req.user.dirMain}\\${file.name}`;
+        filePath = path.join(process.env.filePath, req.user.dirMain, file.name);
+        pathFile = path.join(req.user.dirMain, file.name);
       }
-      // проверка существует ли файл по такому пути
-      if (fs.existsSync(path)) {
+      // Проверка существует ли файл по такому пути
+      if (fs.existsSync(filePath)) {
         return res.status(400).json('Файл по такому пути уже существует');
       }
-      // перемещаем файл
-      file.mv(path)
-      //получаем инфоромацию о файле и загрузка его в бд ит.д
-      const type = file.name.split('.').pop()
+      // Перемещаем файл
+      await file.mv(filePath, (err) => {
+        if (err) {
+          console.error('Error moving the file:', err);
+          return res.status(500).json('Internal Server Error');
+        }
+      });
+      // Получаем информацию о файле и загружаем его в базу данных
+      const type = file.name.split('.').pop();
       const dbFile = new File({
         name: file.name,
         type,
         size: file.size,
-        path: parent?.path,
-        parentID: parent?.ID,
+        path: pathFile || null,
+        parentID: parent?.ID || null,
         storageID: storage.ID
-      })
-      await dbFile.save()
-      await storage.save()
+      });
+
+      await dbFile.save();
+      await storage.save();
 
       return res.json(dbFile);
     } catch (error) {

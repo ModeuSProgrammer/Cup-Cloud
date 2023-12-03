@@ -44,18 +44,17 @@ export function uploadFile(file, dirID) {
       const response = await axios.post(`http://localhost:8000/api/storage/upload`, formData, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         onUploadProgress: progressEvent => {
-          // // const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
-          // // console.log('total', totalLength)
-          // if (totalLength) {
-          //   let progress = Math.round((progressEvent.loaded * 100) / totalLength)
-          //   console.log(progress)
-          // }
+          const totalLength = progressEvent.event.lengthComputable ? progressEvent.event.total : progressEvent.event.target.getResponseHeader('content-length') || progressEvent.event.target.getResponseHeader('x-decompressed-content-length');
+          console.log('total', totalLength)
+          if (totalLength) {
+            let progress = Math.round((progressEvent.loaded * 100) / totalLength)
+            console.log(progress)
+          }
         }
       });
       dispatch(addFile(response.data))
-    }
-    catch (error) {
-      alert(error);
+    } catch (e) {
+      alert(e.response.data.message)
     }
   }
 }
