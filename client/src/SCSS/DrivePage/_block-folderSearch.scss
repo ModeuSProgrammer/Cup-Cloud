@@ -30,20 +30,39 @@
 .drive_btns {
   width: 380px;
   display: flex;
+
   justify-content: space-between;
   .drive_back,
   .drive_create {
-    background-color: #561f47;
+    background-color: $color-violet-btn;
     box-shadow: rgba(0, 0, 0, 0.25);
-    font-size: 18px;
+    font-size: 16px;
     height: 40px;
     border-top: none;
     border-left: none;
     color: white;
     border-radius: 10px;
     margin: 0 10px;
-    width: 250px;
-    padding: 0px 20px;
+    padding: 0px 10px;
+  }
+
+  .drive__upload {
+    width: fit-content;
+    height: 30px;
+    margin: 10px auto;
+    .drive__upload-input {
+      display: none;
+    }
+    .drive__upload-lable {
+      background-color: $color-red-btn;
+      font-size: 16px;
+      box-shadow: rgba(0, 0, 0, 0.25);
+      border: 2px solid $color-red-btn;
+      border-radius: 10px;
+      padding: 5px 5px;
+
+      cursor: pointer;
+    }
   }
 }
 

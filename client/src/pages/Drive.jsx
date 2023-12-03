@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from "../reducers/userReducer";
 
@@ -17,6 +17,7 @@ const Drive = () => {
   const dispatch = useDispatch();
   const currentDir = useSelector(state => state.files.currentDir);
   const dirStack = useSelector(state => state.files.dirStack);
+  const [dragEnter, setDragEnter] = useState(false);
 
   useEffect(() => {
     dispatch(getFiles(currentDir));
@@ -36,6 +37,24 @@ const Drive = () => {
     files.forEach(file => dispatch(uploadFile(file, currentDir)))
   }
 
+  function dragEnterHandler(event) {
+    event.preventDefault()
+    event.stopPropagation()
+    setDragEnter(true)
+  }
+  function dragLeaveHandler(event) {
+    event.preventDefault()
+    event.stopPropagation()
+    setDragEnter(false)
+  }
+  function dropHandler(event) {
+    event.preventDefault()
+    event.stopPropagation()
+    let files = [...event.dataTransfer.files]
+    files.forEach(file => dispatch(uploadFile(file, currentDir)))
+    console.log(files)
+    setDragEnter(false)
+  }
 
   const MainLinks = [
     { url: '/storage', text: 'ДИСК', id: '1', internal: true },
@@ -43,8 +62,8 @@ const Drive = () => {
     { url: '/account', text: 'АККАУНТ', id: '3', internal: true },
     { url: '/', text: 'ВЫХОД', id: '4', internal: false, onClick: () => dispatch(logout()) }
   ];
-  return (
-    <div className="body-bg-1" >
+  return (!dragEnter ?
+    <div className="body-bg-1" onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
       <Logo />
       <NavMenu links={MainLinks} />
       <Popup />
@@ -58,12 +77,13 @@ const Drive = () => {
             <div className="drive_btns">
               <button className='drive_back' onClick={() => backClickHandler()} >Назад</button>
               <button className='drive_create' onClick={() => showPopupHandler()}>Создать папку</button>
-            </div>
-          </div>
 
-          <div className='drive__upload'>
-            <label htmlFor='drive__upload-input' className='drive__upload-lable'>Загрузить файл</label>
-            <input type="file" className='drive__upload-input' id='drive__upload-input' multiple={true} onChange={(event) => fileUploadHandler(event)} />
+
+              <div className='drive__upload'>
+                <label htmlFor='drive__upload-input' className='drive__upload-lable'>Загрузить файл</label>
+                <input type="file" className='drive__upload-input' id='drive__upload-input' multiple={true} onChange={(event) => fileUploadHandler(event)} />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -78,7 +98,12 @@ const Drive = () => {
             <h2><span id="drive-procent" className="drive-procent">90</span>%</h2></div>
           <Pie pieValue="90" />
         </div>
-      </ContainerBlock>
+
+      </ContainerBlock >
+    </div >
+    :
+    <div className='drop-area' onDrop={dropHandler} onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
+      Перетащите файлы сюда
     </div>
   );
 }
