@@ -1,9 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import File from "./file/file";
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 const FileList = () => {
-  const files = useSelector(state => state.files.files).map(file => <File key={file.ID} file={file} />)
+  const files = useSelector(state => state.files.files)
   return (
     <div className='fileList'>
       <div className='filelist__header'>
@@ -11,7 +12,17 @@ const FileList = () => {
         <div className='filelist__date'>Дата</div>
         <div className='filelist__size'>Размер</div>
       </div>
-      {files}
+      <TransitionGroup>
+        {files.map(file =>
+          <CSSTransition key={file.ID}
+            timeout={500}
+            classNames={'file'}
+            exit={false}
+          >
+            <File file={file} />
+          </CSSTransition>
+        )}
+      </TransitionGroup>
     </div>
   );
 };
