@@ -106,7 +106,6 @@ class StorageController {
     try {
       const file = await File.findOne({ where: { ID: req.query.ID, storageID: req.user.storageID } })
       const filepath = path.join(process.env.filePath, file.path);
-      console.log(filepath, req.query.ID)
       if (fs.existsSync(filepath)) {
         return res.download(filepath);
       }
