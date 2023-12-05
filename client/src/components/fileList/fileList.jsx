@@ -5,6 +5,10 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 const FileList = () => {
   const files = useSelector(state => state.files.files)
+
+  if (files.length === 0) {
+    return <div className='NotFiles'>Файлы не найдены</div>
+  }
   return (
     <div className='fileList'>
       <div className='filelist__header'>

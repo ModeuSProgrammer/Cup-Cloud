@@ -133,6 +133,20 @@ class StorageController {
       return res.json('Ошибка удаления файла, папка не пустая');
     }
   }
+
+
+  //для поиска файлов
+  async searchFile(req, res, next) {
+    try {
+      const searchName = req.query.search
+      let files = await File.findAll({ where: { storageID: req.user.storageID } });
+      files = files.filter(file => file.name.includes(searchName))
+      return res.json(files)
+    } catch (error) {
+      console.error(error);
+      return next(ApiError.internal('Ошибка поиска файла'));
+    }
+  }
 }
 
 

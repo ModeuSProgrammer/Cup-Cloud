@@ -11,5 +11,6 @@ router.post('/upload', authMiddleware, storageController.uploadFile);
 router.get('/files', authMiddleware, storageController.getFiles);
 router.get('/download', authMiddleware, storageController.downloadFile);
 router.delete('/delete', authMiddleware, storageController.deleteFile);
+router.get('/search', authMiddleware, storageController.searchFile);
 
 module.exports = router
