@@ -1,7 +1,7 @@
 const fs = require('fs').promises;
 
 // Для создания папок
-class FolderMiddleware {
+class CreateDirMiddleware {
   async createDirServices(file) {
     const userDir = `${process.env.filePath}/${file.path}`;
     try {
@@ -16,4 +16,4 @@ class FolderMiddleware {
   }
 }
 
-module.exports = new FolderMiddleware();
+module.exports = new CreateDirMiddleware();

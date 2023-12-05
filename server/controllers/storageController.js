@@ -3,6 +3,7 @@ const { Storage, File, Tariff } = require('../models/models');
 const path = require('path');
 const fs = require('fs');
 const createDirMiddleware = require('../middleware/createDirMiddleware');
+const DeleteMiddleware = require('../middleware/DeleteMiddleware');
 
 class StorageController {
   async createDir(req, res, next) {
@@ -115,7 +116,25 @@ class StorageController {
       return next(ApiError.internal('Ошибка скачивания файла'));
     }
   }
+
+  //для удаления файлов
+  async deleteFile(req, res, next) {
+    try {
+      const file = await File.findOne({ where: { ID: req.query.ID, storageID: req.user.storageID } })
+      if (!file) {
+        return res.status(400).json('Файл не был найден');
+      }
+      await DeleteMiddleware.deleteFile(file);
+      await file.destroy();
+      return res.json('Файл был удален');
+
+    } catch (error) {
+      console.error(error);
+      return res.json('Ошибка удаления файла, папка не пустая');
+    }
+  }
 }
+
 
 
 module.exports = new StorageController();
