@@ -1,8 +1,9 @@
 .container-lastFile {
   height: 80%;
+  width: 1000px;
   margin-top: 150px;
-  margin-left: 78px;
-  margin-right: 350px;
+  margin-left: 30px;
+  margin-right: 100px;
   h3 {
     margin-bottom: 30px;
   }
@@ -20,5 +21,64 @@
       background-color: white; /* Цвет ползунка */
       border-radius: 4px; /* Закругленные углы ползунка */
     }
+  }
+}
+
+.filelist {
+  margin: 20px 0;
+  &__header {
+    display: grid;
+    grid-template-columns: 1fr 4fr repeat(4, 1fr);
+  }
+  &__name {
+    grid-column-start: 2;
+  }
+  &__data {
+    grid-column-start: 5;
+    justify-self: center;
+  }
+  &__size {
+    grid-column-start: 6;
+    justify-self: center;
+  }
+}
+
+.file {
+  margin: 10px 0;
+  border-bottom: solid 2px white;
+  display: grid;
+  grid-template-columns: 1fr 4fr repeat(4, 1fr);
+  align-items: center;
+  &:hover {
+    transform: scale(1.01);
+  }
+  &__img {
+    justify-self: center;
+  }
+  &__data {
+    grid-column-start: 5;
+    justify-self: center;
+  }
+  &__size {
+    grid-column-start: 6;
+    justify-self: center;
+  }
+  &__btn {
+    display: none;
+  }
+  &:hover &__date {
+    grid-column-start: 3;
+  }
+
+  &:hover &__size {
+    grid-column-start: 4;
+  }
+  &:hover &__download {
+    grid-column-start: 5;
+    display: block;
+  }
+  &:hover &__delete {
+    grid-column-start: 6;
+    display: block;
   }
 }

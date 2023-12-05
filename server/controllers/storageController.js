@@ -101,6 +101,21 @@ class StorageController {
     }
   }
 
+  //для скачиваня файлов
+  async downloadFile(req, res, next) {
+    try {
+      const file = await File.findOne({ where: { ID: req.query.ID, storageID: req.user.storageID } })
+      const filepath = path.join(process.env.filePath, file.path);
+      console.log(filepath, req.query.ID)
+      if (fs.existsSync(filepath)) {
+        return res.download(filepath);
+      }
+      return res.status(400).json('Ошибка скачивания файла');
+    } catch (error) {
+      console.error(error);
+      return next(ApiError.internal('Ошибка скачивания файла'));
+    }
+  }
 }
 
 
