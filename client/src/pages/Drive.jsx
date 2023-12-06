@@ -95,14 +95,11 @@ const Drive = () => {
         <div className="container-folderSearch">
           <form>
             <input type="search" placeholder="Поиск" className="FolderSearch" value={searchName} onChange={e => searchChandeHandler(e)} />
-            <input type="submit" value=">" />
           </form>
           <div className="folders">
             <div className="drive_btns">
               <button className='drive_back' onClick={() => backClickHandler()} >Назад</button>
               <button className='drive_create' onClick={() => showPopupHandler()}>Создать папку</button>
-
-
               <div className='drive__upload'>
                 <label htmlFor='drive__upload-input' className='drive__upload-lable'>Загрузить файл</label>
                 <input type="file" className='drive__upload-input' id='drive__upload-input' multiple={true} onChange={(event) => fileUploadHandler(event)} />

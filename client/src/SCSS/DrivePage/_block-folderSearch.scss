@@ -13,54 +13,53 @@
     display: flex;
     flex-direction: row;
     input {
-      width: 280px;
+      width: 370px;
       margin-top: 20px;
       height: 60px;
       margin-bottom: -12px;
-
-      &:last-child {
-        font-size: 30px;
-        margin-bottom: 20px;
-        font-weight: 900;
-        width: fit-content;
-      }
+      margin-bottom: 20px;
     }
   }
 }
 .drive_btns {
-  width: 380px;
+  width: 370px;
   display: flex;
-
+  flex-direction: column;
   justify-content: space-between;
   .drive_back,
   .drive_create {
     background-color: $color-violet-btn;
     box-shadow: rgba(0, 0, 0, 0.25);
-    font-size: 16px;
+    font-size: 18px;
     height: 40px;
     border-top: none;
     border-left: none;
+    margin-bottom: 20px;
     color: white;
+    width: 100%;
     border-radius: 10px;
-    margin: 0 10px;
-    padding: 0px 10px;
+    margin: 10px 10px;
+    padding: 0px;
   }
 
   .drive__upload {
-    width: fit-content;
     height: 30px;
-    margin: 10px auto;
+    width: 370px;
     .drive__upload-input {
       display: none;
     }
     .drive__upload-lable {
+      display: flex;
+      justify-content: center;
+      align-self: center;
       background-color: $color-red-btn;
-      font-size: 16px;
+      font-size: 18px;
+      width: 100%;
       box-shadow: rgba(0, 0, 0, 0.25);
-      border: 2px solid $color-red-btn;
+      border: 0.5px solid $color-red-btn;
       border-radius: 10px;
-      padding: 5px 5px;
-
+      margin: 10px 10px;
+      padding: 5px 0px;
       cursor: pointer;
     }
   }
