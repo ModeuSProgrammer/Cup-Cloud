@@ -2,7 +2,6 @@
 const Router = require('express');
 const router = new Router();
 const storageController = require('../controllers/storageController');
-
 const authMiddleware = require('../middleware/authMiddleware');
 
 router.post('/files', authMiddleware, storageController.createDir);

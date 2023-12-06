@@ -20,6 +20,7 @@ app.use(fileUpload({
   defParamCharset: 'utf8'
 }));
 app.use(corsMiddleware); // для cors (механизм безопасности)
+app.use(express.static('static'));
 app.use(express.json())//Для обработки запросов json
 app.use('/api', router);
 

@@ -2,7 +2,7 @@ import React, { } from 'react'
 import { useDispatch } from 'react-redux'
 import { logout } from "../reducers/userReducer"
 
-import { SetTariff } from '../actions/tariff'
+import { setTariff } from '../actions/file'
 
 import NavMenu from "../components/NavMenu";
 import Footer from "../components/Footer";
@@ -13,10 +13,8 @@ import TariffBlock from "../components/Tariffblock";
 
 const Tariff = () => {
   const dispatch = useDispatch()
-
   const handleButtonClick = (ID, event) => {
-    event.preventDefault();
-    SetTariff(ID);
+    setTariff(ID);
   };
 
   const MainLinks = [
@@ -37,10 +35,10 @@ const Tariff = () => {
               <button id="BaseTarrif" onClick={(event) => handleButtonClick('1', event)}>Получить</button>
             </TariffBlock>
             <TariffBlock name="Профессиональный" status={0} count={100} price={200} >
-              <button id="ProTarrif" onClick={(event) => handleButtonClick('2', event)}>Получить</button>
+              <button id="ProTarrif" onClick={(event) => handleButtonClick('2',)}>Получить</button>
             </TariffBlock>
             <TariffBlock name="Бизнес" status={0} count={500} price={400}>
-              <button id="BusTarrif" onClick={(event) => handleButtonClick('3', event)}>Получить</button>
+              <button id="BusTarrif" onClick={(event) => handleButtonClick('3')}>Получить</button>
             </TariffBlock>
           </div>
         </ContainerBlock>

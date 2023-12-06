@@ -84,12 +84,10 @@ const Drive = () => {
   }
   const MainLinks = [
     { url: '/storage', text: 'ДИСК', id: '1', internal: true },
-    { url: '/tariff', text: 'ТАРИФ', id: '2', internal: false },
+    { url: '/tariff', text: 'ТАРИФ', id: '2', internal: true },
     { url: '/account', text: 'АККАУНТ', id: '3', internal: true },
     { url: '/', text: 'ВЫХОД', id: '4', internal: false, onClick: () => dispatch(logout()) }
   ];
-
-
   return (!dragEnter ?
     <div className="body-bg-1" onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
       <Logo />

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { setUser } from "../reducers/userReducer";
+import { setProfile, setUser } from "../reducers/userReducer";
 
 export const registration = async (email, password, passwordTwo, firstname) => {
   try {
@@ -46,6 +46,52 @@ export const auth = () => {
       console.error(e);
       alert(e.response?.data.message || "Ошибка проверки авторизации.");
       localStorage.removeItem('token');
+    }
+  };
+};
+
+export const uploadAvatar = (file) => {
+  return async dispatch => {
+    try {
+      const token = localStorage.getItem('token');
+      const formData = new FormData()
+      formData.append('file', file)
+      const response = await axios.post(`http://localhost:8000/api/avatar`, formData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      dispatch(setProfile(response.data));
+    } catch (e) {
+      console.log(e);
+      console.error(e);
+    }
+  };
+};
+export const deleteAvatar = (file) => {
+  return async dispatch => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.delete(`http://localhost:8000/api/delete`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      dispatch(setProfile(response.data));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+};
+
+export const showAvatar = () => {
+  return async dispatch => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`http://localhost:8000/api/getAvatar`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      dispatch(setProfile(response.data));
+    } catch (e) {
+      console.error(e);
     }
   };
 };

@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt'); // для хеширование пароле�
 const jwt = require('jsonwebtoken'); // для регистрации и тд
 const { User, Profile, Storage } = require('../models/models');
 const createDirMiddleware = require('../middleware/createDirMiddleware');
+const fs = require('fs');
+const uuid = require('uuid');
 
 const generateJwt = (ID, email, roleID, storageID, dirMain) => {
   return jwt.sign(
@@ -77,14 +79,53 @@ class UserController {
     }
   };
 
-
-
-
   // проверка и генерация нового токена для авторизации и продолжения сессии 
   async check(req, res, next) {
     const token = generateJwt(req.user.ID, req.user.email, req.user.roleID, req.user.storageID, req.user.dirMain);
     return res.json({ token })
   }
-}
 
+  //функции для профиля загрузка аватара
+  async uploadAvatar(req, res, next) {
+    try {
+      const file = req.files.file
+      const profile = await Profile.findOne({ where: { ID: req.user.ID } })
+      const avatarName = uuid.v4() + ".jpg"
+      file.mv(process.env.staticPath + "\\" + avatarName)
+      profile.avatar = avatarName
+      await profile.save()
+      return res.json(profile)
+    }
+    catch (error) {
+      console.error(error);
+      return next(ApiError.internal('Ошибка загрузки'));
+    }
+  }
+
+  async deleteAvatar(req, res, next) {
+    try {
+      const profileData = await Profile.findOne({ where: { ID: req.user.ID } })
+      fs.unlinkSync(process.env.staticPath + "\\" + profileData.avatar)
+      profileData.avatar = null
+      await profileData.save()
+      return res.json(profileData)
+    }
+    catch (error) {
+      console.error(error);
+      return res.json('Ошибка удаления');
+    }
+  }
+
+  async getAvatar(req, res, next) {
+    try {
+      const profileData = await Profile.findOne({ where: { ID: req.user.ID } });
+      console.log(profileData.avatar);
+      return res.json({ avatar: profileData.avatar });
+    }
+    catch (error) {
+      console.error(error);
+      return res.json('Ошибка отображения');
+    }
+  }
+}
 module.exports = new UserController() 

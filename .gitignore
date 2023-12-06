@@ -1,3 +1,7 @@
+# ненужные файлы для тестирования и статика
+server/static
+server/files
+
 # Logs
 logs
 *.log
