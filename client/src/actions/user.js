@@ -81,16 +81,17 @@ export const deleteAvatar = (file) => {
   };
 };
 
-export const showAvatar = () => {
+export const showData = () => {
   return async dispatch => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:8000/api/getAvatar`, {
+      const response = await axios.get(`http://localhost:8000/api/getdata`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-
+      const { email, firstname, avatar } = response.data;
       dispatch(setProfile(response.data));
     } catch (e) {
+      console.log(e)
       console.error(e);
     }
   };

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from "../reducers/userReducer"
-import { deleteAvatar, uploadAvatar, showAvatar } from "../actions/user";
+import { deleteAvatar, uploadAvatar, showData } from "../actions/user";
 
 import avatarLogo from '../assets/default.png'
 import NavMenu from "../components/NavMenu";
@@ -15,15 +15,18 @@ const Profile = () => {
   const dispatch = useDispatch();
   const currentProfile = useSelector(state => state.user.currentProfile);
 
-  const avatar = currentProfile.avatar !== 'null' ? `http://localhost:8000/${currentProfile.avatar}` : avatarLogo;
+  const avatar = currentProfile.avatar !== null ? `http://localhost:8000/${currentProfile.avatar}` : avatarLogo;
   useEffect(() => {
-    dispatch(showAvatar());
+    dispatch(showData());
   }, [dispatch]);
 
   function changeHandler(e) {
     const file = e.target.files[0]
     dispatch(uploadAvatar(file))
   }
+
+  const name = useSelector(state => state.user.currentProfile.firstname);
+  const email = useSelector(state => state.user.currentProfile.email);
 
   const MainLinks = [
     { url: '/storage', text: 'ДИСК', id: '1', internal: true },
@@ -43,14 +46,12 @@ const Profile = () => {
               <h2>Данные об аккаунте</h2>
               <div className="account-datetag">
                 <p>Имя</p>
-                <p>Дата рождения</p>
                 <p>Почта</p>
               </div>
 
               <div className="account-output">
-                <p id="UserName">1</p>
-                <input type="date" id="UserDay" name="date" />
-                <p id="UserEmail">3</p>
+                <p id="UserName">{name}</p>
+                <p id="UserEmail">{email}</p>
               </div>
             </div>
 

@@ -2,3 +2,77 @@
   padding-top: 200px;
   margin-bottom: 121px;
 }
+
+.container-account {
+  h2 {
+    justify-content: left;
+  }
+  .account-info {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    font-size: 20px;
+    margin-left: 90px;
+    .account-data {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+}
+.account-datetag {
+  display: flex;
+  flex-direction: column;
+  height: 170px;
+  margin-top: 13px;
+  width: 300px;
+
+  p {
+    margin-bottom: 40px;
+  }
+}
+.account-output {
+  margin-top: 13px;
+  input {
+    margin-left: -100px;
+    margin-bottom: 40px;
+  }
+  p {
+    margin-bottom: 40px;
+    margin-left: -100px;
+  }
+}
+.account-avatar {
+  display: flex;
+  align-items: center;
+  margin-right: 77px;
+  img {
+    border-radius: 100%;
+    height: 400px;
+    width: 400px;
+  }
+}
+.btn-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+}
+.custom-file-upload {
+  display: inline-block;
+  cursor: pointer;
+  color: #000;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.file-delete {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: $color-violet-btn;
+  font-size: 24px;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.custom-file-upload input {
+  display: none;
+}

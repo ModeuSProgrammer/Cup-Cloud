@@ -6,7 +6,6 @@ const User = sequelize.define('user', {
   email: { type: DataTypes.STRING, unique: true, },
   password: { type: DataTypes.STRING },
   firstname: { type: DataTypes.STRING },
-
 },
   {
     timestamps: false,
@@ -24,7 +23,6 @@ const Role = sequelize.define('role', {
 const Profile = sequelize.define('profile', {
   ID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   avatar: { type: DataTypes.STRING },
-  birthdate: { type: DataTypes.STRING },
 },
   {
     timestamps: false,
@@ -38,7 +36,6 @@ const File = sequelize.define('file', {
   date: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
   size: { type: DataTypes.DOUBLE },
   parentID: { type: DataTypes.INTEGER }, // для того чтобы можно было сделать своего рода вложенность
-  access_link: { type: DataTypes.STRING(500) },
 },
   {
     timestamps: false,
@@ -63,9 +60,6 @@ const Tariff = sequelize.define('tariff', {
   {
     timestamps: false,
   });
-// для файлов связь
-File.belongsTo(File, { foreignKey: 'parentID', as: 'parent', onDelete: 'CASCADE' });
-File.hasMany(File, { foreignKey: 'parentID', as: 'children', onDelete: 'CASCADE' });
 
 //Создание связей между моделями
 Profile.hasOne(User)

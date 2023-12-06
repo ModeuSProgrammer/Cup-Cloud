@@ -116,15 +116,21 @@ class UserController {
     }
   }
 
-  async getAvatar(req, res, next) {
+  //отправка данных для отображения
+  async getUserData(req, res, next) {
     try {
       const profileData = await Profile.findOne({ where: { ID: req.user.ID } });
-      console.log(profileData.avatar);
-      return res.json({ avatar: profileData.avatar });
+      const userData = await User.findOne({ where: { ID: req.user.ID } });
+      if (!profileData || !userData) {
+        return res.status(404).json({ error: 'Данные не найдены' });
+      }
+      const { email, firstname } = userData;
+      const { avatar } = profileData;
+      return res.json({ email, firstname, avatar });
     }
     catch (error) {
       console.error(error);
-      return res.json('Ошибка отображения');
+      return res.json('Ошибка отображения данных');
     }
   }
 }

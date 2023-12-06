@@ -5,7 +5,8 @@ const SET_PROFILE = "SET_PROFILE"
 const defaultState = {
   currentUser: {},
   currentProfile: {
-    birthday: null,
+    firstname: null,
+    email: null,
     avatar: null,
   },
   isAuth: false
@@ -31,7 +32,8 @@ export default function userReducer(state = defaultState, action) {
         currentProfile: {
           ...state.currentProfile,
           avatar: `${action.payload.avatar}`,
-
+          firstname: `${action.payload.firstname}`,
+          email: `${action.payload.email}`,
         },
         isAuth: true,
       }

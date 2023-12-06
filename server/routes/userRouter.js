@@ -9,7 +9,7 @@ router.post('/registration', userController.registration);
 router.post('/login', userController.login);
 router.get('/check', authMiddleware, userController.check);
 
-router.get('/getAvatar', authMiddleware, userController.getAvatar);
+router.get('/getdata', authMiddleware, userController.getUserData);
 router.post('/avatar', authMiddleware, userController.uploadAvatar);
 router.delete('/delete', authMiddleware, userController.deleteAvatar);
 
