@@ -6,6 +6,7 @@ const PUSH_TO_STACK = "PUSH_TO_STACK"
 const DELETE_FILE = "DELETE_FILE"
 const SET_PROCENT = "SET_PROCENT"
 
+
 const defaultState = {
   files: [],
   currentDir: null,
