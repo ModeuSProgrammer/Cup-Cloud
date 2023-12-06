@@ -21,26 +21,26 @@
 }
 .pie {
   margin-top: 70px;
-  border-radius: 100%;
+  border-radius: 50%;
   outline: 10px solid #561f47;
   border: 5px solid white;
   background: #561f47;
-}
-.pie {
-  --b: 0;
-  --w: 300px;
-  --c: #fb354e;
-  width: var(--w);
+  width: 300px;
   aspect-ratio: 1;
   position: relative;
   display: inline-grid;
+  overflow: hidden;
+  --b: 0;
+  --c: #fb354e;
 }
+
 .pie:before,
 .pie:after {
   content: "";
   position: absolute;
   border-radius: 50%;
 }
+
 .pie:before {
   inset: 0;
   background:
@@ -49,14 +49,17 @@
   -webkit-mask: radial-gradient(farthest-side, #0000 calc(99% - var(--b)), #000 calc(100% - var(--b)));
   mask: radial-gradient(farthest-side, #0000 calc(99% - var(--b)), #000 calc(100% - var(--b)));
 }
+
 .pie:after {
   inset: calc(50% - var(--b) / 2);
   background: var(--c);
   transform: rotate(calc(var(--p) * 3.6deg)) translateY(calc(50% - var(--w) / 2));
 }
+
 .animate {
   animation: p 1s 0.5s both;
 }
+
 @keyframes p {
   from {
     --p: 0;

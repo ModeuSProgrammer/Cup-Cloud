@@ -1,12 +1,16 @@
 import React from 'react';
+import { useSpring, animated } from 'react-spring';
 
-class Pie extends React.Component {
-  render() {
-    const { pieValue } = this.props;
-    return (
-      <div className="pie animate" style={{ '--p': pieValue }}></div>
-    );
-  }
-}
+const Pie = ({ pieValue }) => {
+  const styles = useSpring({
+    from: { p: 0 },
+    to: { p: pieValue },
+    config: { duration: 1000 },
+  });
+
+  return (
+    <animated.div className="pie" style={{ '--p': styles.p }} />
+  );
+};
 
 export default Pie;

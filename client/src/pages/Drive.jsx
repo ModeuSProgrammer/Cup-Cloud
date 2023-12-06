@@ -6,7 +6,7 @@ import NavMenu from "../components/NavMenu"
 import ContainerBlock from "../components/container-block"
 import Pie from "../components/Pie-diagram"
 import Logo from "../components/Logo"
-import { getFiles, uploadFile, searchFiles } from '../actions/file'
+import { getFiles, uploadFile, searchFiles, getDiagrams } from '../actions/file'
 
 import FileList from '../components/fileList/fileList'
 import Popup from '../components/Popup'
@@ -20,14 +20,19 @@ const Drive = () => {
   const currentDir = useSelector(state => state.files.currentDir)
   const dirStack = useSelector(state => state.files.dirStack)
   const loader = useSelector(state => state.app.loader)
+  const procent = useSelector(state => state.files.procent)
   const [searchName, setSearchName] = useState('')
   const [searchTimeout, setSearchTimeout] = useState(false)
   const [dragEnter, setDragEnter] = useState(false)
-
-  //отображение файлов
+  //для файлов
   useEffect(() => {
-    dispatch(getFiles(currentDir))
+    dispatch(getFiles(currentDir));
   }, [currentDir])
+
+  useEffect(() => {
+    dispatch(getDiagrams(procent));
+  }, [procent]);
+
   // для создания папкок
   function showPopupHandler() {
     dispatch(setPopupDisplay('flex'))
@@ -66,18 +71,17 @@ const Drive = () => {
   // поиск файлов
   function searchChandeHandler(e) {
     setSearchName(e.target.value)
-    if (searchTimeout != false) {
+    if (searchTimeout !== false) {
       clearTimeout(searchTimeout)
     }
     dispatch(showLoader())
-    if (e.target.value != '') setSearchTimeout(setTimeout(() => {
+    if (e.target.value !== '') setSearchTimeout(setTimeout(() => {
       dispatch(searchFiles(e.target.value))
     }, 500))
     else {
       dispatch(getFiles(currentDir))
     }
   }
-
   const MainLinks = [
     { url: '/storage', text: 'ДИСК', id: '1', internal: true },
     { url: '/Tariff', text: 'ТАРИФ', id: '2', internal: true },
@@ -127,8 +131,8 @@ const Drive = () => {
         <div className="container-diagrams">
           <div className="diagrams-info">
             <h3>Диск занят на</h3>
-            <h2><span id="drive-procent" className="drive-procent">90</span>%</h2></div>
-          <Pie pieValue="90" />
+            <h2><span id="drive-procent" className="drive-procent">{procent} </span>%</h2></div>
+          <Pie pieValue={procent} />
         </div>
 
       </ContainerBlock >

@@ -46,6 +46,14 @@ class StorageController {
   //для загрузки файлов
   async uploadFile(req, res, next) {
     try {
+      const storages = await Storage.findOne({ where: { ID: req.user.storageID } })
+      const Files = await File.findAll({ where: { storageID: req.user.storageID } });
+      let totalSize = 0;
+      Files.forEach((file) => {
+        totalSize += file.size;
+      });
+      await storages.update({ occupied: totalSize });
+
       const file = req.files.file;
       const parentID = req.body.parentID;
       const parent = parentID ? await File.findOne({ where: { ID: parentID } }) : null;
@@ -126,6 +134,14 @@ class StorageController {
       }
       await DeleteMiddleware.deleteFile(file);
       await file.destroy();
+
+      const storages = await Storage.findOne({ where: { ID: req.user.storageID } })
+      const Files = await File.findAll({ where: { storageID: req.user.storageID } });
+      let totalSize = 0;
+      Files.forEach((file) => {
+        totalSize += file.size;
+      });
+      await storages.update({ occupied: totalSize });
       return res.json('Файл был удален');
 
     } catch (error) {
@@ -147,8 +163,21 @@ class StorageController {
       return next(ApiError.internal('Ошибка поиска файла'));
     }
   }
+
+  //для диаграммы
+  async diagramsProcent(req, res, next) {
+    try {
+      const storageData = await Storage.findOne({ where: { ID: req.user.storageID } });
+      const storageOccupied = storageData.occupied;
+      const tariffID = storageData.tariffID;
+      const tariffData = await Tariff.findOne({ where: { ID: tariffID } });
+      const tariffSpace = tariffData.placeCount * 1024 * 1024 * 1024;
+      const procent = Math.round((storageOccupied * 100) / tariffSpace);
+      return res.json(procent);
+    } catch (error) {
+      console.error(error);
+      return next(ApiError.internal('Ошибка отражения диаграммы'));
+    }
+  }
 }
-
-
-
 module.exports = new StorageController();

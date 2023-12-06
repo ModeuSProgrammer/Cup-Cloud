@@ -8,5 +8,8 @@ export default (size) => {
   if (size > 1024) {
     return (size / (1024)).toFixed(1) + "Kb"
   }
+  if (size === null) {
+    return 0 + "B"
+  }
   return size + "B"
 }

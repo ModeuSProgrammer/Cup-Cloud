@@ -1,5 +1,5 @@
 import axios from "axios";
-import { setFiles, addFile, deleteFileAction } from "../reducers/fileReducer";
+import { setFiles, addFile, deleteFileAction, setProcent } from "../reducers/fileReducer";
 import { hideLoader, showLoader } from '../reducers/appReducer';
 
 export function getFiles(dirID) {
@@ -16,6 +16,7 @@ export function getFiles(dirID) {
       alert(error);
     }
     finally {
+      dispatch(getDiagrams())
       dispatch(hideLoader())
     }
   }
@@ -50,6 +51,7 @@ export function uploadFile(file, dirID) {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       dispatch(addFile(response.data))
+      dispatch(getDiagrams())
     } catch (e) {
       alert(e.response.data.message)
     }
@@ -81,6 +83,7 @@ export function deleteFile(file) {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       });
+      dispatch(getDiagrams())
       dispatch(deleteFileAction(file.ID))
       alert(response.data)
     } catch (e) {
@@ -102,6 +105,21 @@ export function searchFiles(search) {
     }
     finally {
       dispatch(hideLoader())
+    }
+  }
+}
+
+export function getDiagrams() {
+  return async dispatch => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/storage/procent`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      dispatch(setProcent(response.data))
+    } catch (e) {
+      alert(e.response.data.message)
     }
   }
 }
