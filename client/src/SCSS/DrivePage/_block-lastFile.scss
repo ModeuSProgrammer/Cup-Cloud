@@ -14,12 +14,12 @@
     scrollbar-width: thin;
     scrollbar-color: white;
     &::-webkit-scrollbar {
-      width: 5px; /* Ширина скроллбара */
+      width: 5px;
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: white; /* Цвет ползунка */
-      border-radius: 4px; /* Закругленные углы ползунка */
+      background-color: white;
+      border-radius: 4px;
     }
   }
 }
@@ -81,7 +81,7 @@
     grid-column-start: 4;
   }
   &:hover &__download {
-    color: white;
+    color: $color-text-header-btn;
     width: fit-content;
     padding: 0px 20px;
     background-color: $color-red-btn;
@@ -95,7 +95,7 @@
     display: block;
   }
   &:hover &__delete {
-    color: white;
+    color: $color-text-header-btn;
     width: fit-content;
     padding: 0px 20px;
     background-color: $color-red-btn;

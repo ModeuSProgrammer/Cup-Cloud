@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import { registration } from "../actions/user";
+import React, { useState } from "react"
+import { registration } from "../actions/user"
 
-import NavMenu from "../components/NavMenu";
-import Footer from "../components/Footer";
-import SectionBlock from "../components/section-block";
-import ContainerBlock from "../components/container-block";
-import Logo from "../components/Logo";
+import NavMenu from "../components/NavMenu"
+import Footer from "../components/Footer"
+import SectionBlock from "../components/section-block"
+import ContainerBlock from "../components/container-block"
+import Logo from "../components/Logo"
 
 
 const Registration = () => {
   //для redux
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordTwo, setPasswordTwo] = useState("");
-  const [firstname, setFirstName] = useState("");
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [passwordTwo, setPasswordTwo] = useState("")
+  const [firstname, setFirstName] = useState("")
 
   const MainLinks = [
     { url: '/', text: 'ГЛАВНАЯ', id: '1', internal: false },
@@ -21,7 +21,7 @@ const Registration = () => {
     { url: '/#Sale', text: 'АКЦИЯ', id: '3', internal: false },
     { url: '/registration', text: 'РЕГИСТРАЦИЯ', id: '4', internal: false },
     { url: '/login', text: 'ВХОД', id: '5', internal: true }
-  ];
+  ]
   return (
     <div className='body-bg-2'>
       <Logo />
@@ -45,7 +45,7 @@ const Registration = () => {
       </SectionBlock>
       <Footer />
     </div>
-  );
+  )
 }
 
-export default Registration;
+export default Registration 

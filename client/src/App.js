@@ -1,23 +1,23 @@
-import './SCSS/main.scss';
-import React, { useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'; // Добавлены импорты
-import Main from './pages/Main';
-import Login from './pages/Login';
-import Drive from './pages/Drive';
-import Tariff from './pages/Tariff';
-import Profile from './pages/Profile';
-import Registration from './pages/Registration';
-import { useDispatch, useSelector } from "react-redux";
-import { auth } from "./actions/user";
+import './SCSS/main.scss'
+import React, { useEffect } from "react"
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'  // Добавлены импорты
+import Main from './pages/Main'
+import Login from './pages/Login'
+import Drive from './pages/Drive'
+import Tariff from './pages/Tariff'
+import Profile from './pages/Profile'
+import Registration from './pages/Registration'
+import { useDispatch, useSelector } from "react-redux"
+import { auth } from "./actions/user"
 
 function App() {
   const isAuth = useSelector(state => state.user.isAuth)
   const dispatch = useDispatch()
   useEffect(() => {
     if (!isAuth) {
-      dispatch(auth());
+      dispatch(auth())
     }
-  }, [dispatch, isAuth]);
+  }, [dispatch, isAuth])
   return (
     <BrowserRouter>
       <Routes>
@@ -29,7 +29,7 @@ function App() {
         <Route path="/account" element={isAuth ? <Profile /> : <Navigate to="/login" />} />
       </Routes>
     </BrowserRouter >
-  );
+  )
 }
 
-export default App;
+export default App 

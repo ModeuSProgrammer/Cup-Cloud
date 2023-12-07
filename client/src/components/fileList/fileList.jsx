@@ -1,7 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import File from "./file/file";
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import React from 'react'
+import { useSelector } from 'react-redux'
+import File from "./file/file"
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 const FileList = () => {
   const files = useSelector(state => state.files.files)
@@ -28,7 +28,7 @@ const FileList = () => {
         )}
       </TransitionGroup>
     </div>
-  );
-};
+  )
+}
 
-export default FileList;
+export default FileList 

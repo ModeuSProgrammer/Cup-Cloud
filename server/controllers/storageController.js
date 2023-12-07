@@ -1,44 +1,44 @@
-const ApiError = require('../error/ApiError');
-const { Storage, File, Tariff } = require('../models/models');
-const path = require('path');
-const fs = require('fs');
-const createDirMiddleware = require('../middleware/createDirMiddleware');
-const DeleteMiddleware = require('../middleware/DeleteMiddleware');
+const ApiError = require('../error/ApiError')
+const { Storage, File, Tariff } = require('../models/models')
+const path = require('path')
+const fs = require('fs')
+const createDirMiddleware = require('../middleware/createDirMiddleware')
+const DeleteMiddleware = require('../middleware/DeleteMiddleware')
 
 class StorageController {
   async createDir(req, res, next) {
     try {
-      const { name, type, parentID } = req.body;
-      const file = new File({ name, type, parentID, storageID: req.user.storageID });
-      const parentFile = parentID !== undefined ? await File.findOne({ where: { ID: parentID } }) : null;
+      const { name, type, parentID } = req.body
+      const file = new File({ name, type, parentID, storageID: req.user.storageID })
+      const parentFile = parentID !== undefined ? await File.findOne({ where: { ID: parentID } }) : null
       if (!parentFile) {
-        file.path = `${req.user.dirMain}\\${file.name}`;
-        await createDirMiddleware.createDirServices(file);
+        file.path = `${req.user.dirMain}\\${file.name}`
+        await createDirMiddleware.createDirServices(file)
       } else {
-        file.path = `${parentFile.path}\\${file.name}`;
-        await createDirMiddleware.createDirServices(file);
-        await parentFile.save();
+        file.path = `${parentFile.path}\\${file.name}`
+        await createDirMiddleware.createDirServices(file)
+        await parentFile.save()
       }
-      await file.save();
-      return res.json(file);
+      await file.save()
+      return res.json(file)
     }
     catch (error) {
-      console.error(error);
-      return next(ApiError.internal('Ошибка добавления файла'));
+      console.error(error)
+      return next(ApiError.internal('Ошибка добавления файла'))
     }
   }
 
   //для отображение файлов по имени папок
   async getFiles(req, res, next) {
     try {
-      const { parentID } = req.query;
+      const { parentID } = req.query
       const files = parentID ? await File.findAll({ where: { storageID: req.user.storageID, parentID: req.query.parentID } })
-        : await File.findAll({ where: { storageID: req.user.storageID, parentID: null } });
+        : await File.findAll({ where: { storageID: req.user.storageID, parentID: null } })
 
-      return res.json(files);
+      return res.json(files)
     } catch (error) {
-      console.error(error);
-      return next(ApiError.internal('Ошибка отображения файла'));
+      console.error(error)
+      return next(ApiError.internal('Ошибка отображения файла'))
     }
   }
 
@@ -47,50 +47,50 @@ class StorageController {
   async uploadFile(req, res, next) {
     try {
       const storages = await Storage.findOne({ where: { ID: req.user.storageID } })
-      const Files = await File.findAll({ where: { storageID: req.user.storageID } });
-      let totalSize = 0;
+      const Files = await File.findAll({ where: { storageID: req.user.storageID } })
+      let totalSize = 0
       Files.forEach((file) => {
-        totalSize += file.size;
-      });
-      await storages.update({ occupied: totalSize });
+        totalSize += file.size
+      })
+      await storages.update({ occupied: totalSize })
 
-      const file = req.files.file;
-      const parentID = req.body.parentID;
-      const parent = parentID ? await File.findOne({ where: { ID: parentID } }) : null;
-      const storage = await Storage.findOne({ where: { ID: req.user.storageID } });
+      const file = req.files.file
+      const parentID = req.body.parentID
+      const parent = parentID ? await File.findOne({ where: { ID: parentID } }) : null
+      const storage = await Storage.findOne({ where: { ID: req.user.storageID } })
       // Проверка места на диске в зависимости от тарифа
-      const tariffID = storage.tariffID;
-      const tariffData = await Tariff.findOne({ where: { ID: tariffID } });
+      const tariffID = storage.tariffID
+      const tariffData = await Tariff.findOne({ where: { ID: tariffID } })
 
       if (parseInt(storage.occupied) + parseInt(file.size) > (tariffData.placeCount * 1024 * 1024 * 1024)) {
-        return res.status(400).json('Не хватает свободного места на диске');
+        return res.status(400).json('Не хватает свободного места на диске')
       }
 
-      storage.occupied = parseInt(storage.occupied) + parseInt(file.size);
-      let filePath;
-      let pathFile;
+      storage.occupied = parseInt(storage.occupied) + parseInt(file.size)
+      let filePath
+      let pathFile
       // Проверка пути
       if (parent && parent.path !== null) {
-        filePath = path.join(process.env.filePath, parent.path, file.name);
-        pathFile = path.join(parent.path, file.name);
-        console.log(filePath);
+        filePath = path.join(process.env.filePath, parent.path, file.name)
+        pathFile = path.join(parent.path, file.name)
+        console.log(filePath)
       } else {
-        filePath = path.join(process.env.filePath, req.user.dirMain, file.name);
-        pathFile = path.join(req.user.dirMain, file.name);
+        filePath = path.join(process.env.filePath, req.user.dirMain, file.name)
+        pathFile = path.join(req.user.dirMain, file.name)
       }
       // Проверка существует ли файл по такому пути
       if (fs.existsSync(filePath)) {
-        return res.status(400).json('Файл по такому пути уже существует');
+        return res.status(400).json('Файл по такому пути уже существует')
       }
       // Перемещаем файл
       await file.mv(filePath, (err) => {
         if (err) {
-          console.error('Error moving the file:', err);
-          return res.status(500).json('Internal Server Error');
+          console.error('Error moving the file:', err)
+          return res.status(500).json('Internal Server Error')
         }
-      });
+      })
       // Получаем информацию о файле и загружаем его в базу данных
-      const type = file.name.split('.').pop();
+      const type = file.name.split('.').pop()
       const dbFile = new File({
         name: file.name,
         type,
@@ -98,15 +98,15 @@ class StorageController {
         path: pathFile || null,
         parentID: parent?.ID || null,
         storageID: storage.ID
-      });
+      })
 
-      await dbFile.save();
-      await storage.save();
+      await dbFile.save()
+      await storage.save()
 
-      return res.json(dbFile);
+      return res.json(dbFile)
     } catch (error) {
-      console.error(error);
-      return next(ApiError.internal('Ошибка загрузки файла'));
+      console.error(error)
+      return next(ApiError.internal('Ошибка загрузки файла'))
     }
   }
 
@@ -114,14 +114,14 @@ class StorageController {
   async downloadFile(req, res, next) {
     try {
       const file = await File.findOne({ where: { ID: req.query.ID, storageID: req.user.storageID } })
-      const filepath = path.join(process.env.filePath, file.path);
+      const filepath = path.join(process.env.filePath, file.path)
       if (fs.existsSync(filepath)) {
-        return res.download(filepath);
+        return res.download(filepath)
       }
-      return res.status(400).json('Ошибка скачивания файла');
+      return res.status(400).json('Ошибка скачивания файла')
     } catch (error) {
-      console.error(error);
-      return next(ApiError.internal('Ошибка скачивания файла'));
+      console.error(error)
+      return next(ApiError.internal('Ошибка скачивания файла'))
     }
   }
 
@@ -130,23 +130,23 @@ class StorageController {
     try {
       const file = await File.findOne({ where: { ID: req.query.ID, storageID: req.user.storageID } })
       if (!file) {
-        return res.status(400).json('Файл не был найден');
+        return res.status(400).json('Файл не был найден')
       }
-      await DeleteMiddleware.deleteFile(file);
-      await file.destroy();
+      await DeleteMiddleware.deleteFile(file)
+      await file.destroy()
 
       const storages = await Storage.findOne({ where: { ID: req.user.storageID } })
-      const Files = await File.findAll({ where: { storageID: req.user.storageID } });
-      let totalSize = 0;
+      const Files = await File.findAll({ where: { storageID: req.user.storageID } })
+      let totalSize = 0
       Files.forEach((file) => {
-        totalSize += file.size;
-      });
-      await storages.update({ occupied: totalSize });
-      return res.json('Файл был удален');
+        totalSize += file.size
+      })
+      await storages.update({ occupied: totalSize })
+      return res.json('Файл был удален')
 
     } catch (error) {
-      console.error(error);
-      return res.json('Ошибка удаления файла, папка не пустая');
+      console.error(error)
+      return res.json('Ошибка удаления файла, папка не пустая')
     }
   }
 
@@ -155,29 +155,32 @@ class StorageController {
   async searchFile(req, res, next) {
     try {
       const searchName = req.query.search
-      let files = await File.findAll({ where: { storageID: req.user.storageID } });
+      let files = await File.findAll({ where: { storageID: req.user.storageID } })
       files = files.filter(file => file.name.includes(searchName))
       return res.json(files)
     } catch (error) {
-      console.error(error);
-      return next(ApiError.internal('Ошибка поиска файла'));
+      console.error(error)
+      return next(ApiError.internal('Ошибка поиска файла'))
     }
   }
 
   //для диаграммы
   async diagramsProcent(req, res, next) {
     try {
-      const storageData = await Storage.findOne({ where: { ID: req.user.storageID } });
-      const storageOccupied = storageData.occupied;
-      const tariffID = storageData.tariffID;
-      const tariffData = await Tariff.findOne({ where: { ID: tariffID } });
-      const tariffSpace = tariffData.placeCount * 1024 * 1024 * 1024;
-      const procent = Math.round((storageOccupied * 100) / tariffSpace);
-      return res.json(procent);
+      const storageData = await Storage.findOne({ where: { ID: req.user.storageID } })
+      const storageOccupied = storageData.occupied
+      const tariffID = storageData.tariffID
+      const tariffData = await Tariff.findOne({ where: { ID: tariffID } })
+      const tariffSpace = tariffData.placeCount * 1024 * 1024 * 1024
+      const procent = Math.round((storageOccupied * 100) / tariffSpace)
+      if (storageData.occupied === null) {
+        procent = 0
+      }
+      return res.json(procent)
     } catch (error) {
-      console.error(error);
-      return next(ApiError.internal('Ошибка отражения диаграммы'));
+      console.error(error)
+      return res.json('Ошибка отражения диаграммы')
     }
   }
 }
-module.exports = new StorageController();
+module.exports = new StorageController() 

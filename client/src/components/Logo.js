@@ -1,5 +1,5 @@
-import React from "react";
-import ImgBlock from "../components/Img";
+import React from "react"
+import ImgBlock from "../components/Img"
 class Logo extends React.Component {
   render() {
     return (
@@ -9,4 +9,4 @@ class Logo extends React.Component {
     )
   }
 }
-export default Logo;
+export default Logo 

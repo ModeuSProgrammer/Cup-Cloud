@@ -1,10 +1,10 @@
-import React from 'react';
-import dirLogo from '../../../assets/folder1-icons.png';
-import fileLogo from '../../../assets/file-icons.png';
-import { useDispatch, useSelector } from "react-redux";
-import { pushToStack, setCurrentDir } from "../../../reducers/fileReducer";
-import { deleteFile, downloadFile } from '../../../actions/file';
-import sizeFormat from './sizeFormat';
+import React from 'react'
+import dirLogo from '../../../assets/folder1-icons.png'
+import fileLogo from '../../../assets/file-icons.png'
+import { useDispatch, useSelector } from "react-redux"
+import { pushToStack, setCurrentDir } from "../../../reducers/fileReducer"
+import { deleteFile, downloadFile } from '../../../actions/file'
+import sizeFormat from './sizeFormat'
 const File = ({ file }) => {
   const dispatch = useDispatch()
   const currentDir = useSelector(state => state.files.currentDir)
@@ -35,7 +35,7 @@ const File = ({ file }) => {
       {file.type !== 'dir' && <button onClick={(e) => downloadClickHanlder(e)} className="file__btn file__download">Скачать</button>}
       <button onClick={(e) => deleteClickHandler(e)} className="file__btn file__delete">Удалить</button>
     </div>
-  );
-};
+  )
+}
 
-export default File;
+export default File 

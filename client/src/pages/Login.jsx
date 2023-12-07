@@ -1,37 +1,37 @@
-import React, { useState, useEffect } from "react";
-import { login } from "../actions/user";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react"
+import { login } from "../actions/user"
+import { useDispatch } from "react-redux"
 
-import NavMenu from "../components/NavMenu";
-import Footer from "../components/Footer";
-import SectionBlock from "../components/section-block";
-import ContainerBlock from "../components/container-block";
-import Logo from "../components/Logo";
+import NavMenu from "../components/NavMenu"
+import Footer from "../components/Footer"
+import SectionBlock from "../components/section-block"
+import ContainerBlock from "../components/container-block"
+import Logo from "../components/Logo"
 
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
-  const dispatch = useDispatch();
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+  const [loggedIn, setLoggedIn] = useState(false)
+  const dispatch = useDispatch()
 
   const handleLogin = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     try {
-      const response = await dispatch(login(email, password));
-      setLoggedIn(true);
+      const response = await dispatch(login(email, password))
+      setLoggedIn(true)
     } catch (e) {
-      console.error("Login failed:", e);
-      setError(e.response?.data.message || "Произошла ошибка при входе");
+      console.error("Login failed:", e)
+      setError(e.response?.data.message || "Произошла ошибка при входе")
     }
-  };
+  }
 
   // Добавим useEffect для обновления компонента после успешного входа
   useEffect(() => {
     if (loggedIn) { }
-  }, [loggedIn]);
+  }, [loggedIn])
 
 
   const MainLinks = [
@@ -40,7 +40,7 @@ const Login = () => {
     { url: '/#Sale', text: 'АКЦИЯ', id: '3', internal: false },
     { url: '/registration', text: 'РЕГИСТРАЦИЯ', id: '4', internal: true },
     { url: '/login', text: 'ВХОД', id: '5', internal: true }
-  ];
+  ]
   return (
     <div className='body-bg-2'>
       <Logo />
@@ -50,7 +50,7 @@ const Login = () => {
           <div>
             <h2>Авторизация</h2>
             <div className="form-signIn">
-              <form onSubmit={(e) => { e.preventDefault(); dispatch(login(email, password)); }}>
+              <form onSubmit={(e) => { e.preventDefault(); dispatch(login(email, password)) }}>
                 <input type="email" value={email} placeholder="Почта" id="UserEmail" onChange={(event) => setEmail(event.target.value)} />
                 <input type="password" value={password} placeholder="Пароль" id="UserPassword" onChange={(event) => setPassword(event.target.value)} />
                 <input type="submit" value="Войти" id="SignInBtn" />
@@ -62,7 +62,7 @@ const Login = () => {
       </SectionBlock>
       <Footer />
     </div>
-  );
+  )
 }
 
-export default Login;
+export default Login 

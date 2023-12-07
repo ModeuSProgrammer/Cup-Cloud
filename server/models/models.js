@@ -1,5 +1,5 @@
-const sequelize = require('./DB.js'); // база данных
-const { DataTypes } = require('sequelize');// для использование типов полей
+const sequelize = require('./DB.js')  // база данных
+const { DataTypes } = require('sequelize') // для использование типов полей
 // Модели бд без ключей и т.д.
 const User = sequelize.define('user', {
   ID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -9,7 +9,7 @@ const User = sequelize.define('user', {
 },
   {
     timestamps: false,
-  });
+  })
 
 const Role = sequelize.define('role', {
   ID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -18,7 +18,7 @@ const Role = sequelize.define('role', {
   ,
   {
     timestamps: false,
-  });
+  })
 
 const Profile = sequelize.define('profile', {
   ID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -26,7 +26,7 @@ const Profile = sequelize.define('profile', {
 },
   {
     timestamps: false,
-  });
+  })
 
 const File = sequelize.define('file', {
   ID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -39,7 +39,7 @@ const File = sequelize.define('file', {
 },
   {
     timestamps: false,
-  });
+  })
 
 const Storage = sequelize.define('storage', {
   ID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -49,7 +49,7 @@ const Storage = sequelize.define('storage', {
 },
   {
     timestamps: false,
-  });
+  })
 
 const Tariff = sequelize.define('tariff', {
   ID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -59,7 +59,7 @@ const Tariff = sequelize.define('tariff', {
 },
   {
     timestamps: false,
-  });
+  })
 
 //Создание связей между моделями
 Profile.hasOne(User)

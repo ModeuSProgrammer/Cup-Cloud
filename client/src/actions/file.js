@@ -1,6 +1,6 @@
-import axios from "axios";
-import { setFiles, addFile, deleteFileAction, setProcent } from "../reducers/fileReducer";
-import { hideLoader, showLoader } from '../reducers/appReducer';
+import axios from "axios"
+import { setFiles, addFile, deleteFileAction, setProcent } from "../reducers/fileReducer"
+import { hideLoader, showLoader } from '../reducers/appReducer'
 
 export function getFiles(dirID) {
   return async dispatch => {
@@ -10,10 +10,9 @@ export function getFiles(dirID) {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       })
       dispatch(setFiles(response.data))
-      console.log(response.data);
     }
     catch (error) {
-      alert(error);
+      alert(error)
     }
     finally {
       dispatch(getDiagrams())
@@ -34,7 +33,7 @@ export function createDir(dirID, name) {
       dispatch(addFile(response.data))
     }
     catch (error) {
-      alert(error);
+      alert(error)
     }
   }
 }
@@ -49,7 +48,7 @@ export function uploadFile(file, dirID) {
       }
       const response = await axios.post(`http://localhost:8000/api/storage/upload`, formData, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
+      })
       dispatch(addFile(response.data))
       dispatch(getDiagrams())
     } catch (e) {
@@ -82,7 +81,7 @@ export function deleteFile(file) {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
-      });
+      })
       dispatch(getDiagrams())
       dispatch(deleteFileAction(file.ID))
       alert(response.data)
@@ -98,7 +97,7 @@ export function searchFiles(search) {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
-      });
+      })
       dispatch(setFiles(response.data))
     } catch (e) {
       alert(e.response.data.message)
@@ -116,7 +115,7 @@ export function getDiagrams() {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
-      });
+      })
       dispatch(setProcent(response.data))
     } catch (e) {
       alert(e.response.data.message)
@@ -124,19 +123,3 @@ export function getDiagrams() {
   }
 }
 
-export function setTariff(ID) {
-  return async dispatch => {
-    try {
-      const response = await axios.post(`http://localhost:8000/api/tariff?ID=${ID}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      });
-      dispatch(setTariff())
-      alert(response.data)
-    } catch (error) {
-      console.error('Registration failed:', error)
-      alert(error.response?.data.message || "Произошла ошибка при регистрации")
-    }
-  }
-}

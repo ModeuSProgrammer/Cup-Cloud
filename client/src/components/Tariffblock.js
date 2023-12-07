@@ -1,8 +1,8 @@
-import React from "react";
+import React from "react"
 
 class TariffBlock extends React.Component {
   render() {
-    const { name, status, count, price } = this.props;
+    const { name, status, count, price } = this.props
     return (
       <div className="Tariff">
         <h2>{count} ГБ</h2>
@@ -12,7 +12,7 @@ class TariffBlock extends React.Component {
         <p className="description">При наличии активной подписки, важно помнить о своевременной оплате, иначе избыточные данные будут автоматически удалены в течение <b>5 дней</b>.</p>
         {this.props.children}
       </div >
-    );
+    )
   }
 }
 

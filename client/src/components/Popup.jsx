@@ -1,8 +1,8 @@
-import React from "react";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setPopupDisplay } from "../reducers/fileReducer";
-import { createDir } from '../actions/file';
+import React from "react"
+import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { setPopupDisplay } from "../reducers/fileReducer"
+import { createDir } from '../actions/file'
 
 const Popup = () => {
   const [dirName, setDirName] = useState('')
@@ -12,9 +12,9 @@ const Popup = () => {
 
   function createHandler() {
     dispatch(createDir(currentDir, dirName)).then(() => {
-      setDirName('');
-      dispatch(setPopupDisplay('none'));
-    });
+      setDirName('')
+      dispatch(setPopupDisplay('none'))
+    })
   }
   return (
     <div className="popup" onClick={() => dispatch(setPopupDisplay('none'))} style={{ display: popupDisplay }}>
@@ -24,7 +24,7 @@ const Popup = () => {
           <button className="popup__close" onClick={() => dispatch(setPopupDisplay('none'))}>X</button>
         </div>
 
-        <form onSubmit={(e) => { e.preventDefault(); createHandler(); }}>
+        <form onSubmit={(e) => { e.preventDefault(); createHandler() }}>
           <input type="text" min="1" placeholder="Введите название папки" value={dirName} onChange={(e) => setDirName(e.target.value)} />
         </form>
         <button className="popup__create" onClick={() => createHandler()}>Создать</button>
@@ -32,4 +32,4 @@ const Popup = () => {
     </div>
   )
 }
-export default Popup;
+export default Popup 

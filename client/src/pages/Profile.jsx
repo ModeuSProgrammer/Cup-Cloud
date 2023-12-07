@@ -1,39 +1,44 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from "../reducers/userReducer"
-import { deleteAvatar, uploadAvatar, showData } from "../actions/user";
+import { deleteAvatar, uploadAvatar, showData } from "../actions/user"
 
 import avatarLogo from '../assets/default.png'
-import NavMenu from "../components/NavMenu";
-import Footer from "../components/Footer";
-import SectionBlock from "../components/section-block";
-import ContainerBlock from "../components/container-block";
-import ImgBlock from "../components/Img";
-import Logo from "../components/Logo";
+import NavMenu from "../components/NavMenu"
+import Footer from "../components/Footer"
+import SectionBlock from "../components/section-block"
+import ContainerBlock from "../components/container-block"
+import ImgBlock from "../components/Img"
+import Logo from "../components/Logo"
 
 const Profile = () => {
-  const dispatch = useDispatch();
-  const currentProfile = useSelector(state => state.user.currentProfile);
+  const dispatch = useDispatch()
+  const currentProfile = useSelector(state => state.user.currentProfile)
 
-  const avatar = currentProfile.avatar !== null ? `http://localhost:8000/${currentProfile.avatar}` : avatarLogo;
+  const avatar = currentProfile.avatar !== 'null' ? `http://localhost:8000/${currentProfile.avatar}` : avatarLogo
   useEffect(() => {
-    dispatch(showData());
-  }, [dispatch]);
+    dispatch(showData())
+  }, [dispatch])
 
   function changeHandler(e) {
     const file = e.target.files[0]
     dispatch(uploadAvatar(file))
+      .then(() => dispatch(showData()))
+  }
+  function deleteHandler() {
+    dispatch(deleteAvatar())
+      .then(() => dispatch(showData()))
   }
 
-  const name = useSelector(state => state.user.currentProfile.firstname);
-  const email = useSelector(state => state.user.currentProfile.email);
+  const name = useSelector(state => state.user.currentProfile.firstname)
+  const email = useSelector(state => state.user.currentProfile.email)
 
   const MainLinks = [
     { url: '/storage', text: 'ДИСК', id: '1', internal: true },
     { url: '/tariff', text: 'ТАРИФ', id: '2', internal: true },
     { url: '/account', text: 'АККАУНТ', id: '3', internal: true },
     { url: '/', text: 'ВЫХОД', id: '4', internal: false, onClick: () => dispatch(logout()) }
-  ];
+  ]
   return (
     <div className="body-bg-1">
       <Logo />
@@ -60,7 +65,7 @@ const Profile = () => {
                 <input type="file" onChange={(e) => changeHandler(e)} />
                 Загрузить фото
               </label>
-              <button onClick={() => dispatch(deleteAvatar())} className="file-delete">Удалить Фотографию профиля</button>
+              <button onClick={deleteHandler} className="file-delete">Удалить Фотографию профиля</button>
             </div>
 
           </div>
@@ -72,7 +77,7 @@ const Profile = () => {
       </SectionBlock>
       <Footer />
     </div>
-  );
+  )
 }
 
-export default Profile;
+export default Profile 

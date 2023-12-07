@@ -20,7 +20,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: $color-text-header-btn;
   z-index: 1;
   input {
     width: 500px;
@@ -43,25 +43,25 @@
 }
 
 .popup__create {
-  background-color: #561f47;
+  background-color: $color-violet-btn;
   box-shadow: rgba(0, 0, 0, 0.25);
   font-size: 18px;
   height: 40px;
   border-top: none;
   border-left: none;
-  color: white;
+  color: $color-text-header-btn;
   border-radius: 10px;
   width: fit-content;
   padding: 0px 20px;
 }
 .popup__close {
-  background-color: #561f47;
+  background-color: $color-violet-btn;
   box-shadow: rgba(0, 0, 0, 0.25);
   font-size: 18px;
   height: 30px;
   border-top: none;
   border-left: none;
-  color: white;
+  color: $color-text-header-btn;
   border-radius: 10px;
   width: fit-content;
   padding: 0px 20px;
@@ -70,7 +70,7 @@
 .drop-area {
   background-image: url("../../assets/bg-1.jpg");
   width: 100vw;
-  color: white;
+  color: $color-text-header-btn;
   background-color: rgba(0, 0, 0, 0.25);
   height: 100vh;
   display: flex;

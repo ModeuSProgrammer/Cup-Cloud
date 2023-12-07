@@ -26,12 +26,12 @@ const Drive = () => {
   const [dragEnter, setDragEnter] = useState(false)
   //для файлов
   useEffect(() => {
-    dispatch(getFiles(currentDir));
+    dispatch(getFiles(currentDir))
   }, [currentDir])
 
   useEffect(() => {
-    dispatch(getDiagrams(procent));
-  }, [procent]);
+    dispatch(getDiagrams(procent))
+  }, [procent])
 
   // для создания папкок
   function showPopupHandler() {
@@ -87,7 +87,7 @@ const Drive = () => {
     { url: '/tariff', text: 'ТАРИФ', id: '2', internal: true },
     { url: '/account', text: 'АККАУНТ', id: '3', internal: true },
     { url: '/', text: 'ВЫХОД', id: '4', internal: false, onClick: () => dispatch(logout()) }
-  ];
+  ]
   return (!dragEnter ?
     <div className="body-bg-1" onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
       <Logo />
@@ -139,6 +139,6 @@ const Drive = () => {
     <div className='drop-area' onDrop={dropHandler} onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
       Перетащите файлы сюда
     </div>
-  );
+  )
 }
-export default Drive;
+export default Drive 

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 
-import NavMenu from "../components/NavMenu";
-import Footer from "../components/Footer";
-import SectionBlock from "../components/section-block";
-import ContainerBlock from "../components/container-block";
-import ImgBlock from "../components/Img";
-import { registration } from "../actions/user";
+import NavMenu from "../components/NavMenu"
+import Footer from "../components/Footer"
+import SectionBlock from "../components/section-block"
+import ContainerBlock from "../components/container-block"
+import ImgBlock from "../components/Img"
+import { registration } from "../actions/user"
 
 const Main = () => {
   const MainLinks = [
@@ -14,7 +14,7 @@ const Main = () => {
     { url: '/#Sale', text: 'АКЦИЯ', id: '3', internal: false },
     { url: '/registration', text: 'РЕГИСТРАЦИЯ', id: '4', internal: true },
     { url: '/login', text: 'ВХОД', id: '5', internal: false }
-  ];
+  ]
   return (
     <div className="body-bg-0">
       <NavMenu links={MainLinks} />
@@ -59,6 +59,6 @@ const Main = () => {
       </SectionBlock>
       <Footer />
     </div >
-  );
+  )
 }
-export default Main;
+export default Main 

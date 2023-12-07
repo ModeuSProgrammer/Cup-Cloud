@@ -1,11 +1,11 @@
-import React from "react";
-import { Link } from 'react-router-dom';
+import React from "react"
+import { Link } from 'react-router-dom'
 
 class NavMenu extends React.Component {
   render() {
-    const { links } = this.props;
+    const { links } = this.props
     if (!links || links.length === 0) {
-      return null;
+      return null
     }
     return (
       <div className="menu">
@@ -23,8 +23,8 @@ class NavMenu extends React.Component {
           </ul>
         </nav>
       </div>
-    );
+    )
   }
 }
 
-export default NavMenu;
+export default NavMenu 
