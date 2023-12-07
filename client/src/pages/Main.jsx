@@ -1,11 +1,9 @@
-import React, { useState } from "react"
 
 import NavMenu from "../components/NavMenu"
 import Footer from "../components/Footer"
 import SectionBlock from "../components/section-block"
 import ContainerBlock from "../components/container-block"
 import ImgBlock from "../components/Img"
-import { registration } from "../actions/user"
 
 const Main = () => {
   const MainLinks = [

@@ -18,9 +18,7 @@ const Login = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-
     try {
-      const response = await dispatch(login(email, password))
       setLoggedIn(true)
     } catch (e) {
       console.error("Login failed:", e)
