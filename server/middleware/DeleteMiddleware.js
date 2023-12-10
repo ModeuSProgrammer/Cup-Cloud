@@ -4,7 +4,6 @@ const path = require('path')
 class DeleteMiddleware {
   async deleteFile(file) {
     const filepath = this.getPath(file)
-
     try {
       if (file.type === 'dir') {
         await fs.rmdir(filepath, { recursive: true })

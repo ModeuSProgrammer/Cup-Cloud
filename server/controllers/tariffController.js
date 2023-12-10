@@ -2,7 +2,7 @@ const { Storage, Tariff } = require('../models/models')
 
 class TariffController {
   //изменение тарифа
-  async setTariff(req, res, next) {
+  async setTariff(req, res) {
     try {
       const selectTariffID = req.body.tariffID
       const isValidTariff = await Tariff.findOne({ where: { ID: selectTariffID } })
@@ -26,7 +26,7 @@ class TariffController {
   }
 
   //получение тарифа
-  async getTariff(req, res, next) {
+  async getTariff(req, res) {
     try {
       const storageData = await Storage.findOne({ where: { ID: req.user.storageID } })
       const tariffID = storageData.tariffID

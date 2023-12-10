@@ -15,9 +15,8 @@ const generateJwt = (ID, email, roleID, storageID, dirMain) => {
   ) // данные и ключ, опции
 } // генерация токена
 
-//функции и их вызов с обработкой от get post и тд
 class UserController {
-  async registration(req, res, next) {
+  async registration(req, res) {
     try {
       const { firstname, email, password, passwordTwo } = req.body
       // Проверка заполненых полей
@@ -29,13 +28,13 @@ class UserController {
         return res.status(400).json({ message: "Ошибка в поле пароль" })
       }
       // Проверка на наличие данной почты в бд
-      const checkRegUser = await User.findOne({ where: { email } })
+      const checkRegUser = await User.findOne({ where: { email: email } })
       if (checkRegUser) {
         return res.status(400).json({ message: "Пользователь с данной почтой уже зарегистрирован" })
       }
       //Создание нового пользователя с хешированием пароля
       const hashPassword = await bcrypt.hash(password, 5)
-      const profile = await Profile.create({ avatar: 'avatarDefault.jpeg' })
+      const profile = await Profile.create()
       const storage = await Storage.create({ occupied: 0, status: true, datePay: new Date(), tariffID: 1 })
       const user = await User.create({ password: hashPassword, email, firstname, roleID: 1, storageID: storage.ID, profileID: profile.ID })
 
@@ -103,7 +102,7 @@ class UserController {
       return res.json('Ошибка загрузки')
     }
   }
-
+  //функции для профиля удаления аватара
   async deleteAvatar(req, res, next) {
     try {
       const profileData = await Profile.findOne({ where: { ID: req.user.ID } })

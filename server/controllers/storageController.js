@@ -34,14 +34,12 @@ class StorageController {
       const { parentID } = req.query
       const files = parentID ? await File.findAll({ where: { storageID: req.user.storageID, parentID: req.query.parentID } })
         : await File.findAll({ where: { storageID: req.user.storageID, parentID: null } })
-
       return res.json(files)
     } catch (error) {
       console.error(error)
       return next(ApiError.internal('Ошибка отображения файла'))
     }
   }
-
 
   //для загрузки файлов
   async uploadFile(req, res, next) {
@@ -53,15 +51,14 @@ class StorageController {
         totalSize += file.size
       })
       await storages.update({ occupied: totalSize })
-
       const file = req.files.file
       const parentID = req.body.parentID
       const parent = parentID ? await File.findOne({ where: { ID: parentID } }) : null
       const storage = await Storage.findOne({ where: { ID: req.user.storageID } })
+
       // Проверка места на диске в зависимости от тарифа
       const tariffID = storage.tariffID
       const tariffData = await Tariff.findOne({ where: { ID: tariffID } })
-
       if (parseInt(storage.occupied) + parseInt(file.size) > (tariffData.placeCount * 1024 * 1024 * 1024)) {
         return res.status(400).json('Не хватает свободного места на диске')
       }
@@ -73,7 +70,6 @@ class StorageController {
       if (parent && parent.path !== null) {
         filePath = path.join(process.env.filePath, parent.path, file.name)
         pathFile = path.join(parent.path, file.name)
-        console.log(filePath)
       } else {
         filePath = path.join(process.env.filePath, req.user.dirMain, file.name)
         pathFile = path.join(req.user.dirMain, file.name)
@@ -85,24 +81,15 @@ class StorageController {
       // Перемещаем файл
       await file.mv(filePath, (err) => {
         if (err) {
-          console.error('Error moving the file:', err)
-          return res.status(500).json('Internal Server Error')
+          console.error('Ошибка переноса файла:', err)
+          return res.status(500).json('Ошибка сервера')
         }
       })
       // Получаем информацию о файле и загружаем его в базу данных
       const type = file.name.split('.').pop()
-      const dbFile = new File({
-        name: file.name,
-        type,
-        size: file.size,
-        path: pathFile || null,
-        parentID: parent?.ID || null,
-        storageID: storage.ID
-      })
-
+      const dbFile = new File({ name: file.name, type, size: file.size, path: pathFile || null, parentID: parent?.ID || null, storageID: storage.ID })
       await dbFile.save()
       await storage.save()
-
       return res.json(dbFile)
     } catch (error) {
       console.error(error)
@@ -146,10 +133,9 @@ class StorageController {
 
     } catch (error) {
       console.error(error)
-      return res.json('Ошибка удаления файла, папка не пустая')
+      return res.json('Ошибка удаления файла')
     }
   }
-
 
   //для поиска файлов
   async searchFile(req, res, next) {

@@ -35,7 +35,7 @@ const File = sequelize.define('file', {
   path: { type: DataTypes.STRING(1000) },
   date: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
   size: { type: DataTypes.DOUBLE },
-  parentID: { type: DataTypes.INTEGER }, // для того чтобы можно было сделать своего рода вложенность
+  parentID: { type: DataTypes.INTEGER }, // для того чтобы можно было сделать вложенность
 },
   {
     timestamps: false,
