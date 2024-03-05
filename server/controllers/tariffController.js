@@ -7,21 +7,21 @@ class TariffController {
       const selectTariffID = req.body.tariffID
       const isValidTariff = await Tariff.findOne({ where: { ID: selectTariffID } })
       if (!isValidTariff) {
-        return res.json('Указан недопустимый номер тарифа')
+        return res.status(400).json({ message: 'Указан недопустимый номер тарифа' })
       }
       const storageData = await Storage.findOne({ where: { ID: req.user.storageID } })
       if (storageData.tariffID === selectTariffID) {
-        return res.json('Тариф уже был выбран')
+        return res.status(400).json({ message: 'Тариф уже был выбран' })
       }
       if (!selectTariffID) {
-        return res.json('Отсутствует номер тарифа в запросе')
+        return res.status(400).json({ message: 'Отсутствует номер тарифа в запросе' })
       }
       storageData.tariffID = selectTariffID
       storageData.datePay = new Date
       await storageData.save()
       return res.json(storageData.tariffID)
     } catch (error) {
-      return res.json('Ошибка выбора тарифа')
+      return res.status(400).json({ message: 'Ошибка выбора тарифа' })
     }
   }
 
@@ -34,7 +34,7 @@ class TariffController {
     } catch (error) {
       console.error(error)
       console.log(storageData)
-      return res.json('Ошибка отображения тарифа')
+      return res.status(400).json({ message: 'Ошибка отображения тарифа' })
     }
   }
 }

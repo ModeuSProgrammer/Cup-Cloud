@@ -1,0 +1,72 @@
+@import "./variable";
+* {
+  @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&family=Open+Sans:wght@300;400;600;700&display=swap");
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  font-family: "Kanit", sans-serif;
+  font-family: "Open Sans", sans-serif;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+
+  li {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+}
+
+ol {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+
+  li {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+// TITLES AND TEXT
+
+h1 {
+  display: inline;
+  font-size: 100px;
+  font-weight: 300;
+  text-shadow: 4px 4px 4px $color-text-shadow;
+  letter-spacing: 40px;
+}
+h2 {
+  font-size: 44px;
+  text-shadow: 4px 4px 4px $color-text-shadow;
+}
+h3 {
+  font-size: 38px;
+}
+h4 {
+  font-size: 28px;
+  text-shadow: 4px 2px 4px $color-text-shadow;
+}
+h5 {
+  font-size: 20px;
+}
+h6 {
+  font-size: 12px;
+}
+p {
+  font-size: 12spx;
+  text-shadow: 2px 2px 4px $color-text-shadow;
+}

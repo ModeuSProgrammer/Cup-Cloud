@@ -1,13 +1,13 @@
 //base structure
-@import "base/page.scss";
-@import "base/hover-active.scss";
-@import "base/variable.scss";
-//reset settings selectors
-@import "base/base-settings.scss";
+@import "./base/base";
+@import "./base/page";
+@import "./base/forms";
+
+@import "./base/variable";
+@import "./base/hover-active";
 
 //MainPage
 @import "MainPage/block-head.scss";
-@import "MainPage/block-content.scss";
 @import "MainPage/block-sales.scss";
 
 //SignInPage

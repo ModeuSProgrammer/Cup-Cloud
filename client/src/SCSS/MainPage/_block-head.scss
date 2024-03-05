@@ -1,22 +1,3 @@
-.nav {
-  .nav-list {
-    display: flex;
-    color: $color-text-header-btn;
-    justify-content: right;
-    margin-right: 168px;
-    margin-top: 38px;
-  }
-
-  .nav-list li {
-    margin-left: 85px;
-    color: $color-text-header-btn;
-  }
-
-  .nav-list li a {
-    color: $color-text-header-btn;
-  }
-}
-
 .container-header {
   width: 100vw;
   height: 100vh;
@@ -26,25 +7,12 @@
     height: 100%;
   }
 }
-
 .head-hr-line {
   border: none;
   height: 10px;
   margin-top: -10px;
   width: 100%;
   background-color: $color-footer-header;
-}
-.header-logo {
-  position: fixed;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  color: $color-text-header-btn;
-  margin-left: 190px;
-  letter-spacing: 12px;
-  img {
-    width: 100px;
-  }
 }
 .main-header-logo {
   margin-right: 200px;

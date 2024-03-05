@@ -1,49 +1,88 @@
 import React, { useState } from "react"
-import { registration } from "../actions/user"
+import { registration, login } from "../actions/user"
+import { Link } from 'react-router-dom'
+import { useDispatch } from "react-redux"
 
-import NavMenu from "../components/NavMenu"
-import Footer from "../components/Footer"
 import SectionBlock from "../components/section-block"
 import ContainerBlock from "../components/container-block"
-import Logo from "../components/Logo"
+import ImgBlock from "../components/Img"
 
 
 const Registration = () => {
-  //для redux
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [passwordTwo, setPasswordTwo] = useState("")
-  const [firstname, setFirstName] = useState("")
 
-  const MainLinks = [
-    { url: '/', text: 'ГЛАВНАЯ', id: '1', internal: false },
-    { url: '/#aboutus', text: 'О НАС', id: '2', internal: false },
-    { url: '/#Sale', text: 'АКЦИЯ', id: '3', internal: false },
-    { url: '/registration', text: 'РЕГИСТРАЦИЯ', id: '4', internal: false },
-    { url: '/login', text: 'ВХОД', id: '5', internal: true }
-  ]
+  const dispatch = useDispatch()
+  //registration
+  const [RegEmail, setRegEmail] = useState("")
+  const [RegPass, setRegPass] = useState("")
+  const [RegPassTwo, setRegPassTwo] = useState("")
+  const [firstname, setFirstname] = useState("")
+
+  //sign in
+  const [LogEmail, setLogEmail] = useState("")
+  const [LogPass, setLogPass] = useState("")
+  const [SignIn, SetSignIn] = useState("");
+
   return (
-    <div className='body-bg-2'>
-      <Logo />
-      <NavMenu links={MainLinks} />
-      <SectionBlock sectionId="" className="section-reg">
-        <ContainerBlock className="container container-sign">
-          <div>
-            <h2>Регистрация</h2>
-            <div className="registr-form">
-              <form>
-                <input type="text" value={firstname} placeholder="Имя" id="firstName" onChange={(event) => setFirstName(event.target.value)} />
-                <input type="email" value={email} placeholder="Почта" id="Email" onChange={(event) => setEmail(event.target.value)} />
-                <input type="password" value={password} placeholder="Пароль" id="Password" onChange={(event) => setPassword(event.target.value)} />
-                <input type="password" value={passwordTwo} placeholder="Повторите пароль" id="PasswordTwo" onChange={(event) => setPasswordTwo(event.target.value)} />
-                <input type="submit" value="Зарегистрироваться" id="RegBtn" onClick={() => registration(email, password, passwordTwo, firstname)} />
-              </form>
+    <div className="page body-bg-2">
+      <div className='body-bg-2'>
 
+        <header>
+          <div className="header-width">
+            <Link to="/">
+              <div className="header-logo">
+                <ImgBlock filePath="../img/logoCupCloud.svg" /><h4>CUP CLOUD</h4>
+              </div>
+            </Link>
+            <div className="menu-base">
+              <nav className="nav">
+                <ul className="nav-list">
+                  <li className="nav-item"><Link to="/">ГЛАВНАЯ</Link></li>
+                  <li className="nav-item"> <Link to="/registration">АВТОРИЗАЦИЯ | РЕГИСТРАЦИЯ</Link></li>
+                </ul>
+              </nav>
             </div>
           </div>
-        </ContainerBlock>
-      </SectionBlock>
-      <Footer />
+        </header>
+
+        {SignIn ? (
+          <SectionBlock sectionId="" className="section-reg">
+            <ContainerBlock className="container container-sign">
+              <div>
+                <h2>Регистрация</h2>
+                <div className="registr-form">
+
+                  <form onSubmit={(e) => { e.preventDefault(); }}>
+                    <input type="text" value={firstname} placeholder="Имя" id="firstName" onChange={(event) => setFirstname(event.target.value)} />
+                    <input type="email" value={RegEmail} placeholder="Почта" id="Email" onChange={(event) => setRegEmail(event.target.value)} />
+                    <input type="password" value={RegPass} placeholder="Пароль" id="Password" onChange={(event) => setRegPass(event.target.value)} />
+                    <input type="password" value={RegPassTwo} placeholder="Повторите пароль" id="PasswordTwo" onChange={(event) => setRegPassTwo(event.target.value)} />
+                    <input type="submit" value="Зарегистрироваться" id="RegBtn" onClick={() => dispatch(registration(RegEmail, RegPass, RegPassTwo, firstname))} />
+                    <button className="change-button " onClick={() => SetSignIn(false)}>Уже есть аккаунт?</button>
+                  </form>
+                </div>
+              </div>
+            </ContainerBlock>
+          </SectionBlock>
+        )
+          :
+          (
+            <SectionBlock sectionId="" className="section-signin">
+              <ContainerBlock className="container container-sign">
+                <div>
+                  <h2>Авторизация</h2>
+                  <div className="form-signIn">
+                    <form onSubmit={(e) => { e.preventDefault(); }}>
+                      <input type="email" value={LogEmail} placeholder="Почта" id="UserEmail" onChange={(event) => setLogEmail(event.target.value)} />
+                      <input type="password" value={LogPass} placeholder="Пароль" id="UserPassword" onChange={(event) => setLogPass(event.target.value)} />
+                      <input type="submit" value="Войти" id="SignInBtn" onClick={() => dispatch(login(LogEmail, LogPass))} />
+                      <button type="submit" className="change-button" onClick={() => SetSignIn(true)}>Нет аккаунта?</button>
+                    </form>
+                  </div>
+                </div>
+              </ContainerBlock>
+            </SectionBlock>
+          )}
+      </div>
     </div>
   )
 }

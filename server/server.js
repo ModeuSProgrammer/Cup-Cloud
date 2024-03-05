@@ -11,8 +11,7 @@ const models = require('./models/models.js')  //  таблицы бд(модел
 const router = require('./routes/index.js') // Routes для настройки маршрутов
 const ErrorHandler = require('./middleware/ErrorHandlingMiddleware.js')  // для работы с ошибками
 
-const defaultRole = require('./defaultDataDB/roleData.js')  //добавление базовых данынх для таблицы Role
-const defaultTariff = require('./defaultDataDB/tariffData.js')  //добавление базовых данынх для таблицы Tariff
+const defaultDataDB = require('./models/defaultData.js')
 
 const app = express()  // создание экспресс приложения
 app.use(fileUpload({
@@ -24,15 +23,15 @@ app.use(express.static('static'))
 app.use(express.json())//Для обработки запросов json
 app.use('/api', router)
 
-
 //должен идти в самом конце обработчик ошибок
 const port = process.env.PORT || 5000
-
-
 const start = async () => {
   try {
     await sequelize.authenticate() //устанавливаем подключение к бд
     await sequelize.sync()
+    await defaultDataDB.addDefaultDataRoles()
+    await defaultDataDB.createDefaultTariffs()
+
     app.listen(port, () => {
       console.log(`Сервер запущен на порту ${port}`)
     })
@@ -42,25 +41,4 @@ const start = async () => {
   }
 }
 
-const initializeData = async () => {
-  try {
-    await defaultRole.addDefaultDataRoles()
-    await defaultTariff.createDefaultTariffs()
-  }
-  catch (error) {
-    console.error('Ошибка инициализации данных:', error.message)
-    throw error
-  }
-}
-// добавление данных для нормальной работы бд и приложения
-const runApp = async () => {
-  try {
-    await sequelize.sync()
-    await initializeData()
-    await start()
-  } catch (error) {
-    console.error('Ошибка при запуске:', error.message)
-  }
-}
-
-runApp() 
+start()
