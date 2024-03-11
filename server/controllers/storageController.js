@@ -149,24 +149,5 @@ class StorageController {
       return next(ApiError.internal('Ошибка поиска файла'))
     }
   }
-
-  //для диаграммы
-  async diagramsProcent(req, res, next) {
-    try {
-      const storageData = await Storage.findOne({ where: { ID: req.user.storageID } })
-      const storageOccupied = storageData.occupied
-      const tariffID = storageData.tariffID
-      const tariffData = await Tariff.findOne({ where: { ID: tariffID } })
-      const tariffSpace = tariffData.placeCount * 1024 * 1024 * 1024
-      const procent = Math.round((storageOccupied * 100) / tariffSpace)
-      if (storageData.occupied === null) {
-        procent = 0
-      }
-      return res.json(procent)
-    } catch (error) {
-      console.error(error)
-      return res.json('Ошибка отражения диаграммы')
-    }
-  }
 }
 module.exports = new StorageController() 

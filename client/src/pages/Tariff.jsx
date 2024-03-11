@@ -9,15 +9,22 @@ import SectionBlock from "../components/section-block"
 import ContainerBlock from "../components/container-block"
 import TariffBlock from "../components/Tariffblock"
 
+import { getOccupied } from '../actions/file'
+
+
 const Tariff = () => {
   const dispatch = useDispatch()
   const currentStatus = useSelector(state => state.tariff.storageID)
   const [selectedTariff, setSelectedTariff] = useState(currentStatus)
   const tariffID = useSelector(state => state.tariff.tariffID)
 
+  const placeCountGB = useSelector(state => state.busy.occupied.placeCountGB)
+  const TDOccupied = useSelector(state => state.busy.occupied.TDOccupied)
+
   useEffect(() => {
     dispatch(getTariffUser())
-  }, [dispatch])
+    dispatch(getOccupied(placeCountGB))
+  }, [dispatch, placeCountGB])
 
   function handleButtonClick(tariffID, event) {
     if (currentStatus !== tariffID) {
@@ -35,10 +42,14 @@ const Tariff = () => {
                 <ImgBlock filePath="../img/logoCupCloud.svg" /><h4>CUP CLOUD</h4>
               </div>
             </Link>
+            <div className='disk-occupiced'>
+              <h2> <span>{placeCountGB % 1 ? placeCountGB.toFixed(1) : placeCountGB}Gb </span>из {TDOccupied}Gb</h2>
+            </div>
             <div className="menu-base">
               <nav className="nav">
                 <ul className="nav-list">
                   <li className="nav-item"><Link to="/storage">ДИСК</Link></li>
+                  <li className="nav-item"> <Link to="/notes">ЗАМЕТКИ</Link></li>
                   <li className="nav-item"> <Link to="/tariff">ТАРИФ</Link></li>
                   <li className="nav-item"> <Link to="/account">АККАУНТ</Link></li>
                   <li className="nav-item" > <Link to="/" onClick={() => dispatch(logout())}>ВЫХОД</Link></li>
@@ -51,6 +62,7 @@ const Tariff = () => {
         <SectionBlock sectionId="" className="section-Tariff">
           <ContainerBlock className="container container-Tariff">
             <h2>ТАРИФЫ</h2>
+            <h5 className='smail-text'>для диска</h5>
             <div className="Tariff-inner">
               <TariffBlock name="Стандарт" status={tariffID === 1 ? 1 : 0} count={15} price={0} selected={selectedTariff === 1}>
                 <button className='btn__tariff' onClick={(event) => handleButtonClick(1, event)}>Получить</button>

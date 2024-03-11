@@ -79,12 +79,12 @@ footer {
     display: flex;
     color: $color-text-header-btn;
     justify-content: right;
-    margin-right: 168px;
+    margin-right: 128px;
     margin-top: 38px;
   }
 
   .nav-list li {
-    margin-left: 85px;
+    margin-left: 55px;
     color: $color-text-header-btn;
   }
 
@@ -128,7 +128,7 @@ header {
     width: fit-content;
     .nav {
       .nav-list li {
-        margin-left: 85px;
+        margin-left: 55px;
         color: $color-text-header-btn;
       }
     }

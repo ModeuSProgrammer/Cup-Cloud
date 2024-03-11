@@ -1,6 +1,7 @@
 import axios from "axios"
-import { setFiles, addFile, deleteFileAction, setProcent } from "../reducers/fileReducer"
+import { setFiles, addFile, deleteFileAction } from "../reducers/fileReducer"
 import { hideLoader, showLoader } from '../reducers/appReducer'
+import { setProcent, setOccupied } from "../reducers/busyDataReducer"
 
 export function getFiles(dirID) {
   return async dispatch => {
@@ -108,6 +109,7 @@ export function searchFiles(search) {
   }
 }
 
+
 export function getDiagrams() {
   return async dispatch => {
     try {
@@ -123,3 +125,17 @@ export function getDiagrams() {
   }
 }
 
+export function getOccupied() {
+  return async dispatch => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/storage/occupied`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      dispatch(setOccupied(response.data))
+    } catch (e) {
+      alert(e.response.data.message)
+    }
+  }
+}

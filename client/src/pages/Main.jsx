@@ -17,15 +17,6 @@ const Main = () => {
         </div>
 
         <SectionBlock sectionId="main" className="container-header">
-          <div className="header-bg-image">
-            <div className="header-inner">
-              <h1>CUP<br />CLOUD</h1>
-              <div className="main-header-logo">
-                <ImgBlock filePath="../img/logoCupCloud2.svg" className="logo" />
-              </div>
-            </div>
-          </div>
-          <hr className="head-hr-line" />
         </SectionBlock>
 
         <SectionBlock sectionId="aboutus" className="">

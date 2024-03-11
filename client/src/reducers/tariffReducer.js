@@ -8,16 +8,8 @@ const defaultState = {
 
 export default function tariffReducer(state = defaultState, action) {
   switch (action.type) {
-    case SET_TARIFF:
-      return {
-        ...state,
-        tariffID: action.payload.tariffID,
-      }
-    case GET_TARIFF:
-      return {
-        ...state,
-        tariffID: action.payload.tariffID,
-      }
+    case SET_TARIFF: return { ...state, tariffID: action.payload.tariffID }
+    case GET_TARIFF: return { ...state, tariffID: action.payload.tariffID }
     default:
       return state
   }

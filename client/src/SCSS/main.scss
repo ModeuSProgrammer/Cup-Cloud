@@ -6,22 +6,14 @@
 @import "./base/variable";
 @import "./base/hover-active";
 
-//MainPage
-@import "MainPage/block-head.scss";
-@import "MainPage/block-sales.scss";
-
-//SignInPage
-@import "SignInPage/block-signin.scss";
-@import "SignInPage/page-signin.scss";
-
-//AccountPage
-@import "AccountPage/page-account.scss";
-
-//TariffPage
-@import "TariffPage/page-Tariff.scss";
+//pages
+@import "page-main-reg";
+@import "page-Tariff.scss";
+@import "page-account.scss";
+@import "page-note.scss";
 
 //DrivePage
-@import "DrivePage/page-drive.scss";
-@import "DrivePage/block-folderSearch.scss";
-@import "DrivePage/block-lastFile.scss";
+@import "DrivePage/block-popup";
+@import "DrivePage/block-settings.scss";
+@import "DrivePage/block-listFile.scss";
 @import "DrivePage/pie-diagrams.scss";

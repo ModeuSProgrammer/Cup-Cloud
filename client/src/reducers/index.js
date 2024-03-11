@@ -4,6 +4,7 @@ import userReducer from './userReducer'
 import fileReducer from './fileReducer'
 import tariffReducer from './tariffReducer'
 import appReducer from './appReducer'
+import busyDataReducer from './busyDataReducer'
 
 const store = configureStore({
   reducer: {
@@ -11,9 +12,10 @@ const store = configureStore({
     files: fileReducer,
     tariff: tariffReducer,
     app: appReducer,
+    busy: busyDataReducer,
   },
   middleware: [thunk],
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: process.env.NODE_ENV !== 'production'
 })
 
 export default store 

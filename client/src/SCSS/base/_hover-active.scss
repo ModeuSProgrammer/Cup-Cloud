@@ -2,23 +2,33 @@
 
 .nav-list {
   .nav-item a:hover {
-    color: $color-active;
+    color: $color-hover;
     transition: color 0.3s;
   }
 }
 .nav-list {
   .nav-item a:active {
-    color: $color-red-btn;
+    color: $color-active;
   }
 }
 form {
   input[type="submit"]:hover {
     cursor: pointer;
-    background-color: $color-active;
+    background-color: $color-hover;
     transition: background-color 0.3s;
   }
   input[type="submit"]:active {
-    background-color: $color-red-btn;
+    background-color: white;
+    color: black;
+  }
+  button:hover {
+    cursor: pointer;
+    transition: color 5s;
+    color: $color-hover;
+    transition: border-bottom 0.3s;
+    border-bottom: 2px solid $color-hover;
+    font-size: 25px;
+    transition: font-size 1s;
   }
 }
 
@@ -26,18 +36,26 @@ form {
   form {
     input[type="submit"]:hover {
       cursor: pointer;
-      background-color: $color-active;
+      background-color: $color-hover;
       transition: background-color 0.3s;
     }
     input[type="submit"]:active {
-      background-color: $color-red-btn;
+      background-color: white;
+      color: black;
+    }
+    button:hover {
+      cursor: pointer;
+      transition: color 5s;
+      color: $color-hover;
+      transition: border-bottom 0.3s;
+      border-bottom: 2px solid $color-hover;
+      font-size: 25px;
+      transition: font-size 1s;
     }
   }
 }
 
-.drive_btns,
-.popup,
-.Tariff {
+.popup {
   button:hover {
     cursor: pointer;
     background-color: $color-active;

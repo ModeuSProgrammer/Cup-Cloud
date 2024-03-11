@@ -1,6 +1,6 @@
 # ненужные файлы для тестирования и статика
-server/static
-server/_files/
+server/static/*
+server/_files/*
 
 # Logs
 logs

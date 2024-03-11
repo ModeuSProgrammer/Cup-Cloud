@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 
 import { logout } from "../reducers/userReducer"
 import { deleteAvatar, uploadAvatar, showData } from "../actions/user"
+import { getOccupied } from '../actions/file'
 
 import avatarLogo from '../assets/default.png'
 import SectionBlock from "../components/section-block"
@@ -13,11 +14,16 @@ import ImgBlock from "../components/Img"
 const Profile = () => {
   const dispatch = useDispatch()
   const currentProfile = useSelector(state => state.user.currentProfile)
+  const placeCountGB = useSelector(state => state.busy.occupied.placeCountGB)
+  const TDOccupied = useSelector(state => state.busy.occupied.TDOccupied)
 
   const avatar = currentProfile.avatar !== 'null' ? `http://localhost:8000/${currentProfile.avatar}` : avatarLogo
+
   useEffect(() => {
     dispatch(showData())
-  }, [dispatch])
+    dispatch(getOccupied(placeCountGB))
+  }, [dispatch, placeCountGB])
+
 
   function changeHandler(e) {
     const file = e.target.files[0]
@@ -43,10 +49,14 @@ const Profile = () => {
                 <ImgBlock filePath="../img/logoCupCloud.svg" /><h4>CUP CLOUD</h4>
               </div>
             </Link>
+            <div className='disk-occupiced'>
+              <h2> <span>{placeCountGB % 1 ? placeCountGB.toFixed(1) : placeCountGB}Gb </span>из {TDOccupied}Gb</h2>
+            </div>
             <div className="menu-base">
               <nav className="nav">
                 <ul className="nav-list">
                   <li className="nav-item"><Link to="/storage">ДИСК</Link></li>
+                  <li className="nav-item"> <Link to="/notes">ЗАМЕТКИ</Link></li>
                   <li className="nav-item"> <Link to="/tariff">ТАРИФ</Link></li>
                   <li className="nav-item"> <Link to="/account">АККАУНТ</Link></li>
                   <li className="nav-item" > <Link to="/" onClick={() => dispatch(logout())}>ВЫХОД</Link></li>

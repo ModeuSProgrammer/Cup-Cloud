@@ -6,7 +6,8 @@ import { logout } from "../reducers/userReducer"
 import ContainerBlock from "../components/container-block"
 import Pie from "../components/Pie-diagram"
 import ImgBlock from '../components/Img'
-import { getFiles, uploadFile, searchFiles, getDiagrams } from '../actions/file'
+
+import { getFiles, uploadFile, searchFiles, getDiagrams, getOccupied } from '../actions/file'
 
 import FileList from '../components/fileList/fileList'
 import Popup from '../components/Popup'
@@ -14,24 +15,28 @@ import { setCurrentDir, setPopupDisplay } from '../reducers/fileReducer'
 import { showLoader } from '../reducers/appReducer'
 
 
-
 const Drive = () => {
   const dispatch = useDispatch()
+  const loader = useSelector(state => state.app.loader)
+
   const currentDir = useSelector(state => state.files.currentDir)
   const dirStack = useSelector(state => state.files.dirStack)
-  const loader = useSelector(state => state.app.loader)
-  const procent = useSelector(state => state.files.procent)
+
+  const procent = useSelector(state => state.busy.procent)
+  const placeCountGB = useSelector(state => state.busy.occupied.placeCountGB)
+  const TDOccupied = useSelector(state => state.busy.occupied.TDOccupied)
+
+
   const [searchName, setSearchName] = useState('')
   const [searchTimeout, setSearchTimeout] = useState(false)
   const [dragEnter, setDragEnter] = useState(false)
-  //для файлов
-  useEffect(() => {
-    dispatch(getFiles(currentDir))
-  }, [currentDir])
 
   useEffect(() => {
+    dispatch(getFiles(currentDir))
     dispatch(getDiagrams(procent))
-  }, [procent])
+    dispatch(getOccupied(placeCountGB))
+  }, [currentDir, procent, placeCountGB])
+
 
   // для создания папкок
   function showPopupHandler() {
@@ -85,7 +90,6 @@ const Drive = () => {
   return (!dragEnter ?
     <div className="page" onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
       <div className="body-bg-1" >
-
         <header>
           <div className="header-width">
             <Link to="/">
@@ -93,10 +97,14 @@ const Drive = () => {
                 <ImgBlock filePath="../img/logoCupCloud.svg" /><h4>CUP CLOUD</h4>
               </div>
             </Link>
+            <div className='disk-occupiced'>
+              <h2> <span>{placeCountGB % 1 ? placeCountGB.toFixed(1) : placeCountGB}Gb </span>из {TDOccupied}Gb</h2>
+            </div>
             <div className="menu-base">
               <nav className="nav">
                 <ul className="nav-list">
                   <li className="nav-item"><Link to="/storage">ДИСК</Link></li>
+                  <li className="nav-item"> <Link to="/notes">ЗАМЕТКИ</Link></li>
                   <li className="nav-item"> <Link to="/tariff">ТАРИФ</Link></li>
                   <li className="nav-item"> <Link to="/account">АККАУНТ</Link></li>
                   <li className="nav-item" > <Link to="/" onClick={() => dispatch(logout())}>ВЫХОД</Link></li>
@@ -107,48 +115,62 @@ const Drive = () => {
         </header>
 
         <Popup />
-        <ContainerBlock className="container-drive">
-          <div className="container-folderSearch">
-            <form>
-              <input type="search" placeholder="Поиск" className="FolderSearch" value={searchName} onChange={e => searchChandeHandler(e)} />
-            </form>
-            <div className="folders">
-              <div className="drive_btns">
-                <button className='drive_back' onClick={() => backClickHandler()} >Назад</button>
-                <button className='drive_create' onClick={() => showPopupHandler()}>Создать папку</button>
-                <div className='drive__upload'>
-                  <label htmlFor='drive__upload-input' className='drive__upload-lable'>Загрузить файл</label>
-                  <input type="file" className='drive__upload-input' id='drive__upload-input' multiple={true} onChange={(event) => fileUploadHandler(event)} />
-                </div>
+        <ContainerBlock className="container-worksapce">
+
+          <ContainerBlock className="container-drive">
+            <div className='container-search'>
+
+              <form>
+                <input type="search" placeholder="Поиск по диску" className="FolderSearch" value={searchName} onChange={e => searchChandeHandler(e)} />
+              </form>
+              <button className='btn btn-back' onClick={() => backClickHandler()} >Назад</button>
+
+            </div>
+
+            <div className="container-listFile">
+              <div className='listScroll'>
+                {loader ? (
+                  <div className='loader'>
+                    <div className="lds-default">
+                      <div></div><div></div><div></div><div></div><div></div>
+                      <div></div><div></div><div></div><div></div><div></div>
+                      <div></div><div></div>
+                    </div>
+                  </div>
+                ) : (
+                  <FileList />
+                )}
               </div>
             </div>
-          </div>
 
-          <div className="container-lastFile">
-            <div className='listScroll'>
-              {loader ? (
-                <div className='loader'>
-                  <div className="lds-default">
-                    <div></div><div></div><div></div><div></div><div></div>
-                    <div></div><div></div><div></div><div></div><div></div>
-                    <div></div><div></div>
-                  </div>
-                </div>
-              ) : (
-                <FileList />
-              )}
+          </ContainerBlock >
+
+          <div className="container-settings">
+
+            <div className="settings">
+
+              <div className='btn-upload'>
+                <label htmlFor='drive__upload-input' className='drive__upload-lable'>Загрузить файл</label>
+                <input type="file" className='drive__upload-input' id='drive__upload-input' multiple={true} onChange={(event) => fileUploadHandler(event)} />
+              </div>
+
+              <div className='settings-button'>
+                <button className='btn' onClick={() => showPopupHandler()}>Создать папку</button>
+              </div>
+
             </div>
+
+            <div className="container-diagrams">
+              <div className="diagrams-info">
+                <h4>Диск занят на&nbsp;</h4>
+                <h4><span id="drive-procent" className="drive-procent">{procent} </span>%</h4></div>
+              <Pie pieValue={procent} />
+            </div>
+
           </div>
 
-          <div className="container-diagrams">
-            <div className="diagrams-info">
-              <h3>Диск занят на</h3>
-              <h2><span id="drive-procent" className="drive-procent">{procent} </span>%</h2></div>
-            <Pie pieValue={procent} />
-          </div>
+        </ContainerBlock>
 
-        </ContainerBlock >
-        <footer></footer>
       </div >
     </div >
     :

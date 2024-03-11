@@ -6,6 +6,8 @@ import Drive from './pages/Drive'
 import Tariff from './pages/Tariff'
 import Profile from './pages/Profile'
 import Registration from './pages/Registration'
+import Notes from './pages/Notes'
+
 import { useDispatch, useSelector } from "react-redux"
 import { auth } from "./actions/user"
 
@@ -25,6 +27,7 @@ function App() {
         <Route path="/storage" element={isAuth ? <Drive /> : <Navigate to="/registration" />} />
         <Route path="/tariff" element={isAuth ? <Tariff /> : <Navigate to="/registration" />} />
         <Route path="/account" element={isAuth ? <Profile /> : <Navigate to="/registration" />} />
+        <Route path="/notes" element={isAuth ? <Notes /> : <Navigate to="/registration" />} />
       </Routes>
     </BrowserRouter >
   )

@@ -3,16 +3,22 @@
   color: $color-text-header-btn;
 }
 .section-Tariff {
-  padding-top: 200px;
-  margin-bottom: 121px;
+  margin: 100px auto;
 }
 
 .container-Tariff {
   display: flex;
   flex-direction: column;
   h2 {
+    color: $color-red-h2-h4;
     margin: 0 auto;
     width: 100%;
+    height: fit-content;
+  }
+  .smail-text {
+    color: $color-red-h2-h4;
+    margin: 0px auto;
+    margin-bottom: 10px;
     height: fit-content;
   }
 }
@@ -24,23 +30,30 @@
   .Tariff {
     display: flex;
     align-items: center;
+    background-color: rgba(0, 0, 0, 0.05);
+    border: 2px solid rgba(0, 0, 0, 0.8);
     flex-direction: column;
-    border-radius: 50px;
+    border-radius: 10px;
     width: 320px;
     height: 370px;
     h4 {
       margin-top: 10px;
+      color: $color-red-h2-h4;
     }
     h6 {
-      color: $color-tarrrif-one;
+      color: $color-text-dark;
       margin-top: -10px;
       margin-bottom: 10px;
     }
     h2 {
-      margin-top: 20px;
-      color: $color-tarrrif-two;
+      margin-top: 15px;
+      color: $color-text-dark;
+    }
+    h5 {
+      color: $color-text-dark;
     }
     .description {
+      color: $color-text-dark;
       width: 93%;
       text-align: center;
       line-height: 30px;
@@ -52,17 +65,14 @@
 }
 
 .btn__tariff {
-  background-color: $color-violet-btn;
+  cursor: pointer;
+  background-color: #000000;
+  color: white;
   box-shadow: rgba(0, 0, 0, 0.25);
   font-size: 18px;
-  height: 60px;
-  border-top: none;
-  border-left: none;
-  margin-bottom: 20px;
-  color: $color-text-header-btn;
+  height: 55px;
+  margin: 10px auto;
+  padding: 10px 40px;
   width: fit-content;
   border-radius: 10px;
-  margin: 10px 10px;
-  padding: 10px 30px;
-  cursor: pointer;
 }
