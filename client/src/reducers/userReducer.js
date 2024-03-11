@@ -15,7 +15,7 @@ const defaultState = {
 export default function userReducer(state = defaultState, action) {
   switch (action.type) {
     case SET_USER:
-      return { ...state, xcurrentUser: action.payload, isAuth: true }
+      return { ...state, currentUser: action.payload, isAuth: true }
 
     case LOGOUT: localStorage.removeItem('token')
       return { ...state, currentUser: {}, isAuth: false }
