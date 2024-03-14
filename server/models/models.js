@@ -45,7 +45,7 @@ const Storage = sequelize.define('storage', {
   ID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   occupied: { type: DataTypes.DECIMAL(20), defaultValue: 0 },
   status: { type: DataTypes.BOOLEAN, defaultValue: true },
-  datePay: { type: DataTypes.DATE },
+  datePay: { type: DataTypes.DATEONLY },
 },
   {
     timestamps: false,

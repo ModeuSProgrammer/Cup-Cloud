@@ -1,7 +1,6 @@
 const SET_TARIFF = "SET_TARIFF"
 const GET_TARIFF = "GET_TARIFF"
 
-
 const defaultState = {
   tariffID: null,
 }

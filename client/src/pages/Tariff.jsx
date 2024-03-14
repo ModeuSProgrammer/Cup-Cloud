@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from "react-router-dom"
+
+
 import { logout } from "../reducers/userReducer"
 import ImgBlock from '../components/Img'
-import { setTariffUser, getTariffUser } from '../actions/tariff'
+import { setTariffUser, getTariffUser, FullTarrifD } from '../actions/tariff'
 
 import SectionBlock from "../components/section-block"
 import ContainerBlock from "../components/container-block"
-import TariffBlock from "../components/Tariffblock"
-
+import TariffBlock from '../components/Tariffblock'
 import { getOccupied } from '../actions/file'
 
 
@@ -21,17 +22,33 @@ const Tariff = () => {
   const placeCountGB = useSelector(state => state.busy.occupied.placeCountGB)
   const TDOccupied = useSelector(state => state.busy.occupied.TDOccupied)
 
+  const [TarrifBlockOne, setTarrifBlockOne] = useState(null);
+  const [TarrifBlockTwo, setTarrifBlockTwo] = useState(null);
+  const [TarrifBlockThree, setTarrifBlockThree] = useState(null);
+  useEffect(() => {
+    async function fetchData() {
+      const data1 = await FullTarrifD(1);
+      const data2 = await FullTarrifD(2);
+      const data3 = await FullTarrifD(3);
+      setTarrifBlockOne(data1);
+      setTarrifBlockTwo(data2);
+      setTarrifBlockThree(data3);
+    }
+
+    fetchData();
+  }, []);
+
   useEffect(() => {
     dispatch(getTariffUser())
     dispatch(getOccupied(placeCountGB))
-  }, [dispatch, placeCountGB])
+  }, [dispatch, placeCountGB, tariffID])
 
-  function handleButtonClick(tariffID, event) {
+
+  function handleButtonClick(tariffID) {
     if (currentStatus !== tariffID) {
       dispatch(setTariffUser(tariffID))
     }
   }
-
   return (
     <div className="page">
       <div className='body-bg-1' >
@@ -43,7 +60,7 @@ const Tariff = () => {
               </div>
             </Link>
             <div className='disk-occupiced'>
-              <h2> <span>{placeCountGB % 1 ? placeCountGB.toFixed(1) : placeCountGB}Gb </span>из {TDOccupied}Gb</h2>
+              <h2> <span>{placeCountGB % 1 ? placeCountGB.toFixed(1) : placeCountGB}Гб </span>из {TDOccupied}Гб</h2>
             </div>
             <div className="menu-base">
               <nav className="nav">
@@ -64,15 +81,16 @@ const Tariff = () => {
             <h2>ТАРИФЫ</h2>
             <h5 className='smail-text'>для диска</h5>
             <div className="Tariff-inner">
-              <TariffBlock name="Стандарт" status={tariffID === 1 ? 1 : 0} count={15} price={0} selected={selectedTariff === 1}>
-                <button className='btn__tariff' onClick={(event) => handleButtonClick(1, event)}>Получить</button>
-              </TariffBlock>
-              <TariffBlock name="Профессиональный" status={tariffID === 2 ? 1 : 0} count={100} price={200} selected={selectedTariff === 2}>
-                <button className='btn__tariff' onClick={(event) => handleButtonClick(2, event)}>Получить</button>
-              </TariffBlock>
-              <TariffBlock name="Бизнес" status={tariffID === 3 ? 1 : 0} count={500} price={400} selected={selectedTariff === 3}>
-                <button className='btn__tariff' onClick={(event) => handleButtonClick(3, event)}>Получить</button>
-              </TariffBlock>
+
+              {TarrifBlockOne !== null && (<TariffBlock name="Стандарт" status={tariffID === 1 ? 1 : 0} count={TarrifBlockOne.placeCount} price={TarrifBlockOne.price} selected={selectedTariff === 1}>
+                <button className='btn__tariff' onClick={() => handleButtonClick(1)}>Получить</button>
+              </TariffBlock>)}
+              {TarrifBlockOne !== null && (<TariffBlock name="Профессиональный" status={tariffID === 2 ? 1 : 0} count={TarrifBlockTwo.placeCount} price={TarrifBlockTwo.price} selected={selectedTariff === 2}>
+                <button className='btn__tariff' onClick={() => handleButtonClick(2)}>Получить</button>
+              </TariffBlock>)}
+              {TarrifBlockOne !== null && (<TariffBlock name="Бизнес" status={tariffID === 3 ? 1 : 0} count={TarrifBlockThree.placeCount} price={TarrifBlockThree.price} selected={selectedTariff === 3}>
+                <button className='btn__tariff' onClick={() => handleButtonClick(3)}>Получить</button>
+              </TariffBlock>)}
             </div>
           </ContainerBlock>
         </SectionBlock>

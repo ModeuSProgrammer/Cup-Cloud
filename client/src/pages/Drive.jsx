@@ -98,7 +98,7 @@ const Drive = () => {
               </div>
             </Link>
             <div className='disk-occupiced'>
-              <h2> <span>{placeCountGB % 1 ? placeCountGB.toFixed(1) : placeCountGB}Gb </span>из {TDOccupied}Gb</h2>
+              <h2> <span>{placeCountGB % 1 ? placeCountGB.toFixed(1) : placeCountGB}Гб </span>из {TDOccupied}Гб</h2>
             </div>
             <div className="menu-base">
               <nav className="nav">

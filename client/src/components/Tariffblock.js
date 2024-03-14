@@ -1,6 +1,7 @@
 import React from "react"
 
 class TariffBlock extends React.Component {
+
   render() {
     const { name, status, count, price } = this.props
     return (

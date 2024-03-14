@@ -17,7 +17,6 @@ const Profile = () => {
   const placeCountGB = useSelector(state => state.busy.occupied.placeCountGB)
   const TDOccupied = useSelector(state => state.busy.occupied.TDOccupied)
 
-  const avatar = currentProfile.avatar !== 'null' ? `http://localhost:8000/${currentProfile.avatar}` : avatarLogo
 
   useEffect(() => {
     dispatch(showData())
@@ -37,7 +36,7 @@ const Profile = () => {
 
   const name = useSelector(state => state.user.currentProfile.firstname)
   const email = useSelector(state => state.user.currentProfile.email)
-
+  const avatar = currentProfile.avatar !== 'null' ? `http://localhost:8000/${currentProfile.avatar}` : avatarLogo
   return (
     <div className="page">
       <div className="body-bg-1">
@@ -50,7 +49,7 @@ const Profile = () => {
               </div>
             </Link>
             <div className='disk-occupiced'>
-              <h2> <span>{placeCountGB % 1 ? placeCountGB.toFixed(1) : placeCountGB}Gb </span>из {TDOccupied}Gb</h2>
+              <h2> <span>{placeCountGB % 1 ? placeCountGB.toFixed(1) : placeCountGB}Гб </span>из {TDOccupied}Гб</h2>
             </div>
             <div className="menu-base">
               <nav className="nav">
@@ -70,43 +69,49 @@ const Profile = () => {
 
         <SectionBlock sectionId="" className="section-account">
           <ContainerBlock className="container container-account">
-
             <div className="account-info">
+              <h2>Данные об аккаунте</h2>
               <div className="account-data">
-                <h2>Данные об аккаунте</h2>
                 <div className="account-datetag">
                   <p>Имя</p>
                   <p>Почта</p>
-                  <p>Пол</p>
-                  <p>Количество полных лет</p>
-                  <p>Место на диске</p>
+                  <p>Цена тарифа</p>
+                  <p>Статус диска</p>
+                  <p>Дата оплаты</p>
+                  <p >Место на диске</p>
                   <p>Количество заметок</p>
                 </div>
 
                 <div className="account-output">
-                  <p id="UserName">{name}</p>
-                  <p id="UserEmail">{email}</p>
+                  <p >{name}</p>
+                  <p >{email}</p>
+                  <p >500р</p>
+                  <p >on-off</p>
+                  <p >2024-03-14</p>
+                  <p><span>{placeCountGB % 1 ? placeCountGB.toFixed(1) : placeCountGB}Гб </span>из {TDOccupied}Гб</p>
+                  <p >n из m</p>
+                </div>
+
+                <div className="avatar">
+                  <div className="account-avatar">
+                    <ImgBlock filePath={avatar} className="" />
+                  </div>
+
+                  <div className="btn-block">
+                    <label className="custom-file-upload">
+                      <input type="file" onChange={(e) => changeHandler(e)} />
+                      Загрузить фото
+                    </label>
+                    <button onClick={deleteHandler} className="file-delete">Удалить Фотографию профиля</button>
+                  </div>
                 </div>
               </div>
-
-              <div className=" btn-block">
-                <label className="custom-file-upload">
-                  <input type="file" onChange={(e) => changeHandler(e)} />
-                  Загрузить фото
-                </label>
-                <button onClick={deleteHandler} className="file-delete">Удалить Фотографию профиля</button>
-              </div>
-
             </div>
-            <div className="account-avatar">
-              <ImgBlock filePath={avatar} className="" />
-            </div>
-
           </ContainerBlock>
         </SectionBlock>
 
       </div>
-    </div>
+    </div >
   )
 }
 

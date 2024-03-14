@@ -1,8 +1,8 @@
 const { Role, Tariff } = require('./models')
 const defaultTariffs = [
-  { ID: 1, placeCount: 15, price: 0, name: 'basic' },
-  { ID: 2, placeCount: 200, price: 200, name: 'standard' },
-  { ID: 3, placeCount: 500, price: 400, name: 'business' }
+  { ID: 1, placeCount: 15, price: 0, name: 'Стандартный' },
+  { ID: 2, placeCount: 200, price: 200, name: 'Профессиональный' },
+  { ID: 3, placeCount: 500, price: 400, name: 'Бизнес' }
 ]
 
 class defaultDataDB {
