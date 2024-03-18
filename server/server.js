@@ -31,6 +31,7 @@ const start = async () => {
     await sequelize.sync()
     await defaultDataDB.addDefaultDataRoles()
     await defaultDataDB.createDefaultTariffs()
+    await defaultDataDB.baseAdmin()
 
     app.listen(port, () => {
       console.log(`Сервер запущен на порту ${port}`)

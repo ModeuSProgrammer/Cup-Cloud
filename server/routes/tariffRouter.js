@@ -6,8 +6,9 @@ const authMiddleware = require('../middleware/authMiddleware')
 
 router.post('/setTariff', authMiddleware, tariffController.setTariff)
 router.get('/getTariff', authMiddleware, tariffController.getTariff)
+router.get('/dataUserTariff', authMiddleware, tariffController.DataUserTariff)
 
-router.post('/fullDataTarrif', authMiddleware, tariffController.FullTarrifData)
+router.post('/fullDataTariff', authMiddleware, tariffController.FullTariffData)
 
 
 module.exports = router

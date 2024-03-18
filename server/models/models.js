@@ -55,7 +55,29 @@ const Tariff = sequelize.define('tariff', {
   ID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   placeCount: { type: DataTypes.INTEGER, unique: true },
   price: { type: DataTypes.DOUBLE },
-  name: { type: DataTypes.STRING, unique: true }
+  name: { type: DataTypes.STRING, unique: true },
+  countTask: { type: DataTypes.INTEGER, unique: true },
+  priceTask: { type: DataTypes.DOUBLE },
+},
+  {
+    timestamps: false,
+  })
+const List = sequelize.define('list', {
+  ID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  name: { type: DataTypes.STRING, unique: true },
+  occupied: { type: DataTypes.INTEGER, defaultValue: 0 },
+
+},
+  {
+    timestamps: false,
+  })
+
+const Task = sequelize.define('task', {
+  ID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  title: { type: DataTypes.STRING },
+  text: { type: DataTypes.STRING },
+  date: { type: DataTypes.DATE },
+  status: { type: DataTypes.BOOLEAN, defaultValue: true }
 },
   {
     timestamps: false,
@@ -76,12 +98,21 @@ File.belongsTo(Storage)
 
 Tariff.hasMany(Storage)
 Storage.belongsTo(Tariff)
+
+Storage.hasOne(List)
+List.belongsTo(Storage)
+
+List.hasMany(Task)
+Task.belongsTo(List)
+
 module.exports = {
   User,
   Role,
   Profile,
   Storage,
   File,
-  Tariff
+  Tariff,
+  Task,
+  List
 }
 

@@ -1,5 +1,5 @@
 import axios from "axios"
-import { setTariff, getTariff, fulldata } from "../reducers/tariffReducer"
+import { setTariff, getTariff, getDT } from "../reducers/tariffReducer"
 
 
 export function setTariffUser(tariffID) {
@@ -36,9 +36,9 @@ export function getTariffUser() {
   }
 }
 
-export async function FullTarrifD(numList) {
+export async function FullTariffD(numList) {
   try {
-    const response = await axios.post(`http://localhost:8000/api/tariff/fullDataTarrif`, { numList }, {
+    const response = await axios.post(`http://localhost:8000/api/tariff/fullDataTariff`, { numList }, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -47,5 +47,20 @@ export async function FullTarrifD(numList) {
   } catch (error) {
     console.log(error)
     alert('Ошибка на сервере')
+  }
+}
+export function DataUserT() {
+  return async dispatch => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/tariff/dataUserTariff`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      dispatch(getDT(response.data))
+    } catch (error) {
+      console.log(error)
+      alert('Ошибка получения данынх')
+    }
   }
 }

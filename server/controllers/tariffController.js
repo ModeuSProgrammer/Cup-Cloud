@@ -1,4 +1,5 @@
 const { Storage, Tariff } = require('../models/models')
+const jwt = require('jsonwebtoken')
 
 class TariffController {
   //изменение тарифа
@@ -37,7 +38,8 @@ class TariffController {
       return res.status(400).json({ message: 'Ошибка отображения тарифа' })
     }
   }
-  async FullTarrifData(req, res) {
+  // Для отображения блоков
+  async FullTariffData(req, res) {
     try {
       const listTarrif = req.body.numList
       const tarrifData = await Tariff.findOne({ where: { ID: listTarrif } })
@@ -48,6 +50,41 @@ class TariffController {
       let name = data.name
 
       return res.status(200).json({ ID, placeCount, price, name })
+    } catch (error) {
+      console.error(error)
+      return res.status(400).json({ message: 'Ошибка на сервере' })
+    }
+  }
+  // Для отображения блоков
+  async FullTariffData(req, res) {
+    try {
+      const listTarrif = req.body.numList
+      const tarrifData = await Tariff.findOne({ where: { ID: listTarrif } })
+      const data = (tarrifData.dataValues)
+      let ID = data.ID
+      let placeCount = data.placeCount
+      let price = data.price
+      let name = data.name
+
+      return res.status(200).json({ ID, placeCount, price, name })
+    } catch (error) {
+      console.error(error)
+      return res.status(400).json({ message: 'Ошибка на сервере' })
+    }
+  }
+
+  // Для отображения в профиле 
+  async DataUserTariff(req, res) {
+    try {
+
+      const token = req.headers.authorization.split(' ')[1];
+      const decoded = jwt.verify(token, process.env.SECRET_KEY)
+      const storage = await Storage.findOne({ where: { ID: decoded.storageID } })
+      const tarrifData = await Tariff.findOne({ where: { ID: storage.tariffID } })
+      const data = (tarrifData.dataValues)
+      let price = data.price
+
+      return res.status(200).json({ price })
     } catch (error) {
       console.error(error)
       return res.status(400).json({ message: 'Ошибка на сервере' })

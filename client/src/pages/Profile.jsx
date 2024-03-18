@@ -10,6 +10,7 @@ import avatarLogo from '../assets/default.png'
 import SectionBlock from "../components/section-block"
 import ContainerBlock from "../components/container-block"
 import ImgBlock from "../components/Img"
+import { DataUserT } from "../actions/tariff"
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -17,12 +18,11 @@ const Profile = () => {
   const placeCountGB = useSelector(state => state.busy.occupied.placeCountGB)
   const TDOccupied = useSelector(state => state.busy.occupied.TDOccupied)
 
-
   useEffect(() => {
     dispatch(showData())
     dispatch(getOccupied(placeCountGB))
+    dispatch(DataUserT())
   }, [dispatch, placeCountGB])
-
 
   function changeHandler(e) {
     const file = e.target.files[0]
@@ -36,6 +36,9 @@ const Profile = () => {
 
   const name = useSelector(state => state.user.currentProfile.firstname)
   const email = useSelector(state => state.user.currentProfile.email)
+  const price = useSelector(state => state.tariff.dataTariff.price) || 0
+  const roleID = useSelector(state => state.user.currentUser.roleID)
+
   const avatar = currentProfile.avatar !== 'null' ? `http://localhost:8000/${currentProfile.avatar}` : avatarLogo
   return (
     <div className="page">
@@ -54,6 +57,7 @@ const Profile = () => {
             <div className="menu-base">
               <nav className="nav">
                 <ul className="nav-list">
+                  {roleID === 2 ? <li className="nav-item"> <Link to="/admin">АДМИН</Link></li> : ''}
                   <li className="nav-item"><Link to="/storage">ДИСК</Link></li>
                   <li className="nav-item"> <Link to="/notes">ЗАМЕТКИ</Link></li>
                   <li className="nav-item"> <Link to="/tariff">ТАРИФ</Link></li>
@@ -75,20 +79,20 @@ const Profile = () => {
                 <div className="account-datetag">
                   <p>Имя</p>
                   <p>Почта</p>
+                  <p>Роль</p>
                   <p>Цена тарифа</p>
                   <p>Статус диска</p>
                   <p>Дата оплаты</p>
-                  <p >Место на диске</p>
                   <p>Количество заметок</p>
                 </div>
 
                 <div className="account-output">
                   <p >{name}</p>
                   <p >{email}</p>
-                  <p >500р</p>
+                  <p>{roleID === 2 ? 'Администратор' : (roleID === 1 ? 'Пользователь' : 'Неизвестная роль')}</p>
+                  <p>{price}&#8381; </p>
                   <p >on-off</p>
                   <p >2024-03-14</p>
-                  <p><span>{placeCountGB % 1 ? placeCountGB.toFixed(1) : placeCountGB}Гб </span>из {TDOccupied}Гб</p>
                   <p >n из m</p>
                 </div>
 

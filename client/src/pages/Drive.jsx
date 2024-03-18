@@ -25,7 +25,7 @@ const Drive = () => {
   const procent = useSelector(state => state.busy.procent)
   const placeCountGB = useSelector(state => state.busy.occupied.placeCountGB)
   const TDOccupied = useSelector(state => state.busy.occupied.TDOccupied)
-
+  const roleID = useSelector(state => state.user.currentUser.roleID)
 
   const [searchName, setSearchName] = useState('')
   const [searchTimeout, setSearchTimeout] = useState(false)
@@ -103,6 +103,7 @@ const Drive = () => {
             <div className="menu-base">
               <nav className="nav">
                 <ul className="nav-list">
+                  {roleID === 2 ? (<li className="nav-item"><Link to="/admin">АДМИН</Link></li>) : ''}
                   <li className="nav-item"><Link to="/storage">ДИСК</Link></li>
                   <li className="nav-item"> <Link to="/notes">ЗАМЕТКИ</Link></li>
                   <li className="nav-item"> <Link to="/tariff">ТАРИФ</Link></li>
