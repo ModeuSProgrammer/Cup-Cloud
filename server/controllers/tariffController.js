@@ -14,11 +14,18 @@ class TariffController {
       if (!isValidTariff) {
         return res.status(200).json({ message: 'Указан недопустимый номер тарифа' })
       }
+
+      const storageDataSelect = await Storage.findOne({ where: { ID: req.user.storageID } })
+      if (storageDataSelect.tariffID === selectTariffID) {
+        return res.status(200).json({ message: 'Тариф уже был выбран' })
+      }
+
       const storageData = await Storage.findOne({ where: { ID: req.user.storageID } })
       if (!selectTariffID) {
         return res.status(200).json({ message: 'Отсутствует номер тарифа в запросе' })
       }
       storageData.tariffID = selectTariffID
+      storageData.datePay = new Date
       await storageData.save()
       const TID = storageData.tariffID
       return res.json({ TID, message: `Выбран тариф ${storageData.tariffID}` })

@@ -108,10 +108,6 @@ const Profile = () => {
                     </label>
                     <button onClick={deleteHandler} className="file-delete">Удалить Фотографию профиля</button>
                   </div>
-
-                  <form className="button-payment" onSubmit={(e) => e.preventDefault()}>
-                    <input type="submit" value="Оплатить" />
-                  </form>
                 </div>
               </div>
             </div>

@@ -583,15 +583,6 @@ form button:hover {
   display: none;
 }
 
-.button-payment {
-  margin: 30px auto;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  flex-wrap: wrap;
-  align-content: flex-end;
-}
-
 .container-note {
   width: 1500px;
   height: 700px;
