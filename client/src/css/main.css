@@ -533,6 +533,7 @@ form button:hover {
 }
 
 .avatar {
+  height: 500px;
   width: 350px;
   margin-right: 70px;
 }
@@ -540,8 +541,6 @@ form button:hover {
 .account-avatar {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  margin-bottom: 40px;
   height: -moz-fit-content;
   height: fit-content;
   align-items: end;
@@ -550,7 +549,7 @@ form button:hover {
   border-radius: 100%;
   height: -moz-fit-content;
   height: fit-content;
-  width: 200px;
+  width: 150px;
 }
 
 .btn-block {
@@ -582,6 +581,15 @@ form button:hover {
 
 .custom-file-upload input {
   display: none;
+}
+
+.button-payment {
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-wrap: wrap;
+  align-content: flex-end;
 }
 
 .container-note {
@@ -643,6 +651,30 @@ form button:hover {
 .container-admin h4 {
   line-height: 180%;
   text-align: center;
+}
+
+.container-admin__tariff {
+  display: flex;
+  flex-direction: column;
+}
+.container-admin__tariff h4 {
+  margin: 20px auto;
+  color: #fb354e;
+}
+.container-admin__tariff .blocks-tariff {
+  display: flex;
+  flex-direction: row;
+}
+.container-admin__tariff .block-tariff {
+  margin: 0px 20px;
+}
+.container-admin__tariff .block-tariff input {
+  width: 300px;
+}
+.container-admin__tariff .block-tariff input[type=submit] {
+  width: -moz-fit-content;
+  width: fit-content;
+  border: 2px solid #fb354e;
 }
 
 .popup {

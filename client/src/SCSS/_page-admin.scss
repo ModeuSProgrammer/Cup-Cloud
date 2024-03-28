@@ -23,3 +23,25 @@
     text-align: center;
   }
 }
+.container-admin__tariff {
+  display: flex;
+  flex-direction: column;
+  h4 {
+    margin: 20px auto;
+    color: $color-red-h2-h4;
+  }
+  .blocks-tariff {
+    display: flex;
+    flex-direction: row;
+  }
+  .block-tariff {
+    margin: 0px 20px;
+    input {
+      width: 300px;
+    }
+    input[type="submit"] {
+      width: fit-content;
+      border: 2px solid $color-hover;
+    }
+  }
+}

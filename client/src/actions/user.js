@@ -9,7 +9,8 @@ export const registration = async (email, password, passwordTwo, firstname) => {
       passwordTwo,
       firstname
     })
-    alert('Пользователь создан')
+    let message = response.data.message ? response.data.message : 'Ошибка'
+    alert(message)
   } catch (error) {
     console.error('Registration failed:', error)
     alert(error.response?.data.message || "Произошла ошибка при регистрации")

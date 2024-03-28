@@ -52,8 +52,38 @@ const Admin = () => {
 
         <SectionBlock sectionId="" className="section-admin">
           <ContainerBlock className="container-admin">
-            aЙ бля
-
+            <div className="container-admin__tariff">
+              <h4>Измение тарифов</h4>
+              <div className="blocks-tariff">
+                <div className="block-tariff">
+                  <h4>Базовый</h4>
+                  <form onSubmit={(e) => e.preventDefault()}>
+                    <input type="number" placeholder="Количество ГБ" />
+                    <input type="number" placeholder="Количество заметок" />
+                    <input type="number" placeholder="Цена" />
+                    <input type="submit" value="Изменить" />
+                  </form>
+                </div>
+                <div className="block-tariff">
+                  <h4>Профессиональный</h4>
+                  <form onSubmit={(e) => e.preventDefault()}>
+                    <input type="number" placeholder="Количество ГБ" />
+                    <input type="number" placeholder="Количество заметок" />
+                    <input type="number" placeholder="Цена" />
+                    <input type="submit" value="Изменить" />
+                  </form>
+                </div>
+                <div className="block-tariff">
+                  <h4>Бизнес</h4>
+                  <form onSubmit={(e) => e.preventDefault()}>
+                    <input type="number" placeholder="Количество ГБ" />
+                    <input type="number" placeholder="Количество заметок" />
+                    <input type="number" placeholder="Цена" />
+                    <input type="submit" value="Изменить" />
+                  </form>
+                </div>
+              </div>
+            </div>
           </ContainerBlock>
         </SectionBlock>
 

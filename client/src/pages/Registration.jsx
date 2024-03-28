@@ -56,7 +56,7 @@ const Registration = () => {
                     <input type="email" value={RegEmail} placeholder="Почта" id="Email" onChange={(event) => setRegEmail(event.target.value)} />
                     <input type="password" value={RegPass} placeholder="Пароль" id="Password" onChange={(event) => setRegPass(event.target.value)} />
                     <input type="password" value={RegPassTwo} placeholder="Повторите пароль" id="PasswordTwo" onChange={(event) => setRegPassTwo(event.target.value)} />
-                    <input type="submit" value="Зарегистрироваться" id="RegBtn" onClick={() => dispatch(registration(RegEmail, RegPass, RegPassTwo, firstname))} />
+                    <input type="submit" value="Зарегистрироваться" id="RegBtn" onClick={() => registration(RegEmail, RegPass, RegPassTwo, firstname)} />
                     <button className="change-button" onClick={() => SetSignIn(false)}>Уже есть аккаунт?</button>
                   </form>
                 </div>

@@ -25,12 +25,12 @@ class UserController {
       }
       // Проверка данных из двух инпутов
       if (password !== passwordTwo) {
-        return res.status(400).json({ message: "Ошибка в поле пароль" })
+        return res.status(200).json({ message: "Ошибка в поле пароль" })
       }
       // Проверка на наличие данной почты в бд
       const checkRegUser = await User.findOne({ where: { email: email } })
       if (checkRegUser) {
-        return res.status(400).json({ message: "Пользователь с данной почтой уже зарегистрирован" })
+        return res.status(200).json({ message: "Пользователь с данной почтой уже зарегистрирован" })
       }
       //Создание нового пользователя с хешированием пароля
       const hashPassword = await bcrypt.hash(password, 5)
@@ -55,11 +55,11 @@ class UserController {
     try {
       const user = await User.findOne({ where: { email } })
       if (!user) {
-        return res.status(400).json({ message: "Пользователь не найден" })
+        return res.status(200).json({ message: "Пользователь не найден" })
       }
       const isPasswordValid = bcrypt.compareSync(password, user.password)
       if (!isPasswordValid) {
-        return res.status(400).json({ message: "Неверный пароль" })
+        return res.status(200).json({ message: "Неверный пароль" })
       }
       const dirMain = `user${user.storageID.toString()}`
       const token = generateJwt(user.ID, user.email, user.roleID, user.storageID, dirMain)

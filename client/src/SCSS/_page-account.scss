@@ -40,20 +40,20 @@
   }
 }
 .avatar {
+  height: 500px;
   width: 350px;
   margin-right: 70px;
 }
 .account-avatar {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  margin-bottom: 40px;
+
   height: fit-content;
   align-items: end;
   img {
     border-radius: 100%;
     height: fit-content;
-    width: 200px;
+    width: 150px;
   }
 }
 .btn-block {
@@ -81,4 +81,13 @@
 }
 .custom-file-upload input {
   display: none;
+}
+
+.button-payment {
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-wrap: wrap;
+  align-content: flex-end;
 }
