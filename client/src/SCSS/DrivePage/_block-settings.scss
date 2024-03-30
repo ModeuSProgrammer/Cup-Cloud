@@ -53,6 +53,7 @@
 .container-settings {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   height: 819px;
   width: 450px;
@@ -63,9 +64,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: end;
-    margin-bottom: 50px;
-    margin-top: 10px;
-    height: 100%;
+    padding: 10px;
+    margin: 10px auto;
+    height: 300px;
+    width: 85%;
+    border-radius: 20px;
+    background-color: $color-bg-container;
     .diagrams-info {
       display: flex;
       align-items: center;
@@ -88,10 +92,10 @@
     height: 50px;
     font-size: 18px;
 
-    background-color: #000000;
+    background-color: $color-red-btn;
     color: white;
     box-shadow: rgba(0, 0, 0, 0.25);
-    border: 2px solid black;
+    border: 2px solid $color-red-btn;
     padding: 5px 10px;
     border-radius: 10px;
 
@@ -107,7 +111,6 @@
       display: flex;
       justify-content: center;
       align-self: center;
-
       font-size: 18px;
       background-color: transparent;
       color: white;

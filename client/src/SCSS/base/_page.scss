@@ -37,16 +37,7 @@ section {
   border-radius: 10px;
   margin: 0 auto;
 
-  background: conic-gradient(
-    from 45.06deg at 0% 100%,
-    #f5f5f5 -8.17deg,
-    #fffefe 2.6deg,
-    #d9d9d9 48.05deg,
-    #d9d9d9 334.71deg,
-    #f5f5f5 351.83deg,
-    #fffefe 362.6deg
-  );
-
+  background: $color-bg-container;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   h2 {

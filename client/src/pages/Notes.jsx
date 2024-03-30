@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 
 import SectionBlock from "../components/section-block"
@@ -19,6 +19,8 @@ const Notes = () => {
   useEffect(() => {
     dispatch(getOccupied(placeCountGB))
   }, [placeCountGB])
+
+  const [CreateBtn, SetCreateBtn] = useState("false")
 
   return (
     <div className="page">
@@ -49,19 +51,31 @@ const Notes = () => {
           </div>
         </header>
 
+        {CreateBtn ? (
+          <SectionBlock sectionId="" className="">
+            <ContainerBlock className="container container-note">
+              <div className="note-title">
+                <h3>Заметки</h3>
+                <input type="submit" onClick={() => SetCreateBtn(false)} value="Создать заметку" />
+              </div>
+              <div className="note-inner">
+              </div>
 
-        <SectionBlock sectionId="" className="">
-          <ContainerBlock className="container container-note">
-            <div className="note-title">
-              <h3>Заметки</h3>
-              <input type="submit" value="Создать заметку" />
-            </div>
-            <hr className="note-hr-line" />
-            <div className="note-inner">
-            </div>
+            </ContainerBlock>
+          </SectionBlock>
 
-          </ContainerBlock>
-        </SectionBlock>
+        )
+          :
+          (
+            <SectionBlock sectionId="" className="">
+              <ContainerBlock className="container container-create-note">
+                <div className="">
+                  <h3>Создать заметку</h3>
+                  <input type="submit" onClick={() => SetCreateBtn(true)} value="Закрыть" />
+                </div>
+              </ContainerBlock>
+            </SectionBlock>
+          )}
 
       </div>
     </div>

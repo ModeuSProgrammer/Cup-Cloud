@@ -81,7 +81,6 @@ const Tariff = () => {
         <SectionBlock sectionId="" className="section-Tariff">
           <ContainerBlock className="container container-Tariff">
             <h2>ТАРИФЫ</h2>
-            <h5 className='smail-text'>для диска</h5>
             <div className="Tariff-inner">
 
               {TarrifBlockOne !== null && (<TariffBlock name="Стандарт" status={tariffID === 1 ? 1 : 0} count={TarrifBlockOne.placeCount} price={TarrifBlockOne.price} selected={selectedTariff === 1}>

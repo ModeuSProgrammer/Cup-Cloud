@@ -48,6 +48,7 @@ h1 {
 
 h2 {
   font-size: 44px;
+  color: #fb354e;
   text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
@@ -57,6 +58,7 @@ h3 {
 
 h4 {
   font-size: 28px;
+  color: #fb354e;
   text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.25);
 }
 
@@ -110,7 +112,7 @@ section {
   height: 550px;
   border-radius: 10px;
   margin: 0 auto;
-  background: conic-gradient(from 45.06deg at 0% 100%, #f5f5f5 -8.17deg, #fffefe 2.6deg, #d9d9d9 48.05deg, #d9d9d9 334.71deg, #f5f5f5 351.83deg, #fffefe 362.6deg);
+  background: rgba(0, 0, 0, 0.78);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .container h2 {
@@ -212,10 +214,10 @@ form input {
 
 input[type=submit] {
   color: white;
-  background-color: #000000;
+  background-color: #fb354e;
   box-shadow: rgba(0, 0, 0, 0.25);
   font-size: 28px;
-  border: 2px solid black;
+  border: none;
   margin: 0 auto;
   width: -moz-fit-content;
   width: fit-content;
@@ -224,6 +226,7 @@ input[type=submit] {
 }
 
 .change-button {
+  color: #fb354e;
   cursor: pointer;
   margin: 0 auto;
   width: -moz-fit-content;
@@ -231,7 +234,7 @@ input[type=submit] {
   font-size: 20px;
   background-color: transparent;
   border: none;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #fb354e;
 }
 
 .form-signIn {
@@ -248,7 +251,7 @@ input[type=submit] {
 .form-signIn form input[type=submit] {
   margin: 0 auto;
   color: white;
-  background-color: #000000;
+  background-color: #fb354e;
   box-shadow: rgba(0, 0, 0, 0.25);
   font-size: 38px;
   height: 60px;
@@ -259,7 +262,6 @@ input[type=submit] {
 }
 .form-signIn form input[type=submit].ForgotPswd-Btn {
   font-size: 24px;
-  background-color: #000000;
   color: #561f47;
   box-shadow: none;
   width: -moz-fit-content;
@@ -426,13 +428,7 @@ form button:hover {
   width: 100%;
   height: -moz-fit-content;
   height: fit-content;
-}
-.container-Tariff .smail-text {
-  color: #fb354e;
-  margin: 0px auto;
   margin-bottom: 10px;
-  height: -moz-fit-content;
-  height: fit-content;
 }
 
 .Tariff-inner {
@@ -445,7 +441,7 @@ form button:hover {
   display: flex;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.05);
-  border: 2px solid rgba(0, 0, 0, 0.8);
+  border: 2px solid #fb354e;
   flex-direction: column;
   border-radius: 10px;
   width: 320px;
@@ -456,19 +452,19 @@ form button:hover {
   color: #fb354e;
 }
 .Tariff-inner .Tariff h6 {
-  color: #000000;
+  color: white;
   margin-top: -10px;
   margin-bottom: 10px;
 }
 .Tariff-inner .Tariff h2 {
   margin-top: 15px;
-  color: #000000;
+  color: white;
 }
 .Tariff-inner .Tariff h5 {
-  color: #000000;
+  color: white;
 }
 .Tariff-inner .Tariff .description {
-  color: #000000;
+  color: white;
   width: 93%;
   text-align: center;
   line-height: 30px;
@@ -499,6 +495,7 @@ form button:hover {
   justify-content: left;
 }
 .container-account .account-info {
+  color: white;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -564,7 +561,7 @@ form button:hover {
 .custom-file-upload {
   display: inline-block;
   cursor: pointer;
-  color: #000;
+  color: white;
   font-size: 20px;
   margin-bottom: 20px;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -574,7 +571,7 @@ form button:hover {
   cursor: pointer;
   background-color: transparent;
   border: none;
-  color: #561f47;
+  color: #fb354e;
   font-size: 20px;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
@@ -589,34 +586,47 @@ form button:hover {
   display: flex;
   flex-direction: column;
   justify-content: start;
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.78);
   color: white;
   margin: 50px auto;
 }
-
-.note-title {
-  width: 100%;
+.container-note h3 {
+  margin-left: 50px;
+}
+.container-note .note-title {
+  width: 90%;
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  border-bottom: 2px solid #fb354e;
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
-.note-title input {
-  height: -moz-fit-content;
-  height: fit-content;
+.container-note .note-title input[type=submit] {
   width: -moz-fit-content;
   width: fit-content;
+  border-radius: 10px;
+  padding: 5px 10px;
   font-size: 24px;
-  border: none;
-  box-shadow: none;
-  background-color: transparent;
-  color: #fb354e;
+  border: 2px solid #fb354e;
+  margin: 0;
+  cursor: pointer;
 }
 
-.note-hr-line {
-  width: 95%;
-  height: 0px;
-  margin: 0 auto;
-  margin-top: 10px;
+.container-create-note {
+  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  width: 600px;
+  height: 700px;
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.container-create-note h3 {
+  margin-left: 50px;
+  color: #fb354e;
 }
 
 .section-admin {
@@ -906,6 +916,7 @@ form button:hover {
 .container-settings {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   height: 819px;
   width: 450px;
@@ -916,9 +927,12 @@ form button:hover {
   flex-direction: column;
   align-items: center;
   justify-content: end;
-  margin-bottom: 50px;
-  margin-top: 10px;
-  height: 100%;
+  padding: 10px;
+  margin: 10px auto;
+  height: 300px;
+  width: 85%;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.78);
 }
 .container-settings .container-diagrams .diagrams-info {
   display: flex;
@@ -941,10 +955,10 @@ form button:hover {
   width: fit-content;
   height: 50px;
   font-size: 18px;
-  background-color: #000000;
+  background-color: #fb354e;
   color: white;
   box-shadow: rgba(0, 0, 0, 0.25);
-  border: 2px solid black;
+  border: 2px solid #fb354e;
   padding: 5px 10px;
   border-radius: 10px;
   cursor: pointer;
@@ -1099,11 +1113,10 @@ form button:hover {
   initial-value: 0;
 }
 .pie {
-  margin-top: 20px;
+  margin: 20px;
   border-radius: 50%;
-  outline: 10px solid #561f47;
-  border: 5px solid white;
-  background: #561f47;
+  outline: 10px solid #fb354e;
+  outline-offset: -1px;
   width: 200px;
   aspect-ratio: 1;
   position: relative;

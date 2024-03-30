@@ -7,6 +7,7 @@
     justify-content: left;
   }
   .account-info {
+    color: $color-text-white;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -66,7 +67,7 @@
 .custom-file-upload {
   display: inline-block;
   cursor: pointer;
-  color: #000;
+  color: white;
   font-size: 20px;
   margin-bottom: 20px;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -75,7 +76,7 @@
   cursor: pointer;
   background-color: transparent;
   border: none;
-  color: $color-violet-btn;
+  color: $color-red-main-text;
   font-size: 20px;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }

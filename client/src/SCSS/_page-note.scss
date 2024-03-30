@@ -5,30 +5,50 @@
   display: flex;
   flex-direction: column;
   justify-content: start;
+  align-items: center;
   background-color: $color-bg-container;
   color: $color-text-header-btn;
 
   margin: 50px auto;
-}
+  h3 {
+    margin-left: 50px;
+  }
+  .note-title {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid $color-red-btn;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    input[type="submit"] {
+      width: fit-content;
+      border-radius: 10px;
+      padding: 5px 10px;
+      font-size: 24px;
 
-.note-title {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  input {
-    height: fit-content;
-    width: fit-content;
-    font-size: 24px;
-    border: none;
-    box-shadow: none;
-    background-color: transparent;
-    color: $color-red-btn;
+      border: 2px solid $color-red-btn;
+      margin: 0;
+      cursor: pointer;
+    }
   }
 }
-.note-hr-line {
-  width: 95%;
-  height: 0px;
-  margin: 0 auto;
-  margin-top: 10px;
+
+.container-create-note {
+  margin: 50px auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+
+  width: 600px;
+  height: 700px;
+
+  h3 {
+    margin-left: 50px;
+    color: $color-red-h2-h4;
+  }
+
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }

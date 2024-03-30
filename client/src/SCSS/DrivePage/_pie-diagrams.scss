@@ -5,11 +5,10 @@
   initial-value: 0;
 }
 .pie {
-  margin-top: 20px;
+  margin: 20px;
   border-radius: 50%;
-  outline: 10px solid #561f47;
-  border: 5px solid white;
-  background: #561f47;
+  outline: 10px solid $color-red-btn;
+  outline-offset: -1px;
   width: 200px;
   aspect-ratio: 1;
   position: relative;

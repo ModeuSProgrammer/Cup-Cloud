@@ -14,12 +14,7 @@
     margin: 0 auto;
     width: 100%;
     height: fit-content;
-  }
-  .smail-text {
-    color: $color-red-h2-h4;
-    margin: 0px auto;
     margin-bottom: 10px;
-    height: fit-content;
   }
 }
 .Tariff-inner {
@@ -31,7 +26,7 @@
     display: flex;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.05);
-    border: 2px solid rgba(0, 0, 0, 0.8);
+    border: 2px solid $color-red-main-text;
     flex-direction: column;
     border-radius: 10px;
     width: 320px;
@@ -41,19 +36,19 @@
       color: $color-red-h2-h4;
     }
     h6 {
-      color: $color-text-dark;
+      color: $color-text-white;
       margin-top: -10px;
       margin-bottom: 10px;
     }
     h2 {
       margin-top: 15px;
-      color: $color-text-dark;
+      color: $color-text-white;
     }
     h5 {
-      color: $color-text-dark;
+      color: $color-text-white;
     }
     .description {
-      color: $color-text-dark;
+      color: $color-text-white;
       width: 93%;
       text-align: center;
       line-height: 30px;
