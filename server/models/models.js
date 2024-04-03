@@ -56,8 +56,7 @@ const Tariff = sequelize.define('tariff', {
   placeCount: { type: DataTypes.INTEGER, unique: true },
   price: { type: DataTypes.DOUBLE },
   name: { type: DataTypes.STRING, unique: true },
-  countTask: { type: DataTypes.INTEGER, unique: true },
-  priceTask: { type: DataTypes.DOUBLE },
+  countTask: { type: DataTypes.INTEGER, unique: true }
 },
   {
     timestamps: false,

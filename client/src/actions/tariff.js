@@ -64,3 +64,15 @@ export function DataUserT() {
     }
   }
 }
+
+export async function ChangeCellTariff(btnNum, GB, task, price) {
+  try {
+    const response = await axios.post(`http://localhost:8000/api/tariff/AdminChangeTariff`,
+      { btnNum, GB, task, price },
+      { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+    alert(response.data.message)
+  } catch (error) {
+    console.log(error)
+    alert('Ошибка получения данынх')
+  }
+}

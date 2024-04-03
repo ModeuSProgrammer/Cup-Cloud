@@ -97,5 +97,34 @@ class TariffController {
       return res.status(400).json({ message: 'Ошибка на сервере' })
     }
   }
+
+  // Для отображения блоков
+  async AdminChangeTariff(req, res) {
+    try {
+      const btnNum = Number(req.body.btnNum)
+      const { GB, task, price } = req.body
+      if (btnNum != 0) {
+        if (GB != undefined && GB != 0 && GB.length != 0) {
+          const cell = await Tariff.findOne({ where: { ID: btnNum } })
+          cell.placeCount = Number(GB)
+          await cell.save()
+        }
+        if (task != undefined && task != 0 && task.length != 0) {
+          const cell = await Tariff.findOne({ where: { ID: btnNum } })
+          cell.countTask = Number(task)
+          await cell.save()
+        }
+        if (price != undefined && price != 0 && price.length != 0) {
+          const cell = await Tariff.findOne({ where: { ID: btnNum } })
+          cell.price = Number(price)
+          await cell.save()
+        }
+      }
+      return res.status(200).json({ message: "Изменения прошли успешно" })
+    } catch (error) {
+      console.error(error)
+      return res.status(400).json({ message: 'Ошибка на сервере' })
+    }
+  }
 }
 module.exports = new TariffController() 

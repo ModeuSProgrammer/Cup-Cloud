@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 
 import SectionBlock from "../components/section-block"
@@ -8,6 +8,7 @@ import { Link } from "react-router-dom"
 
 import { logout } from "../reducers/userReducer"
 import { getOccupied } from '../actions/file'
+import { ChangeCellTariff } from "../actions/tariff"
 
 const Admin = () => {
   const dispatch = useDispatch()
@@ -19,6 +20,34 @@ const Admin = () => {
   useEffect(() => {
     dispatch(getOccupied(placeCountGB))
   }, [placeCountGB])
+  //СТАНДАРТ
+  const [GBS, setGbS] = useState('')
+  const [taskS, setTaskS] = useState('')
+  const [priceS, setPriceS] = useState('')
+  function handlerClearS() {
+    setGbS("");
+    setTaskS("");
+    setPriceS("");
+  }
+  //ПРОФЕССИОНАЛЬНЫЙ
+  const [GBP, setGbP] = useState('')
+  const [taskP, setTaskP] = useState('')
+  const [priceP, setPriceP] = useState('')
+  function handlerClearP() {
+    setGbP("");
+    setTaskP("");
+    setPriceP("");
+  }
+  //БИЗНЕС
+  const [GBB, setGbB] = useState('')
+  const [taskB, setTaskB] = useState('')
+  const [priceB, setPriceB] = useState('')
+
+  function handlerClearB() {
+    setGbB("");
+    setTaskB("");
+    setPriceB("");
+  }
 
   return (
     <div className="page">
@@ -57,28 +86,28 @@ const Admin = () => {
               <div className="blocks-tariff">
                 <div className="block-tariff">
                   <h4>Базовый</h4>
-                  <form onSubmit={(e) => e.preventDefault()}>
-                    <input type="number" placeholder="Количество ГБ" />
-                    <input type="number" placeholder="Количество заметок" />
-                    <input type="number" placeholder="Цена" />
+                  <form onSubmit={(e) => { e.preventDefault(); ChangeCellTariff(1, GBS, taskS, priceS); handlerClearS() }}>
+                    <input type="number" value={GBS} onChange={(event) => setGbS(event.target.value)} placeholder="Количество ГБ" />
+                    <input type="number" value={taskS} onChange={(event) => setTaskS(event.target.value)} placeholder="Количество заметок" />
+                    <input type="number" value={priceS} onChange={(event) => setPriceS(event.target.value)} placeholder="Цена" />
                     <input type="submit" value="Изменить" />
                   </form>
                 </div>
                 <div className="block-tariff">
                   <h4>Профессиональный</h4>
-                  <form onSubmit={(e) => e.preventDefault()}>
-                    <input type="number" placeholder="Количество ГБ" />
-                    <input type="number" placeholder="Количество заметок" />
-                    <input type="number" placeholder="Цена" />
+                  <form onSubmit={(e) => { e.preventDefault(); ChangeCellTariff(2, GBP, taskP, priceP); handlerClearP() }}>
+                    <input type="number" value={GBP} onChange={(event) => setGbP(event.target.value)} placeholder="Количество ГБ" />
+                    <input type="number" value={taskP} onChange={(event) => setTaskP(event.target.value)} placeholder="Количество заметок" />
+                    <input type="number" value={priceP} onChange={(event) => setPriceP(event.target.value)} placeholder="Цена" />
                     <input type="submit" value="Изменить" />
                   </form>
                 </div>
                 <div className="block-tariff">
                   <h4>Бизнес</h4>
-                  <form onSubmit={(e) => e.preventDefault()}>
-                    <input type="number" placeholder="Количество ГБ" />
-                    <input type="number" placeholder="Количество заметок" />
-                    <input type="number" placeholder="Цена" />
+                  <form onSubmit={(e) => { e.preventDefault(); ChangeCellTariff(3, GBB, taskB, priceB); handlerClearB() }}>
+                    <input type="number" value={GBB} onChange={(event) => setGbB(event.target.value)} placeholder="Количество ГБ" />
+                    <input type="number" value={taskB} onChange={(event) => setTaskB(event.target.value)} placeholder="Количество заметок" />
+                    <input type="number" value={priceB} onChange={(event) => setPriceB(event.target.value)} placeholder="Цена" />
                     <input type="submit" value="Изменить" />
                   </form>
                 </div>

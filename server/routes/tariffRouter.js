@@ -9,6 +9,6 @@ router.get('/getTariff', authMiddleware, tariffController.getTariff)
 router.get('/dataUserTariff', authMiddleware, tariffController.DataUserTariff)
 
 router.post('/fullDataTariff', authMiddleware, tariffController.FullTariffData)
-
+router.post('/AdminChangeTariff', authMiddleware, tariffController.AdminChangeTariff)
 
 module.exports = router
