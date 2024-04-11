@@ -1,15 +1,15 @@
 
 const bcrypt = require('bcrypt')  // для хеширование паролей
 const jwt = require('jsonwebtoken')  // для регистрации и тд
-const { User, Profile, Storage } = require('../models/models')
+const { User, Profile, Storage, List } = require('../models/models')
 const createDirMiddleware = require('../middleware/createDirMiddleware')
 const path = require('path')
 const fs = require('fs')
 const uuid = require('uuid')
 
-const generateJwt = (ID, email, roleID, storageID, dirMain) => {
+const generateJwt = (ID, email, roleID, storageID, dirMain, listID) => {
   return jwt.sign(
-    { ID, email, roleID, storageID, dirMain },
+    { ID, email, roleID, storageID, dirMain, listID },
     process.env.SECRET_KEY,
     { expiresIn: '24h' }
   ) // данные и ключ, опции
@@ -36,16 +36,17 @@ class UserController {
       const hashPassword = await bcrypt.hash(password, 5)
       const profile = await Profile.create()
       const storage = await Storage.create({ occupied: 0, status: true, datePay: new Date(), tariffID: 1 })
+      const lists = await List.create({ storageID: storage.ID })
+
       const user = await User.create({ password: hashPassword, email, firstname, roleID: 1, storageID: storage.ID, profileID: profile.ID })
 
       // Передаем идентификатор хранилища в метод 
       await createDirMiddleware.createDirServices({ path: `user${storage.ID.toString()}` })
       const dirMain = `user${storage.ID.toString()}`
-      const token = generateJwt(user.ID, user.email, user.roleID, user.storageID, dirMain)
-      return res.json({ token })
+      const token = generateJwt(user.ID, user.email, user.roleID, user.storageID, dirMain, lists.ID)
+      return res.json({ token, message: "Регистрация прошла успешно" })
     }
     catch (error) {
-      console.log(error)
       return res.status(500).json({ message: "Внутренняя ошибка сервера" })
     }
   }
@@ -62,7 +63,8 @@ class UserController {
         return res.status(200).json({ message: "Неверный пароль" })
       }
       const dirMain = `user${user.storageID.toString()}`
-      const token = generateJwt(user.ID, user.email, user.roleID, user.storageID, dirMain)
+      const lists = await List.findOne({ where: { storageID: user.storageID } })
+      const token = generateJwt(user.ID, user.email, user.roleID, user.storageID, dirMain, lists.ID)
       return res.json({
         token,
         user: {
@@ -74,14 +76,13 @@ class UserController {
         },
       })
     } catch (error) {
-      console.error('Ошибка:', error)
       return res.status(500).json({ message: 'Ошибка Сервера' })
     }
   }
 
   // проверка и генерация нового токена для авторизации и продолжения сессии 
   async check(req, res, next) {
-    const token = generateJwt(req.user.ID, req.user.email, req.user.roleID, req.user.storageID, req.user.dirMain)
+    const token = generateJwt(req.user.ID, req.user.email, req.user.roleID, req.user.storageID, req.user.dirMain, lists.ID)
     return res.json({ token })
   }
 
@@ -98,7 +99,6 @@ class UserController {
       return res.json(profile)
     }
     catch (error) {
-      console.error(error)
       return res.json('Ошибка загрузки')
     }
   }
@@ -114,7 +114,7 @@ class UserController {
       return res.json(profileData)
     }
     catch (error) {
-      console.error(error)
+
       return res.json('Ошибка удаления')
     }
   }
@@ -132,8 +132,32 @@ class UserController {
       return res.json({ email, firstname, avatar })
     }
     catch (error) {
-      console.error(error)
       return res.json('Ошибка отображения данных')
+    }
+  }
+  //добавление администратора
+  async addAdminsApp(req, res) {
+    try {
+      const { email } = req.body.email
+      const adminData = await User.findOne({ where: { email } })
+      if (!adminData) {
+        return res.status(200).json({ message: `Пользователь с почтой ${email} не найден` })
+      }
+      if (adminData.roleID === 2) {
+        return res.status(200).json({ message: `Администратор с почтой ${email} уже существует` })
+      }
+      adminData.roleID = 2
+      await adminData.save()
+      const cheking = await User.findOne({ where: { email } })
+
+      if (cheking.roleID === 2) {
+        return res.status(200).json({ message: `Администратор с почтой ${email} добавлен` })
+      } else {
+        return res.status(200).json({ message: `Ошибка добавления администратора с почтой ${email}` })
+      }
+    }
+    catch (error) {
+      return res.json({ message: 'Ошибка сервера' })
     }
   }
 }

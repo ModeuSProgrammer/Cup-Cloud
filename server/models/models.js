@@ -63,7 +63,6 @@ const Tariff = sequelize.define('tariff', {
   })
 const List = sequelize.define('list', {
   ID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  name: { type: DataTypes.STRING, unique: true },
   occupied: { type: DataTypes.INTEGER, defaultValue: 0 },
 
 },

@@ -22,12 +22,20 @@ const Registration = () => {
   const [LogPass, setLogPass] = useState("")
   const [SignIn, SetSignIn] = useState("");
 
+  async function handlerClearReg() {
+    setRegEmail('')
+    setRegPass('')
+    setRegPassTwo('')
+    setFirstname('')
+  }
+
   return (
     <div className="page body-bg-2">
       <div className='body-bg-2'>
 
         <header>
           <div className="header-width">
+            <span />
             <Link to="/">
               <div className="header-logo">
                 <ImgBlock filePath="../img/logoCupCloud.svg" /><h4>CUP CLOUD</h4>
@@ -52,11 +60,11 @@ const Registration = () => {
                 <div className="registr-form">
 
                   <form onSubmit={(e) => { e.preventDefault(); }}>
-                    <input type="text" value={firstname} placeholder="Имя" id="firstName" onChange={(event) => setFirstname(event.target.value)} />
-                    <input type="email" value={RegEmail} placeholder="Почта" id="Email" onChange={(event) => setRegEmail(event.target.value)} />
-                    <input type="password" value={RegPass} placeholder="Пароль" id="Password" onChange={(event) => setRegPass(event.target.value)} />
-                    <input type="password" value={RegPassTwo} placeholder="Повторите пароль" id="PasswordTwo" onChange={(event) => setRegPassTwo(event.target.value)} />
-                    <input type="submit" value="Зарегистрироваться" id="RegBtn" onClick={() => registration(RegEmail, RegPass, RegPassTwo, firstname)} />
+                    <input type="text" value={firstname} placeholder="Имя" onChange={(event) => setFirstname(event.target.value)} />
+                    <input type="email" value={RegEmail} placeholder="Почта" onChange={(event) => setRegEmail(event.target.value)} />
+                    <input type="password" value={RegPass} placeholder="Пароль" onChange={(event) => setRegPass(event.target.value)} />
+                    <input type="password" value={RegPassTwo} placeholder="Повторите пароль" onChange={(event) => setRegPassTwo(event.target.value)} />
+                    <input type="submit" value="Зарегистрироваться" onClick={() => { registration(RegEmail, RegPass, RegPassTwo, firstname); handlerClearReg() }} />
                     <button className="change-button" onClick={() => SetSignIn(false)}>Уже есть аккаунт?</button>
                   </form>
                 </div>
@@ -72,9 +80,9 @@ const Registration = () => {
                   <h2>Авторизация</h2>
                   <div className="form-signIn">
                     <form onSubmit={(e) => { e.preventDefault(); }}>
-                      <input type="email" value={LogEmail} placeholder="Почта" id="UserEmail" onChange={(event) => setLogEmail(event.target.value)} />
-                      <input type="password" value={LogPass} placeholder="Пароль" id="UserPassword" onChange={(event) => setLogPass(event.target.value)} />
-                      <input type="submit" value="Войти" id="SignInBtn" onClick={() => dispatch(login(LogEmail, LogPass))} />
+                      <input type="email" value={LogEmail} placeholder="Почта" onChange={(event) => setLogEmail(event.target.value)} />
+                      <input type="password" value={LogPass} placeholder="Пароль" onChange={(event) => setLogPass(event.target.value)} />
+                      <input type="submit" value="Войти" onClick={() => { dispatch(login(LogEmail, LogPass)) }} />
                       <button type="submit" className="change-button" onClick={() => SetSignIn(true)}>Нет аккаунта?</button>
                     </form>
                   </div>

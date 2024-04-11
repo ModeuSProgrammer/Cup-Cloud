@@ -114,7 +114,7 @@ class TariffController {
           cell.countTask = Number(task)
           await cell.save()
         }
-        if (price != undefined && price != 0 && price.length != 0) {
+        if (price != undefined && price.length != 0) {
           const cell = await Tariff.findOne({ where: { ID: btnNum } })
           cell.price = Number(price)
           await cell.save()

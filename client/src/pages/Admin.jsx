@@ -9,6 +9,7 @@ import { Link } from "react-router-dom"
 import { logout } from "../reducers/userReducer"
 import { getOccupied } from '../actions/file'
 import { ChangeCellTariff } from "../actions/tariff"
+import { AddAdmin } from "../actions/user"
 
 const Admin = () => {
   const dispatch = useDispatch()
@@ -25,18 +26,18 @@ const Admin = () => {
   const [taskS, setTaskS] = useState('')
   const [priceS, setPriceS] = useState('')
   function handlerClearS() {
-    setGbS("");
-    setTaskS("");
-    setPriceS("");
+    setGbS("")
+    setTaskS("")
+    setPriceS("")
   }
   //ПРОФЕССИОНАЛЬНЫЙ
   const [GBP, setGbP] = useState('')
   const [taskP, setTaskP] = useState('')
   const [priceP, setPriceP] = useState('')
   function handlerClearP() {
-    setGbP("");
-    setTaskP("");
-    setPriceP("");
+    setGbP("")
+    setTaskP("")
+    setPriceP("")
   }
   //БИЗНЕС
   const [GBB, setGbB] = useState('')
@@ -44,17 +45,24 @@ const Admin = () => {
   const [priceB, setPriceB] = useState('')
 
   function handlerClearB() {
-    setGbB("");
-    setTaskB("");
-    setPriceB("");
+    setGbB("")
+    setTaskB("")
+    setPriceB("")
   }
+  //Clear Admin input and state
+  const [emailAdmins, setAdminEmail] = useState('')
+  function handlerClearAdminEmail() {
+    setAdminEmail("")
+  }
+
 
   return (
     <div className="page">
-      <div className="body-bg-1">
+      <div className="body-bg-0">
 
         <header>
           <div className="header-width">
+            <span />
             <Link to="/">
               <div className="header-logo">
                 <ImgBlock filePath="../img/logoCupCloud.svg" /><h4>CUP CLOUD</h4>
@@ -112,6 +120,18 @@ const Admin = () => {
                   </form>
                 </div>
               </div>
+            </div>
+          </ContainerBlock>
+        </SectionBlock>
+
+        <SectionBlock sectionId="" className="section-admin">
+          <ContainerBlock className="container-admin">
+            <div className="container-admin__adminCreate">
+              <h4>Добавить нового администратора</h4>
+              <form onSubmit={(e) => { e.preventDefault(); AddAdmin(emailAdmins); handlerClearAdminEmail(); }}>
+                <input type="email" value={emailAdmins} onChange={(event) => setAdminEmail(event.target.value)} placeholder="Введите почту нового администратора" required />
+                <input type="submit" value="Добавить" />
+              </form>
             </div>
           </ContainerBlock>
         </SectionBlock>

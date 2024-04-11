@@ -168,7 +168,6 @@ header .header-width {
   justify-content: space-between;
 }
 header .header-width .header-logo {
-  margin-left: 200px;
   height: -moz-fit-content;
   height: fit-content;
   width: -moz-fit-content;
@@ -205,8 +204,31 @@ form input {
   margin-bottom: 15px;
   height: 55px;
   border-radius: 10px;
-  padding-left: 30px;
-  border: none;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 1px solid black;
+  box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.25);
+  font-size: 20px;
+}
+form textarea {
+  display: flex;
+  align-items: center;
+  width: 600px;
+  height: 350px;
+  resize: none;
+  border-radius: 10px;
+  font-size: 16px;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+}
+form input[type=date] {
+  width: 130px;
+  margin-bottom: 15px;
+  height: 55px;
+  border-radius: 10px;
+  padding: 0;
+  margin-left: 10px;
+  padding-left: 10px;
   border: 1px solid black;
   box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.25);
   font-size: 20px;
@@ -282,6 +304,37 @@ input[type=submit] {
 .form-signIn form img {
   width: 50px;
   height: 50px;
+}
+
+select {
+  border-radius: 10px;
+  padding-left: 15px;
+  border: 1px solid black;
+  background-color: #fb354e;
+  color: white;
+  box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.25);
+  font-size: 22px;
+}
+
+.create-note__box-title {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.Close-btn {
+  height: -moz-fit-content;
+  height: fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.Close-btn input[type=submit] {
+  height: 50px;
+  width: 50px;
+  padding: 10px;
+  font-size: 24px;
+  margin: 0;
 }
 
 .nav-list .nav-item a:hover {
@@ -615,43 +668,116 @@ form button:hover {
 
 .container-create-note {
   margin: 50px auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  width: 600px;
+  width: 750px;
   height: 700px;
   background-color: rgba(0, 0, 0, 0.7);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+.container-create-note .create-note__box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.container-create-note .create-note__box form {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 .container-create-note h3 {
-  margin-left: 50px;
+  margin-left: 150px;
   color: #fb354e;
 }
 
+.note-inner {
+  margin-top: 15px;
+  width: 89%;
+  height: 570px;
+  padding: 10px;
+}
+.note-inner .note-list {
+  width: 1300px;
+  overflow-x: hidden;
+  height: 100%;
+  text-overflow: ellipsis;
+  overflow-y: scroll;
+}
+.note-inner .note-list .note-list-item {
+  display: flex;
+  justify-content: space-between;
+  width: 1250px;
+  height: 50px;
+  align-items: center;
+  color: white;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 7px;
+  font-size: 22px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.note-inner .note-list .note-list-item .title {
+  width: 760px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.note-inner .note-list .active {
+  background-color: rgba(251, 53, 78, 0.2);
+}
+.note-inner .note-list .ended {
+  background-color: rgba(119, 136, 153, 0.2);
+}
+
+.create-note__box-title {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.Close-btn {
+  height: -moz-fit-content;
+  height: fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.Close-btn input[type=submit] {
+  height: 50px;
+  width: 50px;
+  padding: 10px;
+  font-size: 24px;
+  margin: 0;
+}
+
 .section-admin {
-  margin: 60px auto;
+  margin: 50px auto;
+}
+
+.section-admin:last-child {
+  margin-bottom: 0;
+  padding-bottom: 50px;
 }
 
 .container-admin {
   display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
   width: 1400px;
-  height: 700px;
+  height: 450px;
   border-radius: 10px;
   margin: 0 auto;
   background-color: rgba(0, 0, 0, 0.78);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-.container-admin h2 {
-  margin-top: 50px;
+.container-admin h4 {
+  margin-top: 10px;
   display: flex;
   justify-content: center;
-  margin-bottom: 30px;
-}
-.container-admin h4 {
-  line-height: 180%;
-  text-align: center;
+  margin-bottom: 10px;
 }
 
 .container-admin__tariff {
@@ -659,7 +785,7 @@ form button:hover {
   flex-direction: column;
 }
 .container-admin__tariff h4 {
-  margin: 20px auto;
+  margin: 10px auto;
   color: #fb354e;
 }
 .container-admin__tariff .blocks-tariff {

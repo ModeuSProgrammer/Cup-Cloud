@@ -9,10 +9,10 @@ export const registration = async (email, password, passwordTwo, firstname) => {
       passwordTwo,
       firstname
     })
-    let message = response.data.message ? response.data.message : 'Ошибка'
-    alert(message)
+    let message = response?.data.message
+    if (message.length != 0)
+      alert(message)
   } catch (error) {
-    console.error('Registration failed:', error)
     alert(error.response?.data.message || "Произошла ошибка при регистрации")
   }
 }
@@ -25,8 +25,13 @@ export const login = (email, password) => {
         email,
         password
       })
-      dispatch(setUser(response.data.user))
-      localStorage.setItem('token', response.data.token)
+      if (response.data.message) {
+        alert(response.data.message)
+      }
+      else {
+        dispatch(setUser(response.data.user))
+        localStorage.setItem('token', response.data.token)
+      }
     } catch (e) {
       alert(e.response.data.message)
     }
@@ -95,5 +100,18 @@ export const showData = () => {
       console.log(e)
       console.error(e)
     }
+  }
+}
+
+
+export async function AddAdmin(email) {
+  try {
+    const token = localStorage.getItem('token')
+    const response = await axios.post(`http://localhost:8000/api/addAdmin`, { email }, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    alert(response.data.message)
+  } catch (e) {
+    console.error(e)
   }
 } 

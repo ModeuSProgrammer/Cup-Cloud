@@ -60,7 +60,7 @@ export function DataUserT() {
       dispatch(getDT(response.data))
     } catch (error) {
       console.log(error)
-      alert('Ошибка получения данынх')
+      alert('Ошибка получения данных')
     }
   }
 }
@@ -73,6 +73,6 @@ export async function ChangeCellTariff(btnNum, GB, task, price) {
     alert(response.data.message)
   } catch (error) {
     console.log(error)
-    alert('Ошибка получения данынх')
+    alert('Ошибка получения данных')
   }
 }

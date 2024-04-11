@@ -55,6 +55,7 @@ const Tariff = () => {
       <div className='body-bg-1' >
         <header>
           <div className="header-width">
+            <span />
             <Link to="/">
               <div className="header-logo">
                 <ImgBlock filePath="../img/logoCupCloud.svg" /><h4>CUP CLOUD</h4>

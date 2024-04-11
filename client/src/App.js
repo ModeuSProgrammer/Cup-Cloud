@@ -12,19 +12,21 @@ import Admin from './pages/Admin'
 
 import { useDispatch, useSelector } from "react-redux"
 import { auth } from "./actions/user"
-import { setUser } from './reducers/userReducer'
+import { logout, setUser } from './reducers/userReducer'
 
 function App() {
   const isAuth = useSelector(state => state.user.isAuth)
   const dispatch = useDispatch()
+
+  let token = localStorage.getItem('token')
+  let decodedToken
+  let roleID
+
   useEffect(() => {
     if (!isAuth & token) {
       dispatch(auth())
     }
   }, [dispatch, isAuth])
-
-  let token = localStorage.getItem('token')
-  let decodedToken
 
   useEffect(() => {
     const DataUser = () => {
@@ -36,8 +38,8 @@ function App() {
     }
     DataUser()
   }, [token, dispatch])
-  const roleID = useSelector(state => state.user.currentUser.roleID)
 
+  roleID = useSelector(state => state.user.currentUser.roleID)
   return (
     <BrowserRouter>
       <Routes>
@@ -47,7 +49,7 @@ function App() {
         <Route path="/tariff" element={isAuth ? <Tariff /> : <Navigate to="/registration" />} />
         <Route path="/account" element={isAuth ? <Profile /> : <Navigate to="/registration" />} />
         <Route path="/notes" element={isAuth ? <Notes /> : <Navigate to="/registration" />} />
-        <Route path="/admin" element={isAuth ? (roleID == 2 ? <Admin /> : <Navigate to="/storage" />) : <Navigate to="/registration" />} />
+        <Route path="/admin" element={isAuth ? (roleID === 2 ? <Admin /> : <Navigate to="/storage" />) : <Navigate to="/registration" />} />
       </Routes>
     </BrowserRouter >
   )

@@ -1,4 +1,4 @@
-const { Role, Tariff, User, Storage, Profile } = require('./models')
+const { Role, Tariff, User, Storage, Profile, List } = require('./models')
 const bcrypt = require('bcrypt')  // для хеширование паролей
 
 const defaultTariffs = [
@@ -54,6 +54,7 @@ class defaultDataDB {
         const pass = await bcrypt.hash('admin', 5)
         const profile = await Profile.create()
         const storage = await Storage.create({ occupied: 0, status: true, datePay: new Date(), tariffID: 1 })
+        const lists = await List.create({ storageID: storage.ID })
         const admin = await User.create({ email: "admin@admin.ru", password: pass, firstname: 'admin', roleID: 2, storageID: storage.ID, profileID: profile.ID })
         return console.log('Базовый администратор создан')
       }
