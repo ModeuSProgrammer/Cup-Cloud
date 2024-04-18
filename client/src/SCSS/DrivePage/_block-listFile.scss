@@ -11,19 +11,17 @@
     height: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
-    scrollbar-width: thin;
-    scrollbar-color: white;
-    &::-webkit-scrollbar {
-      width: 5px;
-    }
+  }
 
-    &::-webkit-scrollbar-thumb {
-      background-color: white;
-      border-radius: 4px;
-    }
+  .listScroll::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .listScroll::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 4px;
   }
 }
-
 .filelist {
   margin: 20px 0;
   &__header {

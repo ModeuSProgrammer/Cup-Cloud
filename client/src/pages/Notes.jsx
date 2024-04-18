@@ -8,7 +8,7 @@ import { Link } from "react-router-dom"
 
 import { logout } from "../reducers/userReducer"
 import { getOccupied } from '../actions/file'
-import { CreateTaskNote, ShowTasks } from "../actions/note"
+import { CreateTaskNote, DeleteTask, EndedTask, OpenTask, ShowTasks } from "../actions/note"
 
 const Notes = () => {
   const dispatch = useDispatch()
@@ -31,17 +31,32 @@ const Notes = () => {
 
   const [tasks, setTasks] = useState([]);
   const [selectValue, SetSelectedValue] = useState("true");
+
   useEffect(() => {
+    let flag = false
     async function fetchData() {
-      const tasksData = await ShowTasks();
-      if (tasksData !== undefined) {
-        setTasks(tasksData);
-      }
+      const delay = 2000;
+      setTimeout(async () => {
+        const tasksData = await ShowTasks();
+        if (tasksData !== undefined) {
+          setTasks(tasksData);
+        }
+      }, (flag ? delay : 1000))
+      flag = true
     }
-    if (selectValue) {
+    if (selectValue && openTaskFlag == false) {
       fetchData();
     }
   }, [tasks, selectValue]);
+
+  const [openTaskFlag, SetOpenTaskFlag] = useState(false)
+  const [handlerTaskID, SetHandlerTaskID] = useState('')
+  useEffect(() => {
+    dispatch(OpenTask(handlerTaskID))
+  }, [handlerTaskID])
+
+  const titleTaskOpen = useSelector(state => state.busy.task.title)
+  const textTaskOpen = useSelector(state => state.busy.task.text)
 
   return (
     <div className="page">
@@ -73,66 +88,77 @@ const Notes = () => {
           </div>
         </header>
 
-        {CreateBtn ? (
+        {openTaskFlag ? (
           <SectionBlock sectionId="" className="">
-            <ContainerBlock className="container container-note">
-              <div className="note-title">
-                <h3>Заметки</h3>
-
-                <select className="note__options" value={selectValue} onChange={(event) => SetSelectedValue(event.target.value)} >
-                  <option value={"true"}>Активные</option>
-                  <option value={"false"}>Завершенные</option>
-                </select>
-
-                <input type="submit" onClick={() => SetCreateBtn(false)} value="Создать заметку" />
-              </div>
-              <div className="note-inner">
-                <ul className="note-list">
-                  {selectValue === "true" ? (
-                    tasks
-                      .filter(task => task.status === true)
-                      .map(task => (
-                        <li className="note-list-item active" key={task.id}>
-                          <span className="title">{task.title}</span>
-                          <span> Создано: {task.date.split('T')[0]} <span>Завершить</span></span>
-
-                        </li>
-                      ))
-                  ) : (
-                    tasks
-                      .filter(task => task.status === false)
-                      .map(task => (
-                        <li className="note-list-item ended" key={task.id}>
-                          <span className="title">{task.title}</span>
-                          <span>Создано: {task.date.split('T')[0]}</span>
-                        </li>
-                      ))
-                  )}
-                </ul>
+            <ContainerBlock className="container container-create-note">
+              <div className="note-open">
+                <h3 className="note-open title">{titleTaskOpen}</h3>
+                <h5 className="note-open text">{textTaskOpen}</h5>
+                <form onSubmit={(e) => { e.preventDefault(); SetOpenTaskFlag(false) }}>
+                  <input type="submit" value="Назад" />
+                </form>
               </div>
             </ContainerBlock>
           </SectionBlock>
-
-        )
-          :
-          (
+        ) : (
+          CreateBtn ? (
             <SectionBlock sectionId="" className="">
-              <ContainerBlock className="container container-create-note">
-                <div className="create-note__box">
-                  <div className="create-note__box-title">
-                    <h3>Создать заметку</h3>
-                    <form className="Close-btn" onSubmit={(e) => { e.preventDefault(); }}> <input type="submit" onClick={() => { SetCreateBtn(true); handlerClear(); SetSelectedValue("true") }} value="&#x2715;" /></form>
-                  </div>
-                  <form onSubmit={(e) => { e.preventDefault(); CreateTaskNote(title, dateTask, text); handlerClear(); }}>
-                    <input type="text" value={title} placeholder="Название" onChange={(event) => SetTitle(event.target.value)} required />
-                    <input type="date" value={dateTask} onChange={(event) => SetSelectedDate(event.target.value)} readOnly />
-                    <textarea rows="5" placeholder="Содержание" minLength="1" maxlength="500" value={text} onChange={(event) => SetText(event.target.value)} required />
-                    <input type="submit" value="Создать" />
-                  </form>
+              <ContainerBlock className="container container-note">
+                <div className="note-title">
+                  <h3>Заметки</h3>
+                  <select className="note__options" value={selectValue} onChange={(event) => SetSelectedValue(event.target.value)} >
+                    <option value={"true"}>Активные</option>
+                    <option value={"false"}>Завершенные</option>
+                  </select>
+
+                  <input type="submit" onClick={() => SetCreateBtn(false)} value="Создать заметку" />
+                </div>
+                <div className="note-inner">
+                  <ul className="note-list">
+                    {selectValue === "true" ? (
+                      tasks
+                        .filter(task => task.status === true)
+                        .map(task => (
+                          <li className="note-list-item active" key={task.ID} >
+                            <span className="title" onClick={() => { SetHandlerTaskID(task.ID); SetOpenTaskFlag(true) }}  >{task.title}</span>
+                            <span> Создано: {task.date.split('T')[0]} <span onClick={() => EndedTask(task.ID)}>Завершить</span></span>
+                          </li>
+                        ))
+                    ) : (
+                      tasks
+                        .filter(task => task.status === false)
+                        .map(task => (
+                          <li className="note-list-item ended" key={task.ID} >
+                            <span className="title" onClick={() => { SetHandlerTaskID(task.ID); SetOpenTaskFlag(true) }}  >{task.title}</span>
+                            <span>Создано: {task.date.split('T')[0]}  <span onClick={() => DeleteTask(task.ID)}>Удалить</span> </span>
+                          </li>
+                        ))
+                    )}
+                  </ul>
                 </div>
               </ContainerBlock>
             </SectionBlock>
-          )}
+          )
+            :
+            (
+              <SectionBlock sectionId="" className="">
+                <ContainerBlock className="container container-create-note">
+                  <div className="create-note__box">
+                    <div className="create-note__box-title">
+                      <h3>Создать заметку</h3>
+                      <form className="Close-btn" onSubmit={(e) => { e.preventDefault(); }}> <input type="submit" onClick={() => { SetCreateBtn(true); handlerClear(); SetSelectedValue("true") }} value="&#x2715;" /></form>
+                    </div>
+                    <form onSubmit={(e) => { e.preventDefault(); CreateTaskNote(title, dateTask, text); handlerClear(); }}>
+                      <input type="text" value={title} placeholder="Название" onChange={(event) => SetTitle(event.target.value)} required />
+                      <input type="date" value={dateTask} onChange={(event) => SetSelectedDate(event.target.value)} readOnly />
+                      <textarea rows="5" placeholder="Содержание" minLength="1" maxlength="500" value={text} onChange={(event) => SetText(event.target.value)} required />
+                      <input type="submit" value="Создать" />
+                    </form>
+                  </div>
+                </ContainerBlock>
+              </SectionBlock>
+            )
+        )}
       </div>
     </div >
 
