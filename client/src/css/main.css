@@ -557,7 +557,6 @@ form button:hover {
 }
 .container-account .account-info .account-data {
   display: flex;
-  flex-wrap: wrap;
 }
 
 .account-datetag {

@@ -138,7 +138,7 @@ class UserController {
   //добавление администратора
   async addAdminsApp(req, res) {
     try {
-      const { email } = req.body.email
+      const email = req.body.email
       const adminData = await User.findOne({ where: { email } })
       if (!adminData) {
         return res.status(200).json({ message: `Пользователь с почтой ${email} не найден` })
@@ -154,6 +154,31 @@ class UserController {
         return res.status(200).json({ message: `Администратор с почтой ${email} добавлен` })
       } else {
         return res.status(200).json({ message: `Ошибка добавления администратора с почтой ${email}` })
+      }
+    }
+    catch (error) {
+      return res.json({ message: 'Ошибка сервера' })
+    }
+  }
+  //удаление администратора
+  async deleteAdminsApp(req, res) {
+    try {
+      const email = req.query.email
+      const adminData = await User.findOne({ where: { email } })
+      if (!adminData) {
+        return res.status(200).json({ message: `Пользователь с почтой ${email} не найден` })
+      }
+      if (adminData.roleID === 1) {
+        return res.status(200).json({ message: `Этот пользователь ${email} не является администратором` })
+      }
+      adminData.roleID = 1
+      await adminData.save()
+      const cheking = await User.findOne({ where: { email } })
+
+      if (cheking.roleID === 1) {
+        return res.status(200).json({ message: `Этот пользователь ${email} не является теперь администратором` })
+      } else {
+        return res.status(200).json({ message: `Ошибка обновления роли у пользователя с почтой ${email}` })
       }
     }
     catch (error) {

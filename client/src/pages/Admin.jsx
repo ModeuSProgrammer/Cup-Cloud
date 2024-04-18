@@ -9,7 +9,7 @@ import { Link } from "react-router-dom"
 import { logout } from "../reducers/userReducer"
 import { getOccupied } from '../actions/file'
 import { ChangeCellTariff } from "../actions/tariff"
-import { AddAdmin } from "../actions/user"
+import { AddAdmin, DeleteAdmin } from "../actions/user"
 
 const Admin = () => {
   const dispatch = useDispatch()
@@ -55,6 +55,11 @@ const Admin = () => {
     setAdminEmail("")
   }
 
+  //Clear Admin input and state
+  const [deleteAdmins, setdeleteAdmins] = useState('')
+  function handlerClearAdminDelete() {
+    setdeleteAdmins("")
+  }
 
   return (
     <div className="page">
@@ -127,10 +132,22 @@ const Admin = () => {
         <SectionBlock sectionId="" className="section-admin">
           <ContainerBlock className="container-admin">
             <div className="container-admin__adminCreate">
-              <h4>Добавить нового администратора</h4>
+              <h4>Добавление нового администратора</h4>
               <form onSubmit={(e) => { e.preventDefault(); AddAdmin(emailAdmins); handlerClearAdminEmail(); }}>
                 <input type="email" value={emailAdmins} onChange={(event) => setAdminEmail(event.target.value)} placeholder="Введите почту нового администратора" required />
                 <input type="submit" value="Добавить" />
+              </form>
+            </div>
+          </ContainerBlock>
+        </SectionBlock>
+
+        <SectionBlock sectionId="" className="section-admin">
+          <ContainerBlock className="container-admin">
+            <div className="container-admin__adminCreate">
+              <h4>Удаление нового администратора</h4>
+              <form onSubmit={(e) => { e.preventDefault(); DeleteAdmin(deleteAdmins); handlerClearAdminDelete(); }}>
+                <input type="email" value={deleteAdmins} onChange={(event) => setdeleteAdmins(event.target.value)} placeholder="Введите почту для удаления администратора" required />
+                <input type="submit" value="Удалить" />
               </form>
             </div>
           </ContainerBlock>

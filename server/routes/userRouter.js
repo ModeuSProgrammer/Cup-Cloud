@@ -10,9 +10,12 @@ router.post('/login', userController.login)
 router.get('/check', authMiddleware, userController.check)
 
 router.post('/addAdmin', authMiddleware, userController.addAdminsApp)
+router.delete('/deleteAdmin', authMiddleware, userController.deleteAdminsApp)
+
 
 router.get('/getdata', authMiddleware, userController.getUserData)
 router.post('/avatar', authMiddleware, userController.uploadAvatar)
+
 router.delete('/delete', authMiddleware, userController.deleteAvatar)
 
 module.exports = router

@@ -10,7 +10,7 @@ export const registration = async (email, password, passwordTwo, firstname) => {
       firstname
     })
     let message = response?.data.message
-    if (message.length != 0)
+    if (message.length !== 0)
       alert(message)
   } catch (error) {
     alert(error.response?.data.message || "Произошла ошибка при регистрации")
@@ -108,6 +108,18 @@ export async function AddAdmin(email) {
   try {
     const token = localStorage.getItem('token')
     const response = await axios.post(`http://localhost:8000/api/addAdmin`, { email }, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    alert(response.data.message)
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export async function DeleteAdmin(email) {
+  try {
+    const token = localStorage.getItem('token')
+    const response = await axios.delete(`http://localhost:8000/api/deleteAdmin?email=${email}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     alert(response.data.message)
