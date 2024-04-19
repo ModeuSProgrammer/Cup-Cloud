@@ -2,9 +2,9 @@ const { Role, Tariff, User, Storage, Profile, List } = require('./models')
 const bcrypt = require('bcrypt')  // для хеширование паролей
 
 const defaultTariffs = [
-  { ID: 1, placeCount: 15, price: 0, name: 'Стандартный' },
-  { ID: 2, placeCount: 200, price: 200, name: 'Профессиональный' },
-  { ID: 3, placeCount: 500, price: 400, name: 'Бизнес' }
+  { ID: 1, placeCount: 15, price: 0, name: 'Стандартный', countTask: 15 },
+  { ID: 2, placeCount: 200, price: 200, name: 'Профессиональный', countTask: 30 },
+  { ID: 3, placeCount: 500, price: 400, name: 'Бизнес', countTask: 70 }
 ]
 
 const defaultRole = [

@@ -6,7 +6,7 @@ const SET_TASK = "SET_TASK"
 const defaultState = {
   procent: 0,
   occupied: [],
-  task: []
+  task: [],
 }
 
 export default function busyDataReducer(state = defaultState, action) {

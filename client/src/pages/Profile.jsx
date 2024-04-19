@@ -37,6 +37,8 @@ const Profile = () => {
   const name = useSelector(state => state.user.currentProfile.firstname)
   const email = useSelector(state => state.user.currentProfile.email)
   const price = useSelector(state => state.tariff.dataTariff.price) || 0
+  const countTask = useSelector(state => state.tariff.dataTariff.countTask) || 0
+  const occupiedTask = useSelector(state => state.tariff.dataTariff.occupiedTask) || 0
   const roleID = useSelector(state => state.user.currentUser.roleID)
 
   const avatar = currentProfile.avatar !== 'null' ? `http://localhost:8000/${currentProfile.avatar}` : avatarLogo
@@ -82,7 +84,6 @@ const Profile = () => {
                   <p>Почта</p>
                   <p>Роль</p>
                   <p>Цена тарифа</p>
-                  <p>Статус диска</p>
                   <p>Дата оплаты</p>
                   <p>Количество заметок</p>
                 </div>
@@ -92,9 +93,8 @@ const Profile = () => {
                   <p >{email}</p>
                   <p>{roleID === 2 ? 'Администратор' : (roleID === 1 ? 'Пользователь' : 'Неизвестная роль')}</p>
                   <p>{price}&#8381; </p>
-                  <p >on-off</p>
                   <p >2024-03-14</p>
-                  <p >n из m</p>
+                  <p >{occupiedTask} из {countTask}</p>
                 </div>
 
                 <div className="avatar">

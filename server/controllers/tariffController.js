@@ -1,4 +1,4 @@
-const { Storage, Tariff } = require('../models/models')
+const { Storage, Tariff, List } = require('../models/models')
 const jwt = require('jsonwebtoken')
 
 class TariffController {
@@ -55,25 +55,8 @@ class TariffController {
       let placeCount = data.placeCount
       let price = data.price
       let name = data.name
-
-      return res.status(200).json({ ID, placeCount, price, name })
-    } catch (error) {
-      console.error(error)
-      return res.status(400).json({ message: 'Ошибка на сервере' })
-    }
-  }
-  // Для отображения блоков
-  async FullTariffData(req, res) {
-    try {
-      const listTarrif = req.body.numList
-      const tarrifData = await Tariff.findOne({ where: { ID: listTarrif } })
-      const data = (tarrifData.dataValues)
-      let ID = data.ID
-      let placeCount = data.placeCount
-      let price = data.price
-      let name = data.name
-
-      return res.status(200).json({ ID, placeCount, price, name })
+      let countTask = data.countTask
+      return res.status(200).json({ ID, placeCount, price, name, countTask })
     } catch (error) {
       console.error(error)
       return res.status(400).json({ message: 'Ошибка на сервере' })
@@ -88,10 +71,13 @@ class TariffController {
       const decoded = jwt.verify(token, process.env.SECRET_KEY)
       const storage = await Storage.findOne({ where: { ID: decoded.storageID } })
       const tarrifData = await Tariff.findOne({ where: { ID: storage.tariffID } })
+      console.log(decoded)
       const data = (tarrifData.dataValues)
       let price = data.price
-
-      return res.status(200).json({ price })
+      let countTask = data.countTask
+      let dataList = await List.findByPk(decoded.listID)
+      let occupiedTask = dataList.occupied
+      return res.status(200).json({ price, countTask, occupiedTask })
     } catch (error) {
       console.error(error)
       return res.status(400).json({ message: 'Ошибка на сервере' })

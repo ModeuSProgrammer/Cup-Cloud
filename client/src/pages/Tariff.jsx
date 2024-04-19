@@ -84,13 +84,13 @@ const Tariff = () => {
             <h2>ТАРИФЫ</h2>
             <div className="Tariff-inner">
 
-              {TarrifBlockOne !== null && (<TariffBlock name="Стандарт" status={tariffID === 1 ? 1 : 0} count={TarrifBlockOne.placeCount} price={TarrifBlockOne.price} selected={selectedTariff === 1}>
+              {TarrifBlockOne !== null && (<TariffBlock name="Стандарт" status={tariffID === 1 ? 1 : 0} tasks={TarrifBlockOne.countTask} count={TarrifBlockOne.placeCount} price={TarrifBlockOne.price} selected={selectedTariff === 1}>
                 <button className='btn__tariff' onClick={() => handleButtonClick(1)}>Получить</button>
               </TariffBlock>)}
-              {TarrifBlockOne !== null && (<TariffBlock name="Профессиональный" status={tariffID === 2 ? 1 : 0} count={TarrifBlockTwo.placeCount} price={TarrifBlockTwo.price} selected={selectedTariff === 2}>
+              {TarrifBlockOne !== null && (<TariffBlock name="Профессиональный" status={tariffID === 2 ? 1 : 0} tasks={TarrifBlockTwo.countTask} count={TarrifBlockTwo.placeCount} price={TarrifBlockTwo.price} selected={selectedTariff === 2}>
                 <button className='btn__tariff' onClick={() => handleButtonClick(2)}>Получить</button>
               </TariffBlock>)}
-              {TarrifBlockOne !== null && (<TariffBlock name="Бизнес" status={tariffID === 3 ? 1 : 0} count={TarrifBlockThree.placeCount} price={TarrifBlockThree.price} selected={selectedTariff === 3}>
+              {TarrifBlockOne !== null && (<TariffBlock name="Бизнес" status={tariffID === 3 ? 1 : 0} tasks={TarrifBlockThree.countTask} count={TarrifBlockThree.placeCount} price={TarrifBlockThree.price} selected={selectedTariff === 3}>
                 <button className='btn__tariff' onClick={() => handleButtonClick(3)}>Получить</button>
               </TariffBlock>)}
             </div>
