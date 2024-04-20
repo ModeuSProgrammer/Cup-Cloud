@@ -149,17 +149,6 @@ class StorageController {
       return next(ApiError.internal('Ошибка поиска файла'))
     }
   }
-  //проверка активации диска
-  async actDrive(req, res, next) {
-    try {
-      const token = req.headers.authorization.split(' ')[1]
-      const decoded = jwt.verify(token, process.env.SECRET_KEY)
-
-    } catch (error) {
-      console.error(error)
-      return next(ApiError.internal('Ошибка работы диска'))
-    }
-  }
 }
 
 module.exports = new StorageController() 
