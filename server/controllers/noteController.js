@@ -27,7 +27,7 @@ class NoteController {
         return res.status(200).json({ message: 'Нет свободных заметок' })
       }
     } catch (error) {
-      return next(ApiError.internal('Ошибка работы диска'))
+      return res.status(400).json({ message: 'Ошибка на сервере' })
     }
   }
 
