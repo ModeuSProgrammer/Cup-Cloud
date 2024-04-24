@@ -151,7 +151,7 @@ const Notes = () => {
                     <form onSubmit={(e) => { e.preventDefault(); CreateTaskNote(title, dateTask, text); handlerClear(); }}>
                       <input type="text" value={title} placeholder="Название" onChange={(event) => SetTitle(event.target.value)} required />
                       <input type="date" value={dateTask} onChange={(event) => SetSelectedDate(event.target.value)} readOnly />
-                      <textarea rows="5" placeholder="Содержание" minLength="1" maxLength="255" value={text} onChange={(event) => SetText(event.target.value)} required />
+                      <textarea rows="5" placeholder="Содержание" minLength="1" maxLength="500" value={text} onChange={(event) => SetText(event.target.value)} required />
                       <input type="submit" value="Создать" />
                     </form>
                   </div>

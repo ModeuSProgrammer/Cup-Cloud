@@ -73,7 +73,7 @@ const List = sequelize.define('list', {
 const Task = sequelize.define('task', {
   ID: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   title: { type: DataTypes.STRING },
-  text: { type: DataTypes.STRING },
+  text: { type: DataTypes.STRING(500) },
   date: { type: DataTypes.DATE },
   status: { type: DataTypes.BOOLEAN, defaultValue: true }
 },
