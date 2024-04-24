@@ -2,24 +2,45 @@
 
 .nav-list {
   .nav-item a:hover {
-    color: $color-hover;
+    color: $color-hover2;
     transition: color 0.3s;
   }
 }
 .nav-list {
   .nav-item a:active {
-    color: $color-active;
+    color: $color-active2;
   }
 }
+.settings .btn:hover,
+.btn-upload:hover,
+.btn__tariff:hover {
+  background-color: $color-hover;
+  color: $color-hover2;
+  border-radius: 10px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: $color-hover;
+  transition: background-color, 0.3s;
+  transition: border-color, 0.3s;
+}
+.settings .btn:active,
+.btn-upload:active,
+.btn__tariff:active {
+  background-color: $color-active;
+  color: $color-active2;
+  border-color: $color-active;
+}
+
 form {
   input[type="submit"]:hover {
     cursor: pointer;
     background-color: $color-hover;
+    color: $color-hover2;
     transition: background-color 0.3s;
   }
   input[type="submit"]:active {
-    background-color: white;
-    color: black;
+    background-color: $color-active;
+    color: $color-active2;
   }
   button:hover {
     cursor: pointer;
@@ -40,8 +61,8 @@ form {
       transition: background-color 0.3s;
     }
     input[type="submit"]:active {
-      background-color: white;
-      color: black;
+      background-color: $color-active;
+      color: $color-active2;
     }
     button:hover {
       cursor: pointer;
@@ -58,11 +79,19 @@ form {
 .popup {
   button:hover {
     cursor: pointer;
-    background-color: $color-active;
+    background-color: $color-hover;
+    color: $color-hover2;
     transition: background-color 0.3s;
   }
   button:active {
     cursor: pointer;
-    background-color: $color-red-btn;
+    background-color: $color-active;
+    color: $color-active2;
   }
+}
+
+.note-list-item span span:last-child:hover {
+  cursor: pointer;
+  color: $color-hover2;
+  transition: color 0.3s;
 }

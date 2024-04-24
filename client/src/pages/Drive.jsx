@@ -70,7 +70,6 @@ const Drive = () => {
     event.stopPropagation()
     let files = [...event.dataTransfer.files]
     files.forEach(file => dispatch(uploadFile(file, currentDir)))
-    console.log(files)
     setDragEnter(false)
   }
   // поиск файлов
@@ -125,8 +124,10 @@ const Drive = () => {
               <form>
                 <input type="search" placeholder="Поиск по диску" className="FolderSearch" value={searchName} onChange={e => searchChandeHandler(e)} />
               </form>
-              <button className='btn btn-back' onClick={() => backClickHandler()} >Назад</button>
 
+              <form onSubmit={(e) => e.preventDefault(e)} className="signle-btn-form">
+                <input type="submit" onClick={() => backClickHandler()} value="Назад" />
+              </form>
             </div>
 
             <div className="container-listFile">

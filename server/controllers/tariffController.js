@@ -71,7 +71,6 @@ class TariffController {
       const decoded = jwt.verify(token, process.env.SECRET_KEY)
       const storage = await Storage.findOne({ where: { ID: decoded.storageID } })
       const tarrifData = await Tariff.findOne({ where: { ID: storage.tariffID } })
-      console.log(decoded)
       const data = (tarrifData.dataValues)
       let price = data.price
       let countTask = data.countTask
@@ -94,19 +93,24 @@ class TariffController {
           const cell = await Tariff.findOne({ where: { ID: btnNum } })
           cell.placeCount = Number(GB)
           await cell.save()
+          return res.status(200).json({ message: "Изменения прошли успешно" })
         }
         if (task != undefined && task != 0 && task.length != 0) {
           const cell = await Tariff.findOne({ where: { ID: btnNum } })
           cell.countTask = Number(task)
           await cell.save()
+          return res.status(200).json({ message: "Изменения прошли успешно" })
         }
         if (price != undefined && price.length != 0) {
           const cell = await Tariff.findOne({ where: { ID: btnNum } })
           cell.price = Number(price)
           await cell.save()
+          return res.status(200).json({ message: "Изменения прошли успешно" })
+        }
+        else {
+          return res.status(200).json({ message: "Нет данных для изменений" })
         }
       }
-      return res.status(200).json({ message: "Изменения прошли успешно" })
     } catch (error) {
       console.error(error)
       return res.status(400).json({ message: 'Ошибка на сервере' })

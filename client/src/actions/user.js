@@ -68,7 +68,6 @@ export const uploadAvatar = (file) => {
 
       dispatch(setProfile(response.data))
     } catch (e) {
-      console.log(e)
       console.error(e)
     }
   }
@@ -97,7 +96,6 @@ export const showData = () => {
       const { email, firstname, avatar } = response.data
       dispatch(setProfile(response.data))
     } catch (e) {
-      console.log(e)
       console.error(e)
     }
   }

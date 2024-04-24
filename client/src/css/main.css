@@ -346,40 +346,62 @@ select {
   color: #ffe5d9;
 }
 
+.settings .btn:hover,
+.btn-upload:hover,
+.btn__tariff:hover {
+  background-color: #ffe5d9;
+  color: #fb354e;
+  border-radius: 10px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #ffe5d9;
+  transition: background-color, 0.3s;
+  transition: border-color, 0.3s;
+}
+
+.settings .btn:active,
+.btn-upload:active,
+.btn__tariff:active {
+  background-color: #fb354e;
+  color: #ffe5d9;
+  border-color: #fb354e;
+}
+
 form input[type=submit]:hover {
   cursor: pointer;
-  background-color: #fb354e;
+  background-color: #ffe5d9;
+  color: #fb354e;
   transition: background-color 0.3s;
 }
 form input[type=submit]:active {
-  background-color: white;
-  color: black;
+  background-color: #fb354e;
+  color: #ffe5d9;
 }
 form button:hover {
   cursor: pointer;
   transition: color 5s;
-  color: #fb354e;
+  color: #ffe5d9;
   transition: border-bottom 0.3s;
-  border-bottom: 2px solid #fb354e;
+  border-bottom: 2px solid #ffe5d9;
   font-size: 25px;
   transition: font-size 1s;
 }
 
 .form-signIn form input[type=submit]:hover {
   cursor: pointer;
-  background-color: #fb354e;
+  background-color: #ffe5d9;
   transition: background-color 0.3s;
 }
 .form-signIn form input[type=submit]:active {
-  background-color: white;
-  color: black;
+  background-color: #fb354e;
+  color: #ffe5d9;
 }
 .form-signIn form button:hover {
   cursor: pointer;
   transition: color 5s;
-  color: #fb354e;
+  color: #ffe5d9;
   transition: border-bottom 0.3s;
-  border-bottom: 2px solid #fb354e;
+  border-bottom: 2px solid #ffe5d9;
   font-size: 25px;
   transition: font-size 1s;
 }
@@ -387,11 +409,19 @@ form button:hover {
 .popup button:hover {
   cursor: pointer;
   background-color: #ffe5d9;
+  color: #fb354e;
   transition: background-color 0.3s;
 }
 .popup button:active {
   cursor: pointer;
   background-color: #fb354e;
+  color: #ffe5d9;
+}
+
+.note-list-item span span:last-child:hover {
+  cursor: pointer;
+  color: #fb354e;
+  transition: color 0.3s;
 }
 
 .container-header {
@@ -415,32 +445,28 @@ form button:hover {
 .sale-inner {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  flex-wrap: nowrap;
 }
-.sale-inner .sale-info {
-  width: -moz-fit-content;
-  width: fit-content;
-  margin-left: 30px;
-  height: 100%;
-}
-.sale-inner .sale-info h4 {
-  text-align: left;
+.sale-inner h4 {
   color: #fb354e;
   text-shadow: none;
+  text-align: left;
+  margin-left: 20px;
 }
 .sale-inner h2 {
+  margin-left: 350px;
   color: #fb354e;
-  margin-left: 377px;
   margin-bottom: 40px;
   text-shadow: none;
 }
 
 .saleimage {
-  margin-right: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.saleimage img {
+  margin-left: 10px;
+  width: 380px;
 }
 
 .container-sign {
@@ -501,19 +527,21 @@ form button:hover {
   height: 370px;
 }
 .Tariff-inner .Tariff h4 {
-  margin-top: 10px;
   color: #fb354e;
 }
 .Tariff-inner .Tariff h6 {
   color: white;
-  margin-top: -10px;
-  margin-bottom: 10px;
+  margin-top: -5px;
+  margin-bottom: 5px;
 }
 .Tariff-inner .Tariff h2 {
-  margin-top: 15px;
+  margin-top: 5px;
   color: white;
+  margin-bottom: -10px;
 }
 .Tariff-inner .Tariff h5 {
+  margin-top: -5px;
+  margin-bottom: 10px;
   color: white;
 }
 .Tariff-inner .Tariff .description {
@@ -528,12 +556,13 @@ form button:hover {
 
 .btn__tariff {
   cursor: pointer;
-  background-color: #000000;
   color: white;
+  border: 2px solid #fb354e;
+  background-color: #fb354e;
   box-shadow: rgba(0, 0, 0, 0.25);
   font-size: 18px;
   height: 55px;
-  margin: 10px auto;
+  margin: 3px auto;
   padding: 10px 40px;
   width: -moz-fit-content;
   width: fit-content;
@@ -599,15 +628,6 @@ form button:hover {
   height: -moz-fit-content;
   height: fit-content;
   width: 150px;
-}
-
-.btn-block {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: -moz-fit-content;
-  height: fit-content;
-  align-items: end;
 }
 
 .custom-file-upload {
@@ -835,7 +855,7 @@ form button:hover {
 .container-admin__tariff .block-tariff input[type=submit] {
   width: -moz-fit-content;
   width: fit-content;
-  border: 2px solid #fb354e;
+  border: 2px solid #ffe5d9;
 }
 
 .popup {
@@ -875,7 +895,8 @@ form button:hover {
 }
 
 .popup__create {
-  background-color: #561f47;
+  border: 2px solid #fb354e;
+  background-color: #fb354e;
   box-shadow: rgba(0, 0, 0, 0.25);
   font-size: 18px;
   height: 40px;
@@ -889,7 +910,8 @@ form button:hover {
 }
 
 .popup__close {
-  background-color: #561f47;
+  border: 2px solid #fb354e;
+  background-color: #fb354e;
   box-shadow: rgba(0, 0, 0, 0.25);
   font-size: 18px;
   height: 30px;
@@ -1049,15 +1071,23 @@ form button:hover {
   justify-content: space-evenly;
 }
 .container-worksapce .container-drive .container-search form {
-  width: -moz-fit-content;
-  width: fit-content;
-  width: 1250px;
+  width: 1280px;
 }
 .container-worksapce .container-drive .container-search form input {
   margin-left: 80px;
   width: 100%;
   height: 55px;
   margin-bottom: 20px;
+}
+.container-worksapce .container-drive .container-search .signle-btn-form {
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.container-worksapce .container-drive .container-search .signle-btn-form input[type=submit] {
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-left: 80px;
+  height: 55px;
 }
 .container-worksapce .container-drive .btn {
   cursor: pointer;
@@ -1123,6 +1153,9 @@ form button:hover {
   border-radius: 10px;
   cursor: pointer;
 }
+.settings .btn-upload {
+  border-radius: 10px;
+}
 .settings .btn-upload .drive__upload-input {
   display: none;
 }
@@ -1132,11 +1165,10 @@ form button:hover {
   display: flex;
   justify-content: center;
   align-self: center;
-  font-size: 18px;
-  background-color: transparent;
+  font-size: 19px;
+  border: 2px solid #fb354e;
+  background-color: #fb354e;
   color: white;
-  border: 2px solid white;
-  box-shadow: rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   padding: 10px 5px;
   cursor: pointer;

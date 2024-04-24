@@ -16,14 +16,13 @@ const Main = () => {
           </nav>
         </div>
 
-        <SectionBlock sectionId="main" className="container-header">
-        </SectionBlock>
+        <SectionBlock sectionId="main" className="container-header" />
 
         <SectionBlock sectionId="aboutus" className="">
           <ContainerBlock className="container">
             <div>
               <h2>О НАС</h2>
-              <h4><b>Cup Cloud</b> - это стартап-проект, ориентированный на аудиториюразных возрастов.<br />
+              <h4><b>Cup Cloud</b> - это стартап-проект, ориентированный на аудиторию разных возрастов.<br />
                 Наш сервер предоставляет услугу для безопасного хранения ваших файлов.<br />
                 Вместе с привлекательным дизайном, мы предоставляем удобные<br />
                 функциональные возможности, которых не найти в других хранилищах.<br />
@@ -36,20 +35,17 @@ const Main = () => {
           <ContainerBlock className="container">
             <div className="sale-inner">
               <h2>ТАРИФЫ</h2>
-              <div className="sale-info">
-                <h4>Для всех пользователей у нас найдётся выгодный<br />тариф от базового до бизнеса, что позволит вам использовать
-                  хранилище на полную.<br />При необходимости вы также можете свободно<br /> менять подписку на другую, которая лучше всего<br />удовлетворяет ваши потребности и предпочтения.</h4>
-              </div>
+              <h4>Для всех пользователей у нас найдётся выгодный тариф<br />  от базового до бизнеса, что позволит вам использовать<br />
+                хранилище на полную.<br />При необходимости вы также можете свободно<br />менять подписку на другую, которая лучше всего<br />удовлетворяет ваши потребности и предпочтения.</h4>
             </div>
             <div className="saleimage">
-              <ImgBlock filePath="../img/sale.png" className="" />
+              <ImgBlock filePath="../img/iconsgraphic.png" className="" />
             </div>
           </ContainerBlock>
         </SectionBlock>
-
         <footer></footer>
       </div >
-    </div>
+    </div >
   )
 }
 export default Main 

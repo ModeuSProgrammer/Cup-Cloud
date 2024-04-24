@@ -63,12 +63,13 @@
 
 .btn__tariff {
   cursor: pointer;
-  background-color: #000000;
   color: white;
+  border: 2px solid $color-red-btn;
+  background-color: $color-red-btn;
   box-shadow: rgba(0, 0, 0, 0.25);
   font-size: 18px;
   height: 55px;
-  margin: 10px auto;
+  margin: 3px auto;
   padding: 10px 40px;
   width: fit-content;
   border-radius: 10px;

@@ -35,13 +35,13 @@ const Notes = () => {
   useEffect(() => {
     let flag = false
     async function fetchData() {
-      const delay = 1500;
+      const delay = 1000;
       setTimeout(async () => {
         const tasksData = await ShowTasks();
         if (tasksData !== undefined) {
           setTasks(tasksData);
         }
-      }, (flag ? delay : 1000))
+      }, (flag == true ? delay : 700))
       flag = true
     }
     if (selectValue && openTaskFlag == false) {
@@ -121,7 +121,7 @@ const Notes = () => {
                         .map(task => (
                           <li className="note-list-item active" key={task.ID} >
                             <span className="title" onClick={() => { SetHandlerTaskID(task.ID); SetOpenTaskFlag(true) }}  >{task.title}</span>
-                            <span> Создано: {task.date.split('T')[0]} <span onClick={() => { EndedTask(task.ID); SetSelectedValue(false) }}>Завершить</span></span>
+                            <span> Создано: {task.date.split('T')[0]} <span onClick={() => EndedTask(task.ID)}>Завершить</span></span>
                           </li>
                         ))
                     ) : (
@@ -130,7 +130,7 @@ const Notes = () => {
                         .map(task => (
                           <li className="note-list-item ended" key={task.ID} >
                             <span className="title" onClick={() => { SetHandlerTaskID(task.ID); SetOpenTaskFlag(true) }}  >{task.title}</span>
-                            <span>Создано: {task.date.split('T')[0]}  <span onClick={() => { DeleteTask(task.ID); SetSelectedValue(false) }}>Удалить</span> </span>
+                            <span>Создано: {task.date.split('T')[0]}  <span onClick={() => DeleteTask(task.ID)}>Удалить</span></span>
                           </li>
                         ))
                     )}
