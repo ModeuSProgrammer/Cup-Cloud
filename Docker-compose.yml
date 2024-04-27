@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  client:
+    build: ./client
+    networks:
+     - my-network
+    ports:
+      - 3000:3000
+    depends_on:
+      - server
+  server:
+    build: ./server
+    networks:
+      - my-network
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres-db
+  postgres-db:
+    image: postgres
+    networks:
+      - my-network
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_USER: postgres
+      POSTGRES_DB: CupCloud
+    ports:
+      - 5432:5432
+  adminer:
+    image: adminer
+    restart: always
+    networks:
+     - my-network
+    ports:
+      - 8080:8080
+
+networks:
+   my-network:
+    driver: bridge
