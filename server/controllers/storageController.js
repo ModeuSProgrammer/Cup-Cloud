@@ -12,10 +12,10 @@ class StorageController {
       const file = new File({ name, type, parentID, storageID: req.user.storageID })
       const parentFile = parentID !== undefined ? await File.findOne({ where: { ID: parentID } }) : null
       if (!parentFile) {
-        file.path = `${req.user.dirMain}\\${file.name}`
+        file.path = path.join(req.user.dirMain, file.name)
         await createDirMiddleware.createDirServices(file)
       } else {
-        file.path = `${parentFile.path}\\${file.name}`
+        file.path = path.join(parentFile.path, file.name)
         await createDirMiddleware.createDirServices(file)
         await parentFile.save()
       }

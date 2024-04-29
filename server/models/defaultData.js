@@ -1,17 +1,13 @@
 const { Role, Tariff, User, Storage, Profile, List } = require('./models')
 const bcrypt = require('bcrypt')  // для хеширование паролей
-
 const defaultTariffs = [
   { ID: 1, placeCount: 15, price: 0, name: 'Стандартный', countTask: 15 },
   { ID: 2, placeCount: 200, price: 200, name: 'Профессиональный', countTask: 30 },
   { ID: 3, placeCount: 500, price: 400, name: 'Бизнес', countTask: 70 }
 ]
-
 const defaultRole = [
   { ID: 1, name: 'user' },
   { ID: 2, name: 'admin' }]
-
-
 class defaultDataDB {
   async addDefaultDataRoles() {
     try {
@@ -23,7 +19,6 @@ class defaultDataDB {
         await Role.create(role)
       }
       return console.log('Роль успешно добавлена в таблицу.')
-
     }
     catch (e) {
       return console.log(e)
@@ -64,5 +59,4 @@ class defaultDataDB {
     }
   }
 }
-
 module.exports = new defaultDataDB() 

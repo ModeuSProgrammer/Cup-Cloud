@@ -1,11 +1,10 @@
-
 const bcrypt = require('bcrypt')  // для хеширование паролей
 const jwt = require('jsonwebtoken')  // для регистрации и тд
 const { User, Profile, Storage, List } = require('../models/models')
 const createDirMiddleware = require('../middleware/createDirMiddleware')
-const path = require('path')
 const fs = require('fs')
 const uuid = require('uuid')
+const path = require('path')
 
 const generateJwt = (ID, email, roleID, storageID, dirMain, listID) => {
   return jwt.sign(
@@ -93,7 +92,8 @@ class UserController {
       const profile = await Profile.findOne({ where: { ID: req.user.ID } })
       const fileExtension = path.extname(file.name)
       const avatarName = uuid.v4() + fileExtension
-      file.mv(process.env.staticPath + "\\" + avatarName)
+      const pathAva = path.join(process.env.staticPath, avatarName)
+      file.mv(pathAva)
       profile.avatar = avatarName
       await profile.save()
       return res.json(profile)
@@ -106,8 +106,9 @@ class UserController {
   async deleteAvatar(req, res, next) {
     try {
       const profileData = await Profile.findOne({ where: { ID: req.user.ID } })
-      if (process.env.staticPath + "\\" + profileData.avatar !== null) {
-        fs.unlinkSync(process.env.staticPath + "\\" + profileData.avatar)
+      const pathAva = path.join(process.env.staticPath, profileData.avatar)
+      if (pathAva !== null) {
+        fs.unlinkSync(pathAva)
       }
       profileData.avatar = null
       await profileData.save()

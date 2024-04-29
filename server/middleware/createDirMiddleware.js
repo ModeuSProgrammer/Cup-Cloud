@@ -1,9 +1,10 @@
 const fs = require('fs').promises
+const path = require('path')
 
 // Для создания папок
 class CreateDirMiddleware {
   async createDirServices(file) {
-    const userDir = `${process.env.filePath}/${file.path}`
+    const userDir = path.join(process.env.filePath, file.path)
     try {
       // Проверка, существует ли директория
       await fs.access(userDir)
