@@ -15,6 +15,9 @@ services:
       - my-network
     ports:
       - 8000:8000
+    volumes:
+      - ./server/_files:/app/server/_files
+      - ./server/static:/app/server/static
     depends_on:
       - postgres-db
   postgres-db:

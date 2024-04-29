@@ -1,5 +1,7 @@
 const { Role, Tariff, User, Storage, Profile, List } = require('./models')
 const bcrypt = require('bcrypt')  // для хеширование паролей
+const createDirMiddleware = require('../middleware/createDirMiddleware')
+
 const defaultTariffs = [
   { ID: 1, placeCount: 15, price: 0, name: 'Стандартный', countTask: 15 },
   { ID: 2, placeCount: 200, price: 200, name: 'Профессиональный', countTask: 30 },
@@ -51,6 +53,7 @@ class defaultDataDB {
         const storage = await Storage.create({ occupied: 0, status: true, datePay: new Date(), tariffID: 1 })
         const lists = await List.create({ storageID: storage.ID })
         const admin = await User.create({ email: "admin@admin.ru", password: pass, firstname: 'admin', roleID: 2, storageID: storage.ID, profileID: profile.ID })
+        await createDirMiddleware.createDirServices({ path: `user${storage.ID.toString()}` })
         return console.log('Базовый администратор создан')
       }
     }
