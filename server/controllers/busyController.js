@@ -16,7 +16,7 @@ class BusyDataController {
       return res.json(procent)
     } catch (error) {
       console.error(error)
-      return res.json('Ошибка отображения диаграммы')
+      return res.json('Ошибка отображения')
     }
   }
 

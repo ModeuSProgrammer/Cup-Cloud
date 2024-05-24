@@ -1107,7 +1107,8 @@ form button:hover {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 819px;
+  min-height: 840px;
+  max-height: 1040px;
   width: 450px;
   background-color: rgba(0, 0, 0, 0.3);
 }
